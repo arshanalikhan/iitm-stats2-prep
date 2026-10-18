@@ -1,0 +1,38 @@
+/* Tokens (light and dark), base typography */
+:root{
+  --bg:#f4f3f8; --surface:#ffffff; --ink:#1b1830; --muted:#5c5873; --line:#dcd9e8;
+  --accent:#5a3fb0; --accent-soft:#ece8fb; --on-accent:#ffffff;
+  --hi:#8f5400; --hi-soft:#fbefd9;
+  --ok:#17703f; --ok-soft:#e1f2e8; --bad:#b3261e; --bad-soft:#fbe6e4;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12101c; --surface:#1b1829; --ink:#e8e6f2; --muted:#a29dba; --line:#2e2a44;
+    --accent:#b4a2ff; --accent-soft:#2a2247; --on-accent:#150f2e;
+    --hi:#e6ad4d; --hi-soft:#30250f;
+    --ok:#52c98f; --ok-soft:#0f2b1f; --bad:#f27a6f; --bad-soft:#371917;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12101c; --surface:#1b1829; --ink:#e8e6f2; --muted:#a29dba; --line:#2e2a44;
+  --accent:#b4a2ff; --accent-soft:#2a2247; --on-accent:#150f2e;
+  --hi:#e6ad4d; --hi-soft:#30250f;
+  --ok:#52c98f; --ok-soft:#0f2b1f; --bad:#f27a6f; --bad-soft:#371917;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+a{color:var(--accent);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:72rem;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,5.4vw,3.4rem);font-weight:700;line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,3.2vw,2.1rem);font-weight:700;line-height:1.1}
+h3{font-size:1.3rem;font-weight:600;line-height:1.2}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+code,.mono{font-family:var(--mono);font-size:.9em}
+p{margin:0}

@@ -1,0 +1,16 @@
+# Generated site (built by tools/build_site.py and deployed by GitHub Actions)
+site/
+
+# Local course data and past papers: never commit
+raw/
+
+# Local-only notes for Claude sessions (they describe private data access)
+HANDOFF.md
+CLAUDE.md
+
+# Editor, OS and tool clutter
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

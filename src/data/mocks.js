@@ -1,4 +1,3 @@
-// Generated from src/ by tools/build_site.py. Edit the source, not this file.
 /* ---------- Mock quizzes: 40 marks each, the shape of the real Quiz 1 ---------- */
 // Items use the same fields as the practice bank plus m = marks. Items sharing c form a comprehension set.
 const MA1 = R`$X$ has PMF` + T("x|0|1|3", "P(X = x)|0.25|0.25|0.5");

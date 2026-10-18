@@ -1,0 +1,95 @@
+/* KaTeX, PMF tables, numeric answers, notes boxes, formula lists, drills, mock picker */
+/* ---------- Stats 2 additions ---------- */
+/* maths */
+.katex{font-size:1.06em}
+.katex-display{margin:.4em 0;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.q-text .katex-display,.why .katex-display{margin:.3em 0}
+.mathblock{overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+
+/* small PMF / CDF tables inside questions and notes */
+table.pt{width:auto;border-collapse:collapse;margin:6px 0;font-size:.92rem;background:var(--surface)}
+table.pt td,table.pt th{border:1px solid var(--line);padding:5px 12px;text-align:center;vertical-align:middle;font-family:var(--mono);font-size:.86rem;letter-spacing:0;text-transform:none;color:var(--ink)}
+table.pt th{background:var(--bg);font-weight:600}
+table.pt td.m,table.pt th.m{background:var(--accent-soft);color:var(--accent)}
+.ptwrap{overflow-x:auto;max-width:100%}
+
+/* numeric answers */
+.numrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.numrow input{font:inherit;font-family:var(--mono);font-size:1rem;width:11rem;max-width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.numrow input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.numrow input.ok{border-color:var(--ok);background:var(--ok-soft)}
+.numrow input.no{border-color:var(--bad);background:var(--bad-soft)}
+.numrow .hintfmt{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.q-meta .mk{color:var(--accent);font-weight:600}
+.q-meta .pq{color:var(--ok);font-weight:600}
+.common{background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;font-size:.95rem;max-width:80ch}
+.common b.cl{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:4px}
+
+/* notes */
+.defn,.ex,.warn{border-radius:10px;padding:12px 14px;max-width:84ch;display:grid;gap:6px}
+.defn{background:var(--accent-soft);border-left:4px solid var(--accent)}
+.ex{background:var(--surface);border:1px solid var(--line)}
+.warn{background:var(--bad-soft);border-left:4px solid var(--bad)}
+.defn > b:first-child,.ex > b:first-child,.warn > b:first-child{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.defn > b:first-child{color:var(--accent)}
+.ex > b:first-child{color:var(--hi)}
+.warn > b:first-child{color:var(--bad)}
+.ex details summary{cursor:pointer;font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.ex details[open] summary{margin-bottom:6px}
+.week h3{padding-top:8px}
+.body p{max-width:80ch}
+.lecs a{color:inherit}
+.vidrow{display:flex;flex-wrap:wrap;gap:6px}
+.vidrow a{font-family:var(--mono);font-size:.74rem;text-decoration:none;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink)}
+.vidrow a b{color:var(--accent);font-weight:600}
+@media (hover:hover){ .vidrow a:hover{border-color:var(--accent);color:var(--accent)} }
+
+/* formula cards */
+.fcard h3 small{display:block;font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.fl{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.fl li{display:grid;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--line);min-width:0}
+.fl li:last-child{border-bottom:0;padding-bottom:0}
+.fl li > span{font-size:.86rem;color:var(--muted)}
+.fl li .katex-display{margin:.15em 0;text-align:left}
+.fl li .katex-display > .katex{text-align:left}
+.given{border:1.5px dashed var(--ok);background:var(--ok-soft);border-radius:12px;padding:14px 16px;display:grid;gap:8px;max-width:90ch}
+.given > b{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ok)}
+table.dist td,table.dist th{vertical-align:middle}
+table.dist td{font-size:.9rem}
+
+/* exam patterns */
+.pat{display:grid;gap:10px}
+.patrow{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.patrow .pw{font-family:var(--mono);font-size:.76rem;color:var(--muted);display:grid;gap:4px;align-content:start}
+.patrow .pw b{font-size:1.4rem;font-family:var(--display);color:var(--accent);line-height:1}
+.patrow h4{margin:0 0 4px;font-size:1.02rem}
+.patrow p{color:var(--muted);font-size:.94rem;max-width:80ch}
+.seen{display:inline-flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.seen span{font-family:var(--mono);font-size:.68rem;padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.seen span.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+@media (max-width:640px){ .patrow{grid-template-columns:1fr;gap:6px} .patrow .pw{grid-auto-flow:column;justify-content:start;align-items:baseline;gap:10px} }
+
+/* drills */
+.drillgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.drillpick{font:inherit;text-align:left;display:grid;gap:4px;align-content:start;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer}
+.drillpick b{font-weight:600}
+.drillpick small{color:var(--muted);font-size:.84rem}
+.drillpick .dw{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.04em}
+.drillpick[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+@media (hover:hover){ .drillpick:hover{border-color:var(--accent)} }
+.drillbox{display:grid;gap:12px}
+.streak{font-family:var(--mono);font-size:.84rem;color:var(--muted)}
+.streak b{color:var(--ink)}
+.steps{margin:0;padding-left:1.3em;display:grid;gap:6px;max-width:80ch}
+.steps li{font-size:.94rem}
+
+/* mocks */
+.paper .meta{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.durpick{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.durpick span{font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+.brand .brand-curve{stroke:var(--on-accent)}
+.tile .s{font-size:.82rem;color:var(--muted)}
+.q .hintfmt{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin:0}
+.q-text{max-width:80ch}
+.q-text p{margin:0 0 6px}
+footer{border-top:1px solid var(--line)}

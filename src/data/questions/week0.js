@@ -1,0 +1,9 @@
+/* ---------- Practice bank, Week 0 recap: Stats 1 distributions ---------- */
+QS.push(
+  { w: 0, t: "num", q: R`A fair die is rolled 5 times. Find the probability of exactly two sixes. Enter the answer correct to three decimal places.`, n: [0.1608, 0.0006], e: R`Binomial($5,\tfrac16$): $\binom52(\tfrac16)^2(\tfrac56)^3=10\cdot\tfrac1{36}\cdot\tfrac{125}{216}=0.1608$.` },
+  { w: 0, t: "num", q: R`$X\sim$ Geometric($0.2$). Find $P(X\gt4)$. Enter the answer correct to three decimal places.`, n: [0.4096, 0.0006], e: R`$P(X\gt k)=(1-p)^k=0.8^4=0.4096$: the first four trials all fail.` },
+  { w: 0, t: "num", q: R`$X\sim$ Poisson($3$). Find $P(X\le1)$. Enter the answer correct to three decimal places.`, n: [0.1991, 0.0006], e: R`$e^{-3}(1+3)=4e^{-3}=0.1991$.` },
+  { w: 0, t: "mcq", q: R`From 10 bulbs, 3 of which are faulty, 4 are picked without replacement. The number of faulty bulbs picked follows`, o: [R`Binomial($4, 0.3$)`, R`HyperGeo($10, 3, 4$)`, R`Geometric($0.3$)`, R`Poisson($1.2$)`], a: [1], e: R`Draws without replacement from a finite population with a fixed number of "successes" are hypergeometric: population 10, 3 successes, 4 draws.` },
+  { w: 0, t: "num", q: R`$X\sim$ Uniform$\{-2,-1,0,1,2,3\}$ and $Y=X^2$. Find $P(Y=4)$. Enter the answer correct to two decimal places.`, n: [0.3333, 0.006], e: R`$Y=4$ when $X=-2$ or $X=2$: $2/6=0.33$.` },
+  { w: 0, t: "msq", q: R`Which of the following are true?`, o: [R`Geometric($p$) takes the value 0 with probability $p$.`, R`A Poisson($\lambda$) variable has mean and variance both equal to $\lambda$.`, R`Binomial($n,p$) has variance $np(1-p)$.`, R`Uniform$\{1,\dots,6\}$ has mean $3.5$.`], a: [1, 2, 3], e: R`Geometric starts at 1 (number of trials up to the first success), so it never takes 0. The other three are standard facts.` }
+);

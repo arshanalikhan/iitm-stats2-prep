@@ -1,0 +1,57 @@
+<section id="traps" class="page" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Read on quiz morning</p>
+      <h2>Last-minute traps</h2>
+      <p>Small slips that cost marks in this course. Each line is a rule to apply, not a fact to recall.</p>
+    </div>
+    <h3>Reading the question</h3>
+    <ul class="traps">
+      <li><b>"Correct to two decimal places"</b>: compute with full precision, round only at the end. 0.3636 → 0.36.</li>
+      <li><b>Given vs asked:</b> in P(A | B) you divide by P(B), the condition.</li>
+      <li><b>Normal(μ, σ²)</b> gives the variance. Normal(2, 5) has σ = √5 ≈ 2.236.</li>
+      <li><b>Exp(λ)</b> uses the rate. "Mean 10 minutes" means λ = 0.1.</li>
+      <li><b>Geometric starts at 1.</b> P(X &gt; k) = (1 − p)^k, not (1 − p)^(k−1).</li>
+      <li><b>"Between a and b"</b> for a continuous variable: ≤ or &lt; makes no difference. For a discrete one it does.</li>
+      <li><b>Fill-in-the-blank sets:</b> type the option number (like 8), not the value, unless the blank asks for a value.</li>
+    </ul>
+    <h3>Joint and conditional</h3>
+    <ul class="traps">
+      <li><b>Check your table adds to 1</b> before you use it.</li>
+      <li><b>Conditional PMF</b> = row ÷ row total. It must also add to 1.</li>
+      <li><b>Range of (Y | X = x)</b> = only the non-zero cells in that row.</li>
+      <li><b>\(f_{NX}(n,k)=0\) when k &gt; n</b> in Poisson splitting questions.</li>
+      <li><b>Split Poisson rate is λp</b>, not λ.</li>
+      <li><b>Cards and balls:</b> include the "everything else" factor in the numerator: \(\binom{40}{1}\) for the non-picture cards.</li>
+      <li><b>Chain rule:</b> \(f_{XYZ}=f_{X\mid YZ}f_{YZ}\). Do not split \(f_{YZ}\) into \(f_Yf_Z\) unless told they are independent.</li>
+    </ul>
+    <h3>Independence, max, min</h3>
+    <ul class="traps">
+      <li><b>One matching cell proves nothing</b>; one failing cell proves dependence.</li>
+      <li><b>A zero cell</b> with non-zero row and column totals means dependent.</li>
+      <li><b>Max:</b> P(max ≤ k) = product of P(Xᵢ ≤ k). <b>Min:</b> P(min ≥ k) = product of P(Xᵢ ≥ k).</li>
+      <li><b>P(max = k) = F(k)ⁿ − F(k − 1)ⁿ</b>, not F(k)ⁿ.</li>
+      <li><b>"Exactly one" among n samples</b> needs the factor n for which sample it is.</li>
+      <li><b>Sum of independent Poissons</b> is Poisson; the conditional of one given the sum is Binomial with p = λ₁/(λ₁ + λ₂).</li>
+    </ul>
+    <h3>Expectation, variance, bounds</h3>
+    <ul class="traps">
+      <li><b>Var(aX + b) = a² Var(X).</b> The +b disappears and a is squared.</li>
+      <li><b>Var(X − Y) = Var X + Var Y − 2 Cov</b>; for independent variables it is a sum.</li>
+      <li><b>E[XY] = E[X]E[Y] only for independent variables.</b> Cov = 0 does not mean independent.</li>
+      <li><b>ρ is between −1 and 1.</b> If you get 1.3 you divided by a variance instead of an SD.</li>
+      <li><b>Markov needs X ≥ 0</b> and uses the mean. For integers, P(X &gt; 50) = P(X ≥ 51).</li>
+      <li><b>Chebyshev uses σ² / c²</b> with c the distance from the mean. For a lower bound, 1 − σ²/c².</li>
+      <li><b>Linearity works without replacement</b>: expected prize from n coupons = n × (average prize per coupon).</li>
+    </ul>
+    <h3>CDF and PDF</h3>
+    <ul class="traps">
+      <li><b>PDF = derivative of the CDF</b>; CDF = integral of the PDF from −∞.</li>
+      <li><b>Normalise with area</b>, not height: the integral over the support must be 1. The PDF may exceed 1.</li>
+      <li><b>P(X = a) = jump in F at a</b>; 0 for a continuous variable.</li>
+      <li><b>P(a &lt; X ≤ b) = F(b) − F(a)</b>, left end open, right end closed.</li>
+      <li><b>Standardise with σ</b>: z = (x − μ)/σ, and F_Z(−z) = 1 − F_Z(z).</li>
+      <li><b>Memoryless:</b> exponential P(X &gt; s + t | X &gt; s) = e^(−λt); geometric P(X &gt; m + n | X &gt; m) = (1 − p)ⁿ.</li>
+    </ul>
+  </div>
+</section>

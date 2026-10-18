@@ -1,0 +1,48 @@
+<button class="totop" id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<aside class="sidebar" aria-label="Pages">
+  <a class="brand" href="#home" aria-label="Home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="brand-bg"/><path d="M6 24c3 0 4-12 10-12s7 12 10 12" fill="none" stroke-width="2.6" stroke-linecap="round" class="brand-curve"/><path d="M6 25.5h20" stroke-width="1.6" stroke-linecap="round" class="brand-curve"/></svg><span>Stats 2 Prep<small>IITM BS · MA1004 · Quiz 1</small></span></a>
+  <nav class="side-nav">
+      <a href="#home" data-page="home"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
+      <a href="#notes" data-page="notes"><i data-lucide="book-open"></i><span>Week notes</span></a>
+      <a href="#formulas" data-page="formulas"><i data-lucide="sigma"></i><span>Formula sheet</span></a>
+      <a href="#worked" data-page="worked"><i data-lucide="calculator"></i><span>Worked examples</span></a>
+      <a href="#patterns" data-page="patterns"><i data-lucide="repeat"></i><span>Past quiz patterns</span></a>
+      <a href="#practice" data-page="practice"><i data-lucide="list-checks"></i><span>Practice</span></a>
+      <a href="#drills" data-page="drills"><i data-lucide="dices"></i><span>Number drills</span></a>
+      <a href="#mock" data-page="mock"><i data-lucide="timer"></i><span>Mock quizzes</span></a>
+      <a href="#traps" data-page="traps"><i data-lucide="triangle-alert"></i><span>Traps</span></a>
+      <a href="#resources" data-page="resources"><i data-lucide="library"></i><span>Resources</span></a>
+  </nav>
+  <div class="side-foot">
+    <div class="side-count"><b id="sidecd">28</b><span id="sidecdl">days to Quiz 1</span></div>
+    <button class="themebtn" type="button" aria-label="Switch color theme"></button>
+  </div>
+</aside>
+
+<header class="topbar">
+  <a class="brand" href="#home" aria-label="Home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="brand-bg"/><path d="M6 24c3 0 4-12 10-12s7 12 10 12" fill="none" stroke-width="2.6" stroke-linecap="round" class="brand-curve"/><path d="M6 25.5h20" stroke-width="1.6" stroke-linecap="round" class="brand-curve"/></svg></a>
+  <p class="topbar-title" id="topTitle">Home</p>
+  <button class="themebtn" type="button" aria-label="Switch color theme"></button>
+</header>
+
+<nav class="bottombar" aria-label="Pages">
+  <a href="#home" data-page="home"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
+  <a href="#notes" data-page="notes"><i data-lucide="book-open"></i><span>Notes</span></a>
+  <a href="#practice" data-page="practice"><i data-lucide="list-checks"></i><span>Practice</span></a>
+  <a href="#drills" data-page="drills"><i data-lucide="dices"></i><span>Drills</span></a>
+  <a href="#mock" data-page="mock"><i data-lucide="timer"></i><span>Mock</span></a>
+  <button type="button" id="moreBtn" aria-expanded="false" aria-controls="moreSheet"><i data-lucide="ellipsis"></i><span>More</span></button>
+</nav>
+<div class="sheet" id="moreSheet" hidden>
+  <div class="sheet-panel" role="dialog" aria-label="More pages">
+    <span class="sheet-grip" aria-hidden="true"></span>
+      <a href="#formulas" data-page="formulas"><i data-lucide="sigma"></i><span><b>Formula sheet</b><small>Every formula for Weeks 1–4, plus what the exam gives you</small></span></a>
+      <a href="#worked" data-page="worked"><i data-lucide="calculator"></i><span><b>Worked examples</b><small>Step-by-step solutions in the quiz style</small></span></a>
+      <a href="#patterns" data-page="patterns"><i data-lucide="repeat"></i><span><b>Past quiz patterns</b><small>13 past papers analysed, with a prediction</small></span></a>
+      <a href="#traps" data-page="traps"><i data-lucide="triangle-alert"></i><span><b>Traps</b><small>Read on quiz morning</small></span></a>
+      <a href="#resources" data-page="resources"><i data-lucide="library"></i><span><b>Resources</b><small>Lectures, slides, Seek links</small></span></a>
+  </div>
+</div>
+
+<main>

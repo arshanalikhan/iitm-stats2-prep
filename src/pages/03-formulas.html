@@ -1,0 +1,99 @@
+<section id="formulas" class="page" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Weeks 1–4 on one page</p>
+      <h2>Formula sheet</h2>
+      <p>Everything you need for Quiz 1. The green box is what the quiz paper prints for you as its "Formula file"; everything else you must remember.</p>
+    </div>
+
+    <div class="given">
+      <b>Printed in the quiz paper</b>
+      <p>Both recent Quiz 1 papers opened with a formula file containing: a <b>discrete</b> table (Uniform, Bernoulli, Binomial, Geometric, Poisson: PMF, CDF, mean, variance), a <b>continuous</b> table (Uniform, Exponential, Normal, Gamma, Beta: PDF, CDF, mean, variance), and the statements of <b>Markov's</b> and <b>Chebyshev's</b> inequalities.</p>
+      <p><b>Not printed:</b> hypergeometric, anything about joint/marginal/conditional PMFs, independence, sums, max/min, covariance, correlation, variance rules, and standard normal values (the paper gives the values it needs inside the question).</p>
+    </div>
+
+    <div class="fgrid">
+      <div class="fcard">
+        <h3>Joint, marginal, conditional<small>Week 1</small></h3>
+        <ul class="fl">
+          <li><span>Joint PMF</span>\[f_{XY}(t_1,t_2)=P(X=t_1,Y=t_2),\quad \textstyle\sum\sum f_{XY}=1\]</li>
+          <li><span>Marginal (sum out the other)</span>\[f_X(t_1)=\sum_{t_2}f_{XY}(t_1,t_2)\]</li>
+          <li><span>Conditional (row ÷ row total)</span>\[f_{Y\mid X=t_1}(t_2)=\frac{f_{XY}(t_1,t_2)}{f_X(t_1)}\]</li>
+          <li><span>Factorisation / chain rule</span>\[f_{XYZ}=f_{X\mid Y,Z}\;f_{Y\mid Z}\;f_Z\]</li>
+          <li><span>Poisson splitting: N ~ Poisson(λ), X | N = n ~ Bin(n, p)</span>\[X\sim\text{Poisson}(\lambda p),\ \ N-X\sim\text{Poisson}(\lambda(1-p))\ \text{indep.}\]</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>Independence<small>Week 2</small></h3>
+        <ul class="fl">
+          <li><span>Definition (every cell)</span>\[f_{XY}(t_1,t_2)=f_X(t_1)f_Y(t_2)\ \ \forall t_1,t_2\]</li>
+          <li><span>Equivalent</span>\[f_{Y\mid X=t_1}(t_2)=f_Y(t_2)\]</li>
+          <li><span>i.i.d. samples, all exceed c</span>\[P(X_1\gt c,\dots,X_n\gt c)=P(X\gt c)^n\]</li>
+          <li><span>Geometric memoryless</span>\[P(X\gt m+n\mid X\gt m)=(1-p)^n\]</li>
+          <li><span>Quick dependence test</span>A zero cell whose row and column totals are both non-zero.</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>Sums of random variables<small>Week 2</small></h3>
+        <ul class="fl">
+          <li><span>Convolution</span>\[P(X+Y=z)=\sum_x f_{XY}(x,z-x)\]</li>
+          <li><span>Independent Poissons</span>\[X+Y\sim\text{Poi}(\lambda_1+\lambda_2),\ \ X\mid X{+}Y{=}n\sim\text{Bin}\!\left(n,\tfrac{\lambda_1}{\lambda_1+\lambda_2}\right)\]</li>
+          <li><span>Binomials with the same p</span>\[X_1\mid X_1{+}X_2{=}m\sim\text{HyperGeo}(n_1{+}n_2,\,n_1,\,m)\]</li>
+          <li><span>i.i.d. Geometric(p)</span>\[P(X+Y=n)=(n-1)p^2(1-p)^{n-2},\ \ X\mid X{+}Y{=}n\sim\text{Unif}\{1..n{-}1\}\]</li>
+          <li><span>Two fair dice</span>\[P(X+Y=s)=\tfrac{6-|s-7|}{36},\quad P(X-Y=d)=\tfrac{6-|d|}{36}\]</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>Max and min<small>Week 2</small></h3>
+        <ul class="fl">
+          <li><span>Max of independent</span>\[P(\max\le k)=\prod_i P(X_i\le k)\]</li>
+          <li><span>Min of independent</span>\[P(\min\ge k)=\prod_i P(X_i\ge k)\]</li>
+          <li><span>i.i.d., integer values</span>\[P(\max=k)=F(k)^n-F(k-1)^n\]</li>
+          <li><span>Min of independent Geometrics</span>\[\min\sim\text{Geo}\big(1-(1-p_1)(1-p_2)\big)\]</li>
+          <li><span>Two fair dice</span>\[P(\max=k)=\tfrac{2k-1}{36},\quad P(\min=k)=\tfrac{13-2k}{36}\]</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>Expectation and variance<small>Week 3</small></h3>
+        <ul class="fl">
+          <li><span>Mean of a function</span>\[E[g(X,Y)]=\sum\sum g(t_1,t_2)f_{XY}(t_1,t_2)\]</li>
+          <li><span>Linearity (always)</span>\[E[aX+bY+c]=aE[X]+bE[Y]+c\]</li>
+          <li><span>Variance</span>\[\mathrm{Var}(X)=E[X^2]-(E[X])^2,\ \ \mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)\]</li>
+          <li><span>Sum</span>\[\mathrm{Var}(X\pm Y)=\mathrm{Var}X+\mathrm{Var}Y\pm2\mathrm{Cov}(X,Y)\]</li>
+          <li><span>Independent product</span>\[\mathrm{Var}(XY)=E[X^2]E[Y^2]-(E[X]E[Y])^2\]</li>
+          <li><span>Hypergeometric (not printed)</span>\[E=\tfrac{mr}{N},\ \ \mathrm{Var}=m\tfrac rN\tfrac{N-r}{N}\tfrac{N-m}{N-1}\]</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>Covariance and correlation<small>Week 3</small></h3>
+        <ul class="fl">
+          <li><span>Covariance</span>\[\mathrm{Cov}(X,Y)=E[XY]-E[X]E[Y]\]</li>
+          <li><span>Bilinear</span>\[\mathrm{Cov}(aX+bY,Z)=a\,\mathrm{Cov}(X,Z)+b\,\mathrm{Cov}(Y,Z)\]</li>
+          <li><span>Correlation</span>\[\rho=\frac{\mathrm{Cov}(X,Y)}{\mathrm{SD}(X)\mathrm{SD}(Y)}\in[-1,1]\]</li>
+          <li><span>Scaling</span>\[\rho(aX+b,cY+d)=\mathrm{sign}(ac)\,\rho(X,Y)\]</li>
+          <li><span>Independent ⇒ Cov = 0 (not the other way round)</span>\[\mathrm{Cov}(X,X)=\mathrm{Var}(X),\ \ \mathrm{Cov}(X,c)=0\]</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>Bounds<small>Week 3 · printed in the paper</small></h3>
+        <ul class="fl">
+          <li><span>Markov (X ≥ 0)</span>\[P(X\ge c)\le\frac{\mu}{c}\]</li>
+          <li><span>Chebyshev</span>\[P(|X-\mu|\ge k\sigma)\le\frac1{k^2},\quad P(|X-\mu|\ge c)\le\frac{\sigma^2}{c^2}\]</li>
+          <li><span>Lower bound form</span>\[P(|X-\mu|\lt c)\ge1-\frac{\sigma^2}{c^2}\]</li>
+          <li><span>Integer X, strict inequality</span>\[P(X\gt 50)=P(X\ge51)\le\tfrac{\mu}{51}\]</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>CDF and PDF<small>Week 4</small></h3>
+        <ul class="fl">
+          <li><span>CDF</span>\[F(x)=P(X\le x),\quad P(a\lt X\le b)=F(b)-F(a)\]</li>
+          <li><span>Point mass = jump</span>\[P(X=a)=F(a)-F(a^-)\]</li>
+          <li><span>PDF</span>\[F(x)=\int_{-\infty}^{x}f(u)\,du,\quad f=F'\]</li>
+          <li><span>Valid density</span>\[f\ge0,\quad \int_{-\infty}^{\infty}f(x)\,dx=1\]</li>
+          <li><span>Exponential tail · memoryless</span>\[P(X\gt x)=e^{-\lambda x},\ \ P(X\gt s{+}t\mid X\gt s)=e^{-\lambda t}\]</li>
+          <li><span>Standardise a normal</span>\[P(X\le x)=F_Z\!\left(\tfrac{x-\mu}{\sigma}\right),\ \ F_Z(-z)=1-F_Z(z)\]</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

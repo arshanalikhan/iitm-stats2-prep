@@ -1,0 +1,26 @@
+/* Headings, ticket strip, section heads, tags */
+/* header */
+.top{background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:grid;gap:18px;padding-block:36px 28px}
+.lede{max-width:62ch;color:var(--muted);font-size:1.05rem}
+.ticket{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
+.ticket div{padding:12px 16px;border-right:1px dashed var(--line);min-width:0}
+.ticket div:last-child{border-right:0}
+.ticket dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ticket dd{margin:2px 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+.ticket dd small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+#countdown{color:var(--accent)}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .wrap{padding-block:10px}
+.tablist{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.tabs a{flex:none;font-family:var(--mono);font-size:.82rem;text-decoration:none;color:var(--ink);padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tabs a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* sections */
+section{scroll-margin-top:64px}
+section > .wrap{display:grid;gap:22px;padding-block:44px}
+.sec-head{display:grid;gap:6px}
+.sec-head p{max-width:68ch;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--hi-soft);color:var(--hi);padding:1px 6px;border-radius:4px;margin-right:6px;vertical-align:2px}

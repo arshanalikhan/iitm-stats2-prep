@@ -1,0 +1,297 @@
+<section id="notes" class="page" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Weeks 1–4 · one at a time</p>
+      <h2>Week notes</h2>
+      <p>Written from the lecture slides and transcripts. Notation follows the course: \(f_{XY}(t_1,t_2)\) for a joint PMF, \(T_X\) for the range of \(X\), Geometric(p) starts at 1, Exp(λ) uses the rate λ, and Normal(μ, σ²) uses the variance. Mark a week as reviewed when you are done.</p>
+    </div>
+    <nav class="weeknav" aria-label="Weeks">
+      <a href="#w0">W0 recap</a><a href="#w1">Week 1</a><a href="#w2">Week 2</a><a href="#w3">Week 3</a><a href="#w4">Week 4</a>
+    </nav>
+
+<!-- ===================== WEEK 0 ===================== -->
+<article class="week" id="w0">
+  <div class="rail"><span class="num">W0</span><span class="lecs">Stats 1 recap</span></div>
+  <div class="body">
+    <h3>Discrete random variables you must know cold</h3>
+    <p>Every Quiz 1 question uses at least one of these. Know the PMF, the range, the mean and the variance without looking.</p>
+    <div class="tbl"><table class="dist">
+      <thead><tr><th>Name</th><th>PMF \(P(X=k)\)</th><th>Range</th><th>\(E[X]\)</th><th>\(\mathrm{Var}(X)\)</th></tr></thead>
+      <tbody>
+        <tr><td>Bernoulli(p)</td><td>\(P(1)=p,\ P(0)=1-p\)</td><td>{0, 1}</td><td>\(p\)</td><td>\(p(1-p)\)</td></tr>
+        <tr><td>Binomial(n, p)</td><td>\(\binom{n}{k}p^k(1-p)^{n-k}\)</td><td>0, 1, …, n</td><td>\(np\)</td><td>\(np(1-p)\)</td></tr>
+        <tr><td>Geometric(p)</td><td>\((1-p)^{k-1}p\)</td><td>1, 2, 3, …</td><td>\(\frac1p\)</td><td>\(\frac{1-p}{p^2}\)</td></tr>
+        <tr><td>Poisson(λ)</td><td>\(\frac{e^{-\lambda}\lambda^k}{k!}\)</td><td>0, 1, 2, …</td><td>\(\lambda\)</td><td>\(\lambda\)</td></tr>
+        <tr><td>Uniform{a, …, b}</td><td>\(\frac{1}{b-a+1}\)</td><td>a, a+1, …, b</td><td>\(\frac{a+b}2\)</td><td>\(\frac{(b-a+1)^2-1}{12}\)</td></tr>
+        <tr><td>HyperGeo(N, r, m)</td><td>\(\frac{\binom{r}{k}\binom{N-r}{m-k}}{\binom{N}{m}}\)</td><td>max(0, m−N+r) … min(r, m)</td><td>\(\frac{mr}{N}\)</td><td>\(m\frac rN\frac{N-r}N\frac{N-m}{N-1}\)</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="notes">
+      <li><b>Geometric counts trials up to and including the first success</b>, so its range starts at 1. \(P(X>k)=(1-p)^k\) and \(P(X\le k)=1-(1-p)^k\).</li>
+      <li><b>Hypergeometric</b> = draws <i>without</i> replacement: m items from N, of which r are "successes". With replacement it would be Binomial(m, r/N).</li>
+      <li><b>Uniform{1,…,6}</b> (a fair die): mean 3.5, variance 35/12 ≈ 2.917.</li>
+      <li>A <b>function of one random variable</b> \(Y=g(X)\): list every \(x\), compute \(g(x)\), and add up the probabilities of all \(x\) that give the same \(y\). The range of \(Y\) is the set of values that actually occur.</li>
+    </ul>
+    <div class="ex"><b>Quick check</b><p>\(X\sim\) Uniform{−2, −1, 0, 1, 2} and \(Y=X^2\). Range of \(Y\) is {0, 1, 4}; \(P(Y=1)=P(X=-1)+P(X=1)=2/5\).</p></div>
+  </div>
+</article>
+
+<!-- ===================== WEEK 1 ===================== -->
+<article class="week" id="w1">
+  <div class="rail"><span class="num">01</span><span class="lecs">L1.1–L1.7<br>Joint, marginal, conditional</span></div>
+  <div class="body">
+    <h3>1. Joint PMF of two random variables</h3>
+    <div class="defn"><b>Definition</b><p>For discrete \(X, Y\) defined on the same experiment, the joint PMF is \(f_{XY}(t_1,t_2)=P(X=t_1,\ Y=t_2)\) for \(t_1\in T_X,\ t_2\in T_Y\). Every entry is ≥ 0 and all entries add up to 1.</p></div>
+    <p>Write it as a table: one row per value of one variable, one column per value of the other. Any probability about \((X,Y)\) is a sum of cells: \(P(X+Y=3)\) is the sum of the cells with \(t_1+t_2=3\).</p>
+    <div class="ex"><b>Example</b>
+      <p>A fair coin is tossed twice. \(X\) = heads on toss 1, \(Y\) = total heads.</p>
+      <div class="ptwrap"><table class="pt"><tr><th>X \ Y</th><th>0</th><th>1</th><th>2</th></tr><tr><th>0</th><td>1/4</td><td>1/4</td><td>0</td></tr><tr><th>1</th><td>0</td><td>1/4</td><td>1/4</td></tr></table></div>
+      <p>\(f_{XY}(1,0)=0\): you cannot have 0 heads in total after a head on toss 1. Zeros like this are what make variables dependent.</p>
+    </div>
+    <ul class="notes">
+      <li><b>Unknown entries</b> (a, b, k): use "sum of all cells = 1" plus whatever extra condition is given (a marginal, a conditional, or \(a=b/2\)).</li>
+      <li><b>Formula-type joint PMFs</b> such as \(f_{XY}(i,j)=\frac{i+2j}{k}\) on a grid: fill the table, add it up, set it equal to 1 to get k.</li>
+      <li><b>Counting experiments</b> (cards, balls without replacement): \(f_{XY}(x,y)=\frac{\binom{a}{x}\binom{b}{y}\binom{\text{rest}}{n-x-y}}{\binom{N}{n}}\). The "rest" factor is the one people forget.</li>
+    </ul>
+
+    <h3>2. Marginal PMF</h3>
+    <div class="defn"><b>Definition</b><p>\(f_X(t_1)=\sum_{t_2\in T_Y} f_{XY}(t_1,t_2)\) (add along the row), and \(f_Y(t_2)=\sum_{t_1\in T_X} f_{XY}(t_1,t_2)\) (add down the column).</p></div>
+    <ul class="notes">
+      <li>The marginal is an ordinary PMF: it adds up to 1.</li>
+      <li><b>Different joint PMFs can have the same marginals.</b> The marginals alone never tell you the joint (unless the variables are independent).</li>
+      <li>In the coin example: \(f_X=(1/2,1/2)\), \(f_Y=(1/4,1/2,1/4)\).</li>
+    </ul>
+
+    <h3>3. Conditional distribution</h3>
+    <div class="defn"><b>Definition</b><p>For \(t_1\) with \(f_X(t_1)>0\): \(f_{Y\mid X=t_1}(t_2)=\dfrac{f_{XY}(t_1,t_2)}{f_X(t_1)}\). Take the row of \(t_1\) and divide it by its own total.</p></div>
+    <ul class="notes">
+      <li>A conditional PMF adds up to 1 over \(t_2\): \(\sum_{t_2} f_{Y\mid X=t_1}(t_2)=1\).</li>
+      <li><b>Range of \((Y\mid X=t_1)\)</b> = the values of \(t_2\) whose cell in that row is non-zero. It can be smaller than \(T_Y\).</li>
+      <li><b>Factorisation:</b> \(f_{XY}(t_1,t_2)=f_{Y\mid X=t_1}(t_2)\,f_X(t_1)=f_{X\mid Y=t_2}(t_1)\,f_Y(t_2)\). Use it to build a joint PMF from a two-stage experiment.</li>
+      <li>Conditioning on an <b>event</b> works the same way: \(P(X=t\mid A)=P(X=t, A)/P(A)\).</li>
+    </ul>
+    <div class="ex"><b>Two-stage example</b>
+      <p>Pick a card. If it is a face card (12 of 52) draw 2 balls from bag A, otherwise 3 balls from bag B. \(Y\) = number of red balls. Then \(f_Y(1)=P(\text{face})\,P(Y=1\mid\text{face})+P(\text{not face})\,P(Y=1\mid\text{not face})\), each conditional being hypergeometric. This "total probability over the first stage" is a standard quiz move.</p>
+    </div>
+
+    <h3>4. Poisson splitting (the most repeated idea in Week 1)</h3>
+    <div class="defn"><b>Result</b><p>If \(N\sim\) Poisson(λ) and, given \(N=n\), each of the n items independently has a property with probability p, so that \((X\mid N=n)\sim\) Binomial(n, p), then
+    \[f_{NX}(n,k)=\frac{e^{-\lambda}\lambda^n}{n!}\binom nk p^k(1-p)^{n-k},\qquad X\sim\text{Poisson}(\lambda p).\]
+    Also \(N-X\sim\) Poisson(λ(1−p)), and \(X\) and \(N-X\) are <b>independent</b>.</p></div>
+    <ul class="notes">
+      <li>\(f_{NX}(n,k)=0\) when \(k>n\) (you cannot have more spam emails than emails).</li>
+      <li>Joint probability of "exactly b boys and g girls": \(P(B=b,G=g)=e^{-\lambda}\frac{\lambda^{b+g}}{b!\,g!}p^g(1-p)^b\). With p = 0.5 this is \(\frac{e^{-\lambda}(\lambda/2)^{b+g}}{b!\,g!}\).</li>
+      <li>\(E[X]=\lambda p\) (useful in Week 3 questions).</li>
+    </ul>
+
+    <h3>5. Three or more random variables</h3>
+    <ul class="notes">
+      <li><b>Joint PMF</b> \(f_{X_1X_2X_3}(t_1,t_2,t_3)=P(X_1=t_1,X_2=t_2,X_3=t_3)\), usually given as a list of rows (t₁, t₂, t₃, prob).</li>
+      <li><b>Marginalise</b> by summing out the variables you do not want: \(f_{X_1X_2}(t_1,t_2)=\sum_{t_3}f_{X_1X_2X_3}(t_1,t_2,t_3)\); \(f_{X_1}(t_1)=\sum_{t_2,t_3}f(t_1,t_2,t_3)\).</li>
+      <li><b>Condition</b> on any subset: \(f_{X_1\mid X_2=a,X_3=b}(t)=\dfrac{f_{X_1X_2X_3}(t,a,b)}{f_{X_2X_3}(a,b)}\); \(P(X_3=1,X_4=1\mid X_1=1,X_2=1)=\dfrac{f(1,1,1,1)}{f_{X_1X_2}(1,1)}\).</li>
+      <li><b>Chain rule</b> (any order): \(f_{X_1X_2X_3}=f_{X_1\mid X_2,X_3}\cdot f_{X_2\mid X_3}\cdot f_{X_3}\). Typical quiz item: given three of these four numbers, find the fourth.</li>
+      <li>\(f_{XYZ}=f_{X\mid Y,Z}\,f_{YZ}\) is always true; \(f_{X\mid Y,Z}\,f_Y\,f_Z\) is true only under independence of Y and Z.</li>
+    </ul>
+    <div class="ex"><b>Chain-rule example</b>
+      <p>\(f_{X_1X_2X_3}(0,1,2)=?\) given \(f_{X_3}(2)=0.4\), \(f_{X_2\mid X_3=2}(1)=0.5\), \(f_{X_1\mid X_2=1,X_3=2}(0)=0.25\).</p>
+      <details><summary>Show working</summary><p>\(0.25\times0.5\times0.4=0.05\).</p></details>
+    </div>
+    <div class="warn"><b>Watch out</b><p>In "three cards from a deck, X kings, Y jacks, Z queens", the remaining cards are the 40 non-K/J/Q cards. \(P(X=1,Y=0,Z=1)=\frac{\binom41\binom41\binom{40}1}{\binom{52}3}\).</p></div>
+  </div>
+</article>
+<!-- ===================== WEEK 2 ===================== -->
+<article class="week" id="w2">
+  <div class="rail"><span class="num">02</span><span class="lecs">L2.1–L2.11<br>Independence, functions</span></div>
+  <div class="body">
+    <h3>1. Independence of two random variables</h3>
+    <div class="defn"><b>Definition</b><p>\(X\) and \(Y\) are independent if \(f_{XY}(t_1,t_2)=f_X(t_1)\,f_Y(t_2)\) for <b>every</b> \(t_1\in T_X,\ t_2\in T_Y\). Equivalently \(f_{Y\mid X=t_1}(t_2)=f_Y(t_2)\) for every \(t_1\).</p></div>
+    <ul class="notes">
+      <li><b>One failing cell is enough to prove dependence.</b> One matching cell proves nothing.</li>
+      <li><b>Zero test:</b> if some cell is 0 while its row total and column total are both non-zero, \(X\) and \(Y\) are dependent. Fastest check in an exam.</li>
+      <li><b>Row test:</b> independent ⇔ every row of the table is a multiple of every other row (all rows proportional to the column totals).</li>
+      <li>Joint PMF that factors as \(g(x)h(y)\) on a <b>rectangular</b> range (e.g. \(\frac{9}{16\cdot 4^{x+y}}=\frac{3}{4^{x+1}}\cdot\frac{3}{4^{y+1}}\)) ⇒ independent. If the range is not a rectangle (e.g. \(x\lt y\)) they are dependent.</li>
+      <li>Two dice: \(X\) = die A and \(Y\) = number of sixes are dependent (\(X=6\) forces \(Y\ge1\)). Heads and tails in the same tosses are dependent (\(Y=n-X\)).</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <div class="ptwrap"><table class="pt"><tr><th>X \ Y</th><th>1</th><th>2</th><th class="m">\(f_X\)</th></tr><tr><th>0</th><td>0.12</td><td>0.28</td><td class="m">0.4</td></tr><tr><th>1</th><td>0.18</td><td>0.42</td><td class="m">0.6</td></tr><tr><th class="m">\(f_Y\)</th><td class="m">0.3</td><td class="m">0.7</td><td class="m">1</td></tr></table></div>
+      <p>Every cell equals row total × column total (0.4 × 0.3 = 0.12, …), so \(X\) and \(Y\) are independent.</p>
+    </div>
+
+    <h3>2. Many random variables, i.i.d.</h3>
+    <ul class="notes">
+      <li>\(X_1,\dots,X_n\) are independent if the joint PMF is the product of all n marginals, for every combination of values. Then <b>every subset</b> is independent too, and conditioning on some of them does not change the others: \(f_{X_1X_2\mid X_3=t}(a,b)=f_{X_1}(a)f_{X_2}(b)\).</li>
+      <li>Pairwise independence does not imply independence of all three (even-parity example: \(X_3=X_1\oplus X_2\)).</li>
+      <li><b>i.i.d.</b> = independent and identically distributed (same PMF). Repeated tosses, die throws, samples.</li>
+      <li>"All n samples exceed c": \(P(X_1>c,\dots,X_n>c)=P(X>c)^n\). For 10 i.i.d. Geometric(0.2), \(P(\text{all}>10)=(0.8^{10})^{10}=0.8^{100}\).</li>
+      <li>"Exactly one sample equals a and exactly one equals b" among n i.i.d.: choose positions, \(n(n-1)\,P(a)P(b)\,[1-P(a)-P(b)]^{n-2}\).</li>
+    </ul>
+    <div class="defn"><b>Memoryless property of Geometric</b><p>\(P(X>m+n\mid X>m)=P(X>n)=(1-p)^n\). "No bug in the first 3 runs; probability the first bug comes after run 5" = \(P(X>5\mid X>3)=(1-p)^2\).</p></div>
+
+    <h3>3. Functions of random variables</h3>
+    <ul class="notes">
+      <li>\(Z=g(X_1,\dots,X_n)\): for each value z, \(f_Z(z)=\sum f_{X_1\dots X_n}(t_1,\dots,t_n)\) over all tuples with \(g(t_1,\dots,t_n)=z\).</li>
+      <li>Work it as a table: list each tuple with its probability and its g-value, then group by g-value. The <b>range</b> is the set of g-values with non-zero probability.</li>
+      <li>Joint PMF of two functions \((g,h)\): group by the pair of values. Same method.</li>
+      <li>One-to-one functions keep the probabilities and just relabel; many-to-one functions merge probabilities.</li>
+    </ul>
+
+    <h3>4. Sum of two random variables</h3>
+    <div class="defn"><b>Convolution</b><p>\(P(X+Y=z)=\sum_{x}f_{XY}(x,\,z-x)\). If independent: \(f_Z(z)=\sum_x f_X(x)\,f_Y(z-x)\).</p></div>
+    <ul class="notes">
+      <li><b>Poisson + Poisson:</b> independent \(X\sim\)Poisson(λ₁), \(Y\sim\)Poisson(λ₂) ⇒ \(X+Y\sim\)Poisson(λ₁+λ₂), and \((X\mid X+Y=n)\sim\) Binomial\((n,\frac{\lambda_1}{\lambda_1+\lambda_2})\).</li>
+      <li><b>Binomial + Binomial</b> (same p): \(X_1+X_2\sim\)Binomial(n₁+n₂, p), and \((X_1\mid X_1+X_2=m)\sim\) HyperGeo(n₁+n₂, n₁, m), which does not depend on p.</li>
+      <li><b>Sum of n i.i.d. Bernoulli(p)</b> = Binomial(n, p). Given the sum is k, each \(X_i\) is 1 with probability k/n: \(P(X_1=0\mid Y=8)=2/10\) when n = 10.</li>
+      <li><b>Two i.i.d. Geometric(p):</b> \(P(X+Y=n)=(n-1)p^2(1-p)^{n-2}\) for n ≥ 2, and \((X\mid X+Y=n)\) is <b>uniform on {1, …, n−1}</b>, whatever p is. So \(P(X=6\mid X+Y=10)=1/9\).</li>
+      <li><b>Difference of i.i.d. Geometric(p):</b> \(P(X-Y=k)=\frac{p(1-p)^{k}}{2-p}\) for k ≥ 1 (and \(\frac{p}{2-p}\) for k = 0).</li>
+      <li><b>Two fair dice:</b> \(P(X+Y=s)=\frac{6-|s-7|}{36}\); \(P(X-Y=d)=\frac{6-|d|}{36}\).</li>
+    </ul>
+
+    <h3>5. Maximum and minimum</h3>
+    <div class="defn"><b>CDF trick</b><p>For independent \(X_1,\dots,X_n\): \(P(\max\le k)=\prod_i P(X_i\le k)\) and \(P(\min\ge k)=\prod_i P(X_i\ge k)\). For i.i.d. with CDF F: \(F_{\max}(k)=F(k)^n\), \(F_{\min}(k)=1-\big(1-F(k)\big)^n\) (integer-valued, with \(P(X\gt k)=1-F(k)\)).</p></div>
+    <ul class="notes">
+      <li><b>PMF of the max</b> (integer values): \(P(\max=k)=F(k)^n-F(k-1)^n\). Two dice: \(P(\max=k)=\frac{k^2-(k-1)^2}{36}=\frac{2k-1}{36}\).</li>
+      <li><b>PMF of the min:</b> \(P(\min=k)=P(\min\ge k)-P(\min\ge k+1)\). Two dice: \(P(\min=k)=\frac{(7-k)^2-(6-k)^2}{36}=\frac{13-2k}{36}\).</li>
+      <li><b>Min of independent Geometrics</b> is Geometric: \(\min(X,Y)\sim\) Geometric\((1-(1-p_1)(1-p_2))\).</li>
+      <li>Max of Bernoullis: \(P(\max=0)=\prod P(X_i=0)\). Min of Bernoullis: \(P(\min=1)=\prod P(X_i=1)\).</li>
+      <li>i.i.d. Uniform{1,…,m}: \(P(\min(X,Y)=k)=\frac{(m-k+1)^2-(m-k)^2}{m^2}\).</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <p>\(X_1,\dots,X_5\) i.i.d. Binomial(4, 1/4). \(P(X\le 2)=1-P(3)-P(4)=1-\frac{12}{256}-\frac1{256}=\frac{243}{256}\).</p>
+      <details><summary>Show working</summary><p>\(P(\max\le2)=(243/256)^5\). \(P(X\ge 3)=13/256\), so \(P(\min\le 2)=1-P(\text{all}\ge3)=1-(13/256)^5\).</p></details>
+    </div>
+  </div>
+</article>
+<!-- ===================== WEEK 3 ===================== -->
+<article class="week" id="w3">
+  <div class="rail"><span class="num">03</span><span class="lecs">L3.1–L3.7<br>E, Var, Cov, ρ, bounds</span></div>
+  <div class="body">
+    <h3>1. Expected value</h3>
+    <div class="defn"><b>Definition</b><p>\(E[X]=\sum_{t\in T_X} t\,f_X(t)\). For a function: \(E[g(X)]=\sum_t g(t)f_X(t)\) and \(E[g(X,Y)]=\sum_{t_1,t_2}g(t_1,t_2)\,f_{XY}(t_1,t_2)\). You never need the PMF of \(g(X,Y)\) itself.</p></div>
+    <ul class="notes">
+      <li><b>Linearity (always true, even for dependent variables):</b> \(E[aX+bY+c]=aE[X]+bE[Y]+c\).</li>
+      <li>\(E[XY]=E[X]E[Y]\) <b>if</b> X and Y are independent. The converse is false.</li>
+      <li>\(X\ge0\) ⇒ \(E[X]\ge0\). A constant has \(E[c]=c\).</li>
+      <li>\(E[X^2]\ne(E[X])^2\) in general (the gap is the variance).</li>
+    </ul>
+    <div class="defn"><b>Indicator trick</b><p>Write a count as a sum of 0/1 indicators and add their means: \(E[\#]=\sum P(\text{event}_i)\). Hat matching: n people, each gets own hat with prob 1/n, so \(E=n\cdot\frac1n=1\). Six balls removed from balls 1–10: each removed ball has mean 5.5, so \(E[\text{sum}]=6\times5.5=33\).</p></div>
+    <ul class="notes">
+      <li><b>Lottery / coupon expected prize:</b> buying 2 of 600 tickets where the prizes total ₹1800: each ticket's mean prize is 1800/600 = 3, so \(E=2\times3=6\), i.e. ₹6. Without-replacement draws still add means.</li>
+      <li><b>Random number of customers:</b> if \(N\sim\)Poisson(λ) customers each spend an average of m, expected total = λ·m. Expected buyers when each buys with prob p: λp.</li>
+      <li><b>Investments:</b> a ₹2000 share going ×1.5 w.p. 0.3 or ×0.5 w.p. 0.7 has expected value 2000(0.45+0.35) = 1600. Independent day-to-day factors multiply their means.</li>
+    </ul>
+
+    <h3>2. Variance and standard deviation</h3>
+    <div class="defn"><b>Definition</b><p>\(\mathrm{Var}(X)=E[(X-\mu)^2]=E[X^2]-(E[X])^2\), \(\mathrm{SD}(X)=\sqrt{\mathrm{Var}(X)}\).</p></div>
+    <ul class="notes">
+      <li>\(\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)\), \(\mathrm{SD}(aX+b)=|a|\,\mathrm{SD}(X)\). Adding a constant changes nothing.</li>
+      <li>\(\mathrm{Var}(X\pm Y)=\mathrm{Var}X+\mathrm{Var}Y\pm2\,\mathrm{Cov}(X,Y)\). If independent the covariance term is 0, so \(\mathrm{Var}(X-Y)=\mathrm{Var}X+\mathrm{Var}Y\) (variances add, never subtract).</li>
+      <li>Independent \(X, Y\): \(\mathrm{Var}(XY)=E[X^2]E[Y^2]-(E[X]E[Y])^2\), where \(E[X^2]=\mathrm{Var}X+(E X)^2\).</li>
+      <li>\(\mathrm{Var}(X)=\tfrac12E[(X-X')^2]\) for an i.i.d. copy \(X'\).</li>
+      <li><b>Standardised variable</b> \(Z=\frac{X-\mu}{\sigma}\) has mean 0 and variance 1.</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <p>\(X\) takes 0, 2, 4 with probabilities 1/2, 1/3, 1/6. \(E[X]=\frac23+\frac46=\frac43\); \(E[X^2]=\frac43+\frac{16}6=4\); \(\mathrm{Var}=4-\frac{16}9=\frac{20}9\).</p>
+      <details><summary>Also: E[(X − 2)²]</summary><p>\(E[(X-2)^2]=\frac12\cdot4+\frac13\cdot0+\frac16\cdot4=\frac83\). Check: \(\mathrm{Var}+(\mu-2)^2=\frac{20}9+\frac49=\frac{24}9=\frac83\).</p></details>
+    </div>
+
+    <h3>3. Covariance</h3>
+    <div class="defn"><b>Definition</b><p>\(\mathrm{Cov}(X,Y)=E[(X-E X)(Y-E Y)]=E[XY]-E[X]E[Y]\).</p></div>
+    <ul class="notes">
+      <li>\(\mathrm{Cov}(X,X)=\mathrm{Var}(X)\); \(\mathrm{Cov}(X,c)=0\); symmetric.</li>
+      <li><b>Bilinear:</b> \(\mathrm{Cov}(aX+bY,\,cZ+dW)=ac\,\mathrm{Cov}(X,Z)+ad\,\mathrm{Cov}(X,W)+bc\,\mathrm{Cov}(Y,Z)+bd\,\mathrm{Cov}(Y,W)\). Constants added inside disappear.</li>
+      <li>Independent ⇒ Cov = 0. <b>Cov = 0 does not imply independent</b> (e.g. X uniform on {−1, 0, 1} and Y = X²).</li>
+      <li>\(\mathrm{Cov}(X,X+Y)=\mathrm{Var}X+\mathrm{Cov}(X,Y)\).</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <p>Cov(X,Y) = 4, Cov(X,Z) = 1, Cov(Y,Z) = 3, Var(Y) = 6. Find Cov(2X + 3Y, Y − Z).</p>
+      <details><summary>Show working</summary><p>\(2\mathrm{Cov}(X,Y)-2\mathrm{Cov}(X,Z)+3\mathrm{Var}(Y)-3\mathrm{Cov}(Y,Z)=8-2+18-9=15\).</p></details>
+    </div>
+
+    <h3>4. Correlation coefficient</h3>
+    <div class="defn"><b>Definition</b><p>\(\rho(X,Y)=\dfrac{\mathrm{Cov}(X,Y)}{\mathrm{SD}(X)\,\mathrm{SD}(Y)}\), always in \([-1,1]\).</p></div>
+    <ul class="notes">
+      <li>\(\rho=\pm1\) exactly when \(Y=aX+b\) (sign of a). Two balls from 5 white + 5 red: X red + Y white = 2, so \(\rho(X,Y)=-1\).</li>
+      <li>\(\rho(aX+b,\,cY+d)=\pm\rho(X,Y)\), sign of ac. Scaling never changes the size of ρ.</li>
+      <li>ρ is the covariance of the standardised variables: \(\mathrm{Cov}\!\big(\frac{X-\mu_X}{\sigma_X},\frac{Y-\mu_Y}{\sigma_Y}\big)=\rho\). If X and Y are independent this is 0.</li>
+      <li>Joint PMF that factors (e.g. \(\frac{(x+1)(y+1)}{27}\)) ⇒ independent ⇒ ρ = 0.</li>
+    </ul>
+
+    <h3>5. Bounds from mean and variance</h3>
+    <div class="defn"><b>Markov</b><p>If \(X\ge0\) with mean μ, then for c > 0: \(P(X\ge c)\le \dfrac{\mu}{c}\).</p></div>
+    <div class="defn"><b>Chebyshev</b><p>If X has mean μ and variance σ², then \(P(|X-\mu|\ge k\sigma)\le\dfrac1{k^2}\), i.e. \(P(|X-\mu|\ge c)\le\dfrac{\sigma^2}{c^2}\). Lower bound: \(P(|X-\mu|\lt c)\ge1-\dfrac{\sigma^2}{c^2}\).</p></div>
+    <ul class="notes">
+      <li><b>Markov with a strict inequality on an integer variable:</b> \(P(X\gt 50)=P(X\ge51)\le\frac{\mu}{51}\).</li>
+      <li><b>Chebyshev needs a symmetric interval around μ.</b> "Between 5 and 15" with μ = 10 means \(|X-10|\lt5\). If the interval is not symmetric, use the half-width of the largest symmetric interval inside it.</li>
+      <li>"At least 130 or at most 70 heads in 200 fair tosses": μ = 100, σ² = 50, \(P(|X-100|\ge30)\le50/900=1/18\).</li>
+      <li>Chebyshev with k ≤ 1 gives a useless bound (≥ 1). The quiz still asks for it: answer 1.</li>
+      <li>Find n so that a Chebyshev bound on \(P(|\bar X-\mu|\ge\varepsilon)\) is below δ: \(\frac{\sigma^2}{n\varepsilon^2}\lt\delta\) ⇒ \(n\gt\frac{\sigma^2}{\varepsilon^2\delta}\).</li>
+    </ul>
+  </div>
+</article>
+<!-- ===================== WEEK 4 ===================== -->
+<article class="week" id="w4">
+  <div class="rail"><span class="num">04</span><span class="lecs">L4.1–L4.7<br>Continuous random variables</span></div>
+  <div class="body">
+    <p class="callout"><b>Week 4 opens on Seek around 23 Oct.</b> These notes follow the Week 4 slides (already in the course's slides folder) and the Jun 2026 run's Week 4 lectures and assignments. Both recent Quiz 1 papers had two to four Week 4 items worth 6–8 marks.</p>
+    <h3>1. Cumulative distribution function (CDF)</h3>
+    <div class="defn"><b>Definition</b><p>\(F_X(x)=P(X\le x)\) for every real x. It is non-decreasing, goes to 0 as \(x\to-\infty\), goes to 1 as \(x\to\infty\), and is right-continuous.</p></div>
+    <ul class="notes">
+      <li>\(P(a\lt X\le b)=F(b)-F(a)\). Learn this exact form: left end open, right end closed.</li>
+      <li>\(P(X\gt a)=1-F(a)\); \(P(X=a)\) = size of the jump of F at a; \(P(X\lt a)=F(a^-)\) (the value just before a).</li>
+      <li><b>Discrete X:</b> F is a staircase. The jump points are the range of X and the jump sizes are the PMF. Between jumps F is flat, so \(P(X\le 1.5)=F(1)\) if nothing lies in (1, 1.5].</li>
+      <li>Geometric(p): \(F(x)=1-(1-p)^k\) for \(k\le x\lt k+1\).</li>
+      <li>For \(Y=\frac{X-\mu}{\sigma}\): \(F_Y(y)=F_X(\mu+y\sigma)\).</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <p>\(F(x)=0\) for x &lt; 0; 0.3 for 0 ≤ x &lt; 2; 0.75 for 2 ≤ x &lt; 5; 1 for x ≥ 5. Then the range is {0, 2, 5}, \(P(X=2)=0.45\), and \(P(X=5\mid X\ge2)=\frac{0.25}{0.7}\approx0.357\).</p>
+    </div>
+
+    <h3>2. Continuous and mixed random variables</h3>
+    <div class="defn"><b>Definition</b><p>X is <b>continuous</b> if its CDF is continuous at every x. Then \(P(X=x)=0\) for every x, and \(P(a\le X\le b)=P(a\lt X\le b)=P(a\le X\lt b)=P(a\lt X\lt b)=F(b)-F(a)\).</p></div>
+    <ul class="notes">
+      <li>A CDF with both slopes and jumps is a <b>mixed</b> random variable: the jumps carry point probabilities. E.g. \(F(x)=0.5+0.1x\) on [0, 5] has \(P(X=0)=0.5\).</li>
+      <li>"Which cannot be the CDF of a continuous random variable?" → look for a jump (a break where the two pieces do not meet) or a CDF that does not reach 1.</li>
+      <li>Continuous models: heights, weights, waiting times, rainfall, stock prices. They approximate discrete variables with huge ranges (e.g. Binomial with large n).</li>
+    </ul>
+
+    <h3>3. Probability density function (PDF)</h3>
+    <div class="defn"><b>Definition</b><p>X has PDF \(f_X\) if \(F_X(x)=\int_{-\infty}^{x}f_X(u)\,du\). Wherever F is differentiable, \(f_X(x)=F_X'(x)\). Probabilities are areas: \(P(a\lt X\lt b)=\int_a^b f_X(x)\,dx\).</p></div>
+    <ul class="notes">
+      <li><b>Valid density:</b> \(f(x)\ge0\) everywhere and \(\int_{-\infty}^{\infty}f(x)\,dx=1\) (and piecewise continuous). \(\frac4{15}x^3\) on [−1, 2] fails because it is negative for x &lt; 0.</li>
+      <li>A PDF value can be bigger than 1. It is a density, not a probability.</li>
+      <li>\(P(x_0-\varepsilon\lt X\lt x_0+\varepsilon)\approx 2\varepsilon f(x_0)\): a higher density means values <i>near</i> \(x_0\) are more likely. "\(f(2)=2f(1)\) ⇒ probability near 2 ≈ twice that near 1" is true only approximately.</li>
+      <li><b>Support</b> = \(\{x: f(x)\gt0\}\).</li>
+      <li><b>Finding k:</b> integrate the PDF over its support and set it to 1. \(k(6-x)\) on (0, 6): \(k\cdot18=1\Rightarrow k=\frac1{18}\).</li>
+      <li><b>Median / percentile:</b> solve \(F(m)=0.5\) (or 0.75 for the 75th percentile). For \(4x^3\) on [0, 1], \(F=x^4\), median \(=0.5^{1/4}\approx0.841\).</li>
+      <li><b>Conditional on an event:</b> \(P(X\gt2\mid X\gt1)=\frac{P(X\gt2)}{P(X\gt1)}\), since {X &gt; 2} lies inside {X &gt; 1}.</li>
+      <li>Integrals you need: \(\int x^n dx=\frac{x^{n+1}}{n+1}\), \(\int e^{-ax}dx=-\frac{e^{-ax}}{a}\). Areas of triangles and trapezoids often replace integrals for straight-line PDFs.</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <p>\(f(x)=x/18\) on [0, 6]. Then \(F(x)=x^2/36\), \(P(X\gt3)=1-\frac9{36}=\frac34\), \(P(X\gt2)=\frac{32}{36}=\frac89\), and \(P(X\gt3\mid X\gt2)=\frac{3/4}{8/9}=\frac{27}{32}\approx0.844\).</p>
+    </div>
+
+    <h3>4. Common continuous distributions</h3>
+    <div class="tbl"><table class="dist">
+      <thead><tr><th>Name</th><th>PDF</th><th>CDF</th><th>Mean</th><th>Variance</th></tr></thead>
+      <tbody>
+        <tr><td>Uniform[a, b]</td><td>\(\frac1{b-a}\), a &lt; x &lt; b</td><td>\(\frac{x-a}{b-a}\)</td><td>\(\frac{a+b}2\)</td><td>\(\frac{(b-a)^2}{12}\)</td></tr>
+        <tr><td>Exp(λ)</td><td>\(\lambda e^{-\lambda x}\), x &gt; 0</td><td>\(1-e^{-\lambda x}\)</td><td>\(\frac1\lambda\)</td><td>\(\frac1{\lambda^2}\)</td></tr>
+        <tr><td>Normal(μ, σ²)</td><td>\(\frac1{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)</td><td>no closed form</td><td>\(\mu\)</td><td>\(\sigma^2\)</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="notes">
+      <li><b>Uniform:</b> probability = length of the overlap ÷ (b − a). Conditioning a uniform on a sub-interval gives a uniform on that sub-interval: \(P(X\lt10\mid X\lt20)=\frac{10}{20}\) for Uniform[0, 50].</li>
+      <li><b>Exponential:</b> \(P(X\gt x)=e^{-\lambda x}\), \(P(a\lt X\lt b)=e^{-\lambda a}-e^{-\lambda b}\). "Mean 10 minutes" means λ = 0.1. <b>Memoryless:</b> \(P(X\gt s+t\mid X\gt s)=P(X\gt t)\).</li>
+      <li><b>Normal:</b> bell curve centred at μ (the most likely region), symmetric. Standardise: \(P(X\le x)=F_Z\!\big(\frac{x-\mu}{\sigma}\big)\). Symmetry: \(F_Z(-z)=1-F_Z(z)\). Normal(2, 5) means variance 5, so σ = √5.</li>
+      <li>Rules of thumb: \(P(|Z|\le1)\approx0.683\), \(P(|Z|\le2)\approx0.954\), \(P(|Z|\le3)\approx0.997\); \(F_Z(1)\approx0.841\), \(F_Z(-1)\approx0.159\).</li>
+      <li>"Replace at most 15.8% under warranty" with lifetime Normal(μ, σ²) and \(F_Z(-1)=0.158\) ⇒ warranty = μ − σ.</li>
+    </ul>
+    <div class="ex"><b>Example</b>
+      <p>\(X\sim\) Normal(20, 9). Find \(P(14\lt X\lt 23)\) using \(F_Z\).</p>
+      <details><summary>Show working</summary><p>σ = 3, so \(P=F_Z(\frac{23-20}3)-F_Z(\frac{14-20}3)=F_Z(1)-F_Z(-2)\approx0.8413-0.0228=0.8186\).</p></details>
+    </div>
+    <div class="warn"><b>Ignore for Quiz 1</b><p>The exam's formula sheet also prints Gamma and Beta distributions. They belong to later weeks.</p></div>
+  </div>
+</article>
+  </div>
+</section>

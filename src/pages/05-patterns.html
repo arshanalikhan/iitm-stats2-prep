@@ -1,0 +1,38 @@
+<section id="patterns" class="page" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Every Stats 2 Quiz 1 since June 2022</p>
+      <h2>Past quiz patterns</h2>
+      <p>I read and tagged every question from 13 Quiz 1 sittings (June 2022 to July 2026): 82 paper sets from <a href="https://quizpractice.space/" target="_blank" rel="noopener">quizpractice.space</a> plus the answer-keyed Feb and Jun 2026 papers on Seek. Duplicate sets were merged, leaving the distinct questions below. Each one was tagged with the pattern it tests. Nothing here copies a question; it counts them.</p>
+    </div>
+
+    <div class="tiles" id="patTiles"></div>
+
+    <h3>What the data says</h3>
+    <div class="insights">
+      <div class="insight"><b>Six patterns are in almost every paper</b><p>Normalising a PDF (12 of 13 sittings), expectation from a PMF (12), max/min of i.i.d. variables (11), a probability from a PDF or CDF (11), variance (11) and Chebyshev (11). Master these six and you have roughly half the paper.</p></div>
+      <div class="insight"><b>Seek's own mock is a real past paper</b><p>"Mock For Quiz 1" on the Jun 2026 Seek page is the Oct 2023 Quiz 1, question for question, and "Mock for Week 1 and 2" is mostly the Jun 2022 paper. Do both, but don't treat a good score there as a prediction.</p></div>
+      <div class="insight"><b>Setups come back with new numbers</b><p>Exact repeats across sittings: none. Same setup, new numbers: often. Formula joint PMFs like (2x + y)/27, the "book store" pair of Poissons, U = XY from three coin tosses, a PDF drawn as a graph with α and β, and "roll a die, then toss that many coins" each appeared in two or more sittings.</p></div>
+      <div class="insight"><b>The week split is steady</b><p>Week 3 is worth 9–14 marks in every paper. Week 4 is usually about 8 (range 5–14), and Weeks 1 and 2 share the rest. The chart below shows each sitting.</p></div>
+      <div class="insight"><b>A fill-in-the-blanks set every time since Oct 2025</b><p>A worked solution with blanks A–E (1 or 0.5 mark each, about 3 marks in all): type the option number, then the final value. The tested topics were a conditional from a table, the max of two variables and P(X &gt; a | X &gt; b) from a PDF.</p></div>
+      <div class="insight"><b>Traps the papers keep setting</b><p>Markov with a strict inequality on a count (P(X &gt; 74) means P(X ≥ 75)) came up three times, once in reverse (find μ from the bound). Chebyshev is almost always "between a and b" around the mean. "Find k" before every Week 4 probability.</p></div>
+    </div>
+
+    <h3>Marks by week in each paper</h3>
+    <p class="muted-p">Marks per week, scaled to a 40-mark paper (the Oct 2022 sitting had two different papers and is averaged). Hover a bar for exact values.</p>
+    <div class="weekchart" id="weekChart"></div>
+
+    <h3>Pattern heatmap</h3>
+    <p class="muted-p">Rows are patterns, columns are sittings, and each cell shows the marks that pattern carried in that paper. "Chance" weights recent papers more (each older paper counts 15% less) and is a rough guide, not a promise. Tap a row's drill to practise it.</p>
+    <div class="chips" id="patFilter"></div>
+    <div class="heatwrap"><table class="heat" id="heat"></table></div>
+
+    <h3>The likely Quiz 1 on 15 Nov 2026</h3>
+    <p class="muted-p">A blueprint built from the chances above, with each week's marks matching the usual split. Take it as a timed paper from Mock quizzes ("Predicted paper"): every question is a fresh drill of that pattern.</p>
+    <div class="blueprint" id="blueprint"></div>
+    <p><a class="btn primary" href="#mock">Take the predicted paper →</a></p>
+
+    <h3>Every pattern, explained</h3>
+    <div class="patlist" id="patList"></div>
+  </div>
+</section>

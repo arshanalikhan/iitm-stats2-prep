@@ -1,0 +1,60 @@
+/* Theme button, back-to-top, phone tweaks */
+/* theme toggle: fixed in the top-right corner, aligned with the content column; the tab strip reserves room for it */
+.themebtn{flex:none;display:inline-flex;align-items:center;gap:6px;font:inherit;font-family:var(--mono);font-size:.82rem;line-height:1.6;cursor:pointer;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent);}
+.themebtn svg{width:15px;height:15px;flex:none}
+@media (hover:hover){
+  .themebtn:hover{background:var(--accent);color:var(--on-accent)}
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+code{overflow-wrap:anywhere}
+.exambar{top:calc(env(safe-area-inset-top,0px) + var(--navh,54px))}
+section,.week{scroll-margin-top:calc(var(--navh,54px) + 10px)}
+.totop{position:fixed;z-index:30;right:max(16px, env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:46px;height:46px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.18);display:none;align-items:center;justify-content:center}
+.totop svg{width:20px;height:20px}
+.totop.show{display:inline-flex}
+.btn:active,.chip:active,.opt:active,.pal:active,.tabs a:active{transform:scale(.98)}
+
+/* phones */
+@media (max-width:640px){
+  .themebtn{width:42px;height:42px;padding:0;justify-content:center}
+  .themebtn span{display:none}
+  .themebtn svg{width:18px;height:18px}
+  .tabs a{padding:9px 13px}
+  .top .wrap{padding-block:26px 22px;gap:14px}
+  section > .wrap{gap:18px;padding-block:32px}
+  h2{font-size:1.55rem}
+  .lede{font-size:1rem}
+  .ticket{grid-template-columns:1fr 1fr}
+  .ticket div{border-right:0;border-bottom:1px dashed var(--line);padding:10px 12px}
+  .ticket div:nth-child(odd){border-right:1px dashed var(--line)}
+  .ticket div:nth-last-child(-n+2){border-bottom:0}
+  .ticket dd{font-size:.92rem}
+  .weeknav a,.vids a{padding:8px 11px}
+  .weeknav,.vids{gap:8px}
+  .week{padding-block:24px}
+  pre.f{font-size:.78rem}
+  .fcard,.day{padding:16px}
+  .toolbar{padding:12px}
+  .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding-inline:12px;padding-bottom:2px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none}
+  .chip,.btn{min-height:42px;padding:9px 14px}
+  .actions{gap:10px}
+  .q{padding:14px;gap:10px}
+  .opt{padding:12px;min-height:48px}
+  .why{font-size:.92rem}
+  .exambar{padding:8px 10px;gap:6px 10px;border-radius:0;margin-inline:-16px;border-inline:0}
+  .exambar .name{display:none}
+  .exambar .navbtns{width:auto}
+  .timer{font-size:1.15rem}
+  .exambar .who{font-size:.76rem}
+  .palette{grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px}
+  .pal{height:42px}
+  .navbtns .btn{flex:1 1 auto}
+  .navbtns div{flex:1 1 100%}
+  .tile{padding:12px 14px}
+  .tile .v{font-size:1.55rem}
+  .papers .startrow .btn{flex:1 1 auto}
+  .rep-item,.repgroup h3{padding-top:12px}
+}

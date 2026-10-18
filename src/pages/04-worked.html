@@ -1,0 +1,226 @@
+<section id="worked" class="page" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Quiz style · step by step</p>
+      <h2>Worked examples</h2>
+      <p>Each one copies the shape of a question from a recent Quiz 1 paper or assignment, with new numbers. Try it first, then open the working. The red line is the slip that loses the mark.</p>
+    </div>
+    <div class="actions"><div class="left"><button class="btn" id="openAll" type="button">Open all workings</button></div></div>
+
+    <div class="wgroup"><h3>Week 1 · joint, marginal, conditional</h3><div class="wgrid">
+
+      <article class="wx"><div class="wmeta"><span class="tag">W1</span><span class="tag p">Numeric</span></div>
+        <h4>Conditional probability from a table</h4>
+        <p class="wq">Joint PMF of X and Y:</p>
+        <div class="ptwrap"><table class="pt"><tr><th>X \ Y</th><th>0</th><th>1</th><th>2</th><th>3</th></tr><tr><th>0</th><td>0.05</td><td>0.10</td><td>0.05</td><td>0.10</td></tr><tr><th>1</th><td>0.10</td><td>0.05</td><td>0.15</td><td>0.05</td></tr><tr><th>2</th><td>0.05</td><td>0.10</td><td>0.10</td><td>0.10</td></tr></table></div>
+        <p class="wq">Find \(P(0\lt X\lt 2\mid Y\gt1)\) to two decimal places.</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(0\lt X\lt2\) means \(X=1\); \(Y\gt1\) means \(Y\in\{2,3\}\).</div></li>
+          <li><div>Numerator: \(P(X=1,Y\in\{2,3\})=0.15+0.05=0.20\).</div></li>
+          <li><div>Denominator: columns 2 and 3: \(0.05+0.15+0.10+0.10+0.05+0.10=0.55\).</div></li>
+          <li><div><span class="calc">0.20 / 0.55 = 0.3636</span></div></li>
+        </ol><p class="wans">≈ 0.36</p><p class="wtrap">Trap: dividing by P(X = 1) instead of P(Y &gt; 1). Divide by the probability of what you are given.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W1</span><span class="tag p">Numeric</span></div>
+        <h4>Random two-digit number</h4>
+        <p class="wq">A number from 00 to 99 is chosen uniformly. X = units digit, Y = remainder when the number is divided by 3. Find \(P(X=4,\,Y=1)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Units digit 4: 04, 14, 24, …, 94 (10 numbers).</div></li>
+          <li><div>Remainder 1 mod 3 among them: 4, 34, 64, 94.</div></li>
+          <li><div><span class="calc">4 / 100 = 0.04</span></div></li>
+        </ol><p class="wans">0.04</p><p class="wtrap">Trap: assuming X and Y are independent (0.1 × 1/3). With 100 numbers the remainders are not perfectly balanced, so count.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W1</span><span class="tag p">Numeric</span></div>
+        <h4>Chain rule with three variables</h4>
+        <p class="wq">X, Y, Z each take values in {0, 1}. Given \(f_{XYZ}(1,0,1)=\frac16\), \(f_Y(0)=\frac12\) and \(f_{Z\mid Y=0}(1)=\frac12\), find \(f_{X\mid Y=0,Z=1}(1)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(f_{X\mid Y=0,Z=1}(1)=\dfrac{f_{XYZ}(1,0,1)}{f_{YZ}(0,1)}\).</div></li>
+          <li><div>\(f_{YZ}(0,1)=f_{Z\mid Y=0}(1)\,f_Y(0)=\frac12\cdot\frac12=\frac14\).</div></li>
+          <li><div><span class="calc">(1/6) / (1/4) = 2/3 ≈ 0.67</span></div></li>
+        </ol><p class="wans">2/3 ≈ 0.67</p><p class="wtrap">Trap: dividing by \(f_Y(0)f_Z(1)\). You are not told Y and Z are independent.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W1</span><span class="tag p">Numeric</span></div>
+        <h4>Poisson splitting</h4>
+        <p class="wq">Calls to a helpline in an hour: \(N\sim\)Poisson(12). Each call is international with probability 0.25, independently. X = number of international calls. Find P(X = 2), \(f_{NX}(5,7)\), and P(exactly 3 international and 6 domestic).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Splitting: \(X\sim\)Poisson(12 × 0.25 = 3) and domestic \(D\sim\)Poisson(9), independent.</div></li>
+          <li><div><span class="calc">P(X=2) = e^(-3)·3²/2! = 0.2240</span></div></li>
+          <li><div>\(f_{NX}(5,7)=0\): 7 international calls out of 5 calls is impossible.</div></li>
+          <li><div><span class="calc">P(X=3)·P(D=6) = (e^-3·3³/3!)(e^-9·9⁶/6!) = 0.0204</span></div></li>
+        </ol><p class="wans">0.224 · 0 · 0.0204</p><p class="wtrap">Trap: using Poisson(12) for X. The split variable has rate λp.</p></details>
+      </article>
+    </div></div>
+
+    <div class="wgroup"><h3>Week 2 · independence, functions, max/min</h3><div class="wgrid">
+
+      <article class="wx"><div class="wmeta"><span class="tag">W2</span><span class="tag p">Multi-select</span></div>
+        <h4>Is it independent?</h4>
+        <div class="ptwrap"><table class="pt"><tr><th>X \ Y</th><th>1</th><th>2</th></tr><tr><th>1</th><td>a</td><td>0.2</td></tr><tr><th>2</th><td>b</td><td>0.4</td></tr></table></div>
+        <p class="wq">If \(a=b/2\), are X and Y independent? Find \(f_X(1)\) and \(f_Y(1)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Total = 1: \(a+b=0.4\); with \(a=b/2\): \(b=0.8/3\approx0.267\), \(a\approx0.133\).</div></li>
+          <li><div>Row 1 is (a, 0.2) and row 2 is (2a, 0.4): row 2 = 2 × row 1. Proportional rows ⇒ independent.</div></li>
+          <li><div>\(f_X(1)=a+0.2=\frac13\), \(f_Y(1)=a+b=0.4\). Check: \(\frac13\times0.4=0.133=a\). ✓</div></li>
+        </ol><p class="wans">Independent · f_X(1) = 1/3 · f_Y(1) = 0.4</p><p class="wtrap">Trap: checking one cell only. Here every cell passes because the rows are proportional.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W2</span><span class="tag p">Numeric</span></div>
+        <h4>Conditioning on a sum of Bernoullis</h4>
+        <p class="wq">\(X\sim\)Bernoulli(0.3) and \(Y\sim\)Bernoulli(0.6) are independent; Z = X + Y. Find \(f_{X\mid Z=1}(1)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Z = 1 happens as (X, Y) = (1, 0) or (0, 1).</div></li>
+          <li><div><span class="calc">P(1,0) = 0.3·0.4 = 0.12
+P(0,1) = 0.7·0.6 = 0.42</span></div></li>
+          <li><div><span class="calc">0.12 / (0.12 + 0.42) = 0.2222</span></div></li>
+        </ol><p class="wans">≈ 0.22</p><p class="wtrap">Trap: answering P(X = 1) = 0.3. Knowing the sum changes the odds.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W2</span><span class="tag p">Numeric</span></div>
+        <h4>Minimum of two uniforms</h4>
+        <p class="wq">\(X, Y\) i.i.d. Uniform{1, 2, 3, 4, 5}, \(W=\min(X,Y)\). Find \(P(W\le2)\) and \(P(W=2)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(P(W\ge3)=P(X\ge3)P(Y\ge3)=(3/5)^2=0.36\), so \(P(W\le2)=0.64\).</div></li>
+          <li><div>\(P(W\ge2)=(4/5)^2=0.64\); \(P(W=2)=P(W\ge2)-P(W\ge3)=0.64-0.36=0.28\).</div></li>
+        </ol><p class="wans">0.64 · 0.28</p><p class="wtrap">Trap: \(P(\min\le k)=P(X\le k)^2\). That product is the rule for the max.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W2</span><span class="tag p">Numeric</span></div>
+        <h4>i.i.d. samples: exactly one, none</h4>
+        <p class="wq">\(X_1,\dots,X_4\) are i.i.d. with \(P(0)=0.4,\ P(1)=0.3,\ P(2)=0.2,\ P(3)=0.1\). Find P(the value 1 appears exactly once) and P(no sample equals 0).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>"Equals 1" is a Bernoulli(0.3) trial for each sample; count ~ Binomial(4, 0.3).</div></li>
+          <li><div><span class="calc">4 · 0.3 · 0.7³ = 0.4116</span></div></li>
+          <li><div><span class="calc">P(none = 0) = 0.6⁴ = 0.1296</span></div></li>
+        </ol><p class="wans">≈ 0.41 · ≈ 0.13</p><p class="wtrap">Trap: forgetting the factor 4 for which sample is the 1.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W2</span><span class="tag p">Numeric</span></div>
+        <h4>Poisson sum, then condition</h4>
+        <p class="wq">Calls at centres A and B: \(X\sim\)Poisson(3), \(Y\sim\)Poisson(5), independent. Z = X + Y. Find \(f_{Y\mid Z=6}(4)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\((Y\mid Z=6)\sim\)Binomial\((6,\frac{5}{3+5})\).</div></li>
+          <li><div><span class="calc">C(6,4)·(5/8)⁴·(3/8)² = 15 · 0.15259 · 0.14063 = 0.3219</span></div></li>
+        </ol><p class="wans">≈ 0.322</p><p class="wtrap">Trap: using p = 3/8 (that is the share of X, not Y).</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W2</span><span class="tag p">Numeric</span></div>
+        <h4>Two geometrics given their sum</h4>
+        <p class="wq">\(X, Y\) i.i.d. Geometric(p). Find \(P(X=3\mid X+Y=8)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(P(X=3,Y=5)=p(1-p)^2\cdot p(1-p)^4=p^2(1-p)^6\).</div></li>
+          <li><div>\(P(X+Y=8)=\sum_{k=1}^{7}p^2(1-p)^6=7p^2(1-p)^6\).</div></li>
+          <li><div><span class="calc">p²(1-p)⁶ / (7p²(1-p)⁶) = 1/7 ≈ 0.143</span></div></li>
+        </ol><p class="wans">1/7 ≈ 0.14</p><p class="wtrap">Trap: thinking you need p. Every split of 8 is equally likely.</p></details>
+      </article>
+    </div></div>
+
+    <div class="wgroup"><h3>Week 3 · expectation, variance, bounds</h3><div class="wgrid">
+
+      <article class="wx"><div class="wmeta"><span class="tag">W3</span><span class="tag p">Numeric</span></div>
+        <h4>Mean, a function, and Markov</h4>
+        <p class="wq">X takes 0, 1, 3 with probabilities 1/4, 1/2, 1/4. Find \(E[(X-1)^2]\) and a Markov upper bound on \(P(X\ge3)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div><span class="calc">E[(X-1)²] = ¼·1 + ½·0 + ¼·4 = 1.25</span></div></li>
+          <li><div><span class="calc">E[X] = 0 + ½ + ¾ = 1.25</span></div></li>
+          <li><div><span class="calc">P(X ≥ 3) ≤ 1.25/3 = 0.4167</span></div></li>
+        </ol><p class="wans">1.25 · ≤ 0.42</p><p class="wtrap">Trap: Markov uses the mean, not the variance. (The exact answer here is 0.25, well under the bound.)</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W3</span><span class="tag p">Numeric</span></div>
+        <h4>Chebyshev lower bounds</h4>
+        <p class="wq">X has mean 20 and variance 16. Lower-bound \(P(12\lt X\lt 28)\) and \(P(10\le X\le 26)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>12 to 28 is \(|X-20|\lt8\): \(1-\frac{16}{64}=0.75\).</div></li>
+          <li><div>10 to 26 is not symmetric about 20. The largest symmetric interval inside it is [14, 26], i.e. \(|X-20|\le6\).</div></li>
+          <li><div><span class="calc">1 - 16/36 = 0.5556</span></div></li>
+        </ol><p class="wans">0.75 · ≈ 0.56</p><p class="wtrap">Trap: using the variance as if it were σ (16/8² is right; 4/8² is not).</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W3</span><span class="tag p">Numeric</span></div>
+        <h4>Covariance is zero, but…</h4>
+        <div class="ptwrap"><table class="pt"><tr><th>X \ Y</th><th>1</th><th>2</th></tr><tr><th>0</th><td>0.2</td><td>0.1</td></tr><tr><th>1</th><td>0.1</td><td>0.3</td></tr><tr><th>2</th><td>0.2</td><td>0.1</td></tr></table></div>
+        <p class="wq">Find Cov(X, Y). Are X and Y independent?</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(f_X=(0.3,0.4,0.3)\), \(f_Y=(0.5,0.5)\). \(E[X]=1\), \(E[Y]=1.5\).</div></li>
+          <li><div><span class="calc">E[XY] = 1·(0.1·1 + 0.3·2) + 2·(0.2·1 + 0.1·2) = 0.7 + 0.8 = 1.5</span></div></li>
+          <li><div>Cov = 1.5 − 1 × 1.5 = 0.</div></li>
+          <li><div>But \(f_{XY}(0,1)=0.2\ne0.3\times0.5\): dependent.</div></li>
+        </ol><p class="wans">Cov = 0 · dependent</p><p class="wtrap">Trap: "Cov = 0 so independent". Only the reverse direction is true.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W3</span><span class="tag p">Numeric</span></div>
+        <h4>Expected prize with coupons</h4>
+        <p class="wq">300 coupons: one is worth ₹1500, one ₹600, the rest ₹0. You get 3 coupons at random. Find the expected prize.</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Each coupon you hold has mean prize \((1500+600)/300=7\) rupees.</div></li>
+          <li><div>Linearity works without replacement too: \(3\times7=21\).</div></li>
+        </ol><p class="wans">₹21</p><p class="wtrap">Trap: listing every combination of 3 coupons. Linearity does it in one line.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W3</span><span class="tag p">Numeric</span></div>
+        <h4>Variance of a combination</h4>
+        <p class="wq">Var(X) = 4, Var(Y) = 2, Cov(X, Y) = −1. Find Var(2X − 3Y + 4).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(\mathrm{Var}(aX+bY+c)=a^2\mathrm{Var}X+b^2\mathrm{Var}Y+2ab\,\mathrm{Cov}(X,Y)\).</div></li>
+          <li><div><span class="calc">4·4 + 9·2 + 2·2·(-3)·(-1) = 16 + 18 + 12 = 46</span></div></li>
+        </ol><p class="wans">46</p><p class="wtrap">Trap: sign of the covariance term. Here a·b = −6 and Cov = −1, so the term is +12.</p></details>
+      </article>
+    </div></div>
+
+    <div class="wgroup"><h3>Week 4 · CDF, PDF, named distributions</h3><div class="wgrid">
+
+      <article class="wx"><div class="wmeta"><span class="tag">W4</span><span class="tag p">Numeric</span></div>
+        <h4>Find c, then a probability</h4>
+        <p class="wq">\(f(x)=cx\) for \(0\le x\lt2\), \(f(x)=2c\) for \(2\le x\lt3\), 0 otherwise. Find c and \(P(1\lt X\lt2.5)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Area: \(\int_0^2cx\,dx=2c\) (a triangle), plus \(2c\times1=2c\) (a rectangle). Total \(4c=1\Rightarrow c=0.25\).</div></li>
+          <li><div><span class="calc">∫₁² 0.25x dx = 0.25·(4-1)/2 = 0.375
+∫₂^2.5 0.5 dx = 0.25</span></div></li>
+          <li><div>Sum = 0.625.</div></li>
+        </ol><p class="wans">c = 0.25 · 0.625</p><p class="wtrap">Trap: setting f(x) = 1 somewhere. It is the area that must be 1.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W4</span><span class="tag p">Numeric</span></div>
+        <h4>From a CDF to a conditional probability</h4>
+        <p class="wq">Daily rainfall X (cm) has \(F(x)=x^2/36\) on [0, 6] (0 before, 1 after). Find the PDF and \(P(X\gt4\mid X\lt5)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>\(f(x)=F'(x)=x/18\) on [0, 6].</div></li>
+          <li><div>\(P(4\lt X\lt5)=F(5)-F(4)=\frac{25-16}{36}=\frac9{36}\); \(P(X\lt5)=\frac{25}{36}\).</div></li>
+          <li><div><span class="calc">(9/36) / (25/36) = 9/25 = 0.36</span></div></li>
+        </ol><p class="wans">f(x) = x/18 · 0.36</p><p class="wtrap">Trap: \(f=x^2/36\cdot\)something. Differentiate the CDF to get the PDF.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W4</span><span class="tag p">Numeric</span></div>
+        <h4>Exponential waiting time</h4>
+        <p class="wq">A bus wait X is exponential with mean 8 minutes. Find \(P(4\lt X\lt12)\) and \(P(X\gt12\mid X\gt4)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Mean 8 ⇒ λ = 1/8.</div></li>
+          <li><div><span class="calc">e^(-4/8) - e^(-12/8) = 0.6065 - 0.2231 = 0.3834</span></div></li>
+          <li><div>Memoryless: \(P(X\gt12\mid X\gt4)=P(X\gt8)=e^{-1}=0.3679\).</div></li>
+        </ol><p class="wans">≈ 0.38 · ≈ 0.37</p><p class="wtrap">Trap: λ = 8. The mean is 1/λ.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W4</span><span class="tag p">Numeric</span></div>
+        <h4>Normal with a given table</h4>
+        <p class="wq">\(X\sim\)Normal(50, 16). Using \(F_Z(-1)=0.15866\), \(F_Z(0.5)=0.69146\), find \(P(X\ge46\mid X\le52)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>σ = 4. \(X\le52\leftrightarrow Z\le0.5\); \(X\ge46\leftrightarrow Z\ge-1\).</div></li>
+          <li><div><span class="calc">(F_Z(0.5) - F_Z(-1)) / F_Z(0.5) = (0.69146 - 0.15866)/0.69146 = 0.7705</span></div></li>
+        </ol><p class="wans">≈ 0.77</p><p class="wtrap">Trap: dividing by 16 instead of 4. Normal(50, 16) gives the variance.</p></details>
+      </article>
+
+      <article class="wx"><div class="wmeta"><span class="tag">W4</span><span class="tag p">Numeric</span></div>
+        <h4>Reading a staircase CDF</h4>
+        <p class="wq">\(F(x)=0\) for x &lt; −1; 0.2 on [−1, 1); 0.5 on [1, 2); 0.9 on [2, 4); 1 for x ≥ 4. Find the PMF of \(Y=X^2\) and \(P(X\gt1\mid X\ge1)\).</p>
+        <details class="wsol"><summary>Working</summary><ol class="wsteps">
+          <li><div>Jumps: \(P(X=-1)=0.2,\ P(X=1)=0.3,\ P(X=2)=0.4,\ P(X=4)=0.1\).</div></li>
+          <li><div>\(Y=1\) from X = ±1: 0.5; \(Y=4\): 0.4; \(Y=16\): 0.1.</div></li>
+          <li><div><span class="calc">P(X>1 | X≥1) = (0.4+0.1)/(0.3+0.4+0.1) = 0.625</span></div></li>
+        </ol><p class="wans">Y: 1 → 0.5, 4 → 0.4, 16 → 0.1 · 0.625</p><p class="wtrap">Trap: reading F(2) = 0.9 as P(X = 2). The probability is the jump, 0.9 − 0.5.</p></details>
+      </article>
+    </div></div>
+  </div>
+</section>
