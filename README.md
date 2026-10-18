@@ -7,7 +7,7 @@ Live: https://arshanalikhan.github.io/iitm-stats2-prep/
 - **Week notes** — joint/marginal/conditional PMFs, independence, functions of random variables, expectation, variance, covariance, Markov/Chebyshev, CDF/PDF and continuous distributions
 - **Formula sheet** — with what the quiz paper prints for you
 - **Worked examples** — quiz-style problems solved step by step
-- **Past quiz patterns** — the kinds of questions in the Feb 2026 and Jun 2026 Quiz 1 papers
+- **Past quiz patterns** — every Quiz 1 since June 2022 tagged by pattern: heatmap, chance of each pattern, predicted paper
 - **Practice** — original MCQ, multi-select and numeric questions with explanations
 - **Number drills** — random problems with computed answers and full working
 - **Mock quizzes** — 40-mark timed papers in practice or exam mode

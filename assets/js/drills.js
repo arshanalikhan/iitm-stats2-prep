@@ -318,5 +318,115 @@ const DRILLS = [
         return { w: 4, q: "$X\\sim\\text{Normal}(" + mu + "," + sg * sg + ")$. Find $P(" + xa + "\\lt X\\lt" + xb + ")$. " + given + " " + dpText(4), v, dp: 4, steps: ["$\\sigma=\\sqrt{" + sg * sg + "}=" + sg + "$.", "$z=\\frac{" + xa + "-" + mu + "}{" + sg + "}=" + za + "$ and $\\frac{" + xb + "-" + mu + "}{" + sg + "}=" + zb + "$.", "$P=F_Z(" + zb + ")-F_Z(" + za + ")=" + nf(v, 5) + "$."] }; }
       const v = (Z[String(zb)] - Z[String(za)]) / Z[String(zb)];
       return { w: 4, q: "$X\\sim\\text{Normal}(" + mu + "," + sg * sg + ")$. Find $P(X\\gt" + xa + "\\mid X\\lt" + xb + ")$. " + given + " " + dpText(3), v, dp: 3, steps: ["$\\sigma=" + sg + "$; standardise: $" + xa + "\\to" + za + "$, $" + xb + "\\to" + zb + "$.", "$\\dfrac{F_Z(" + zb + ")-F_Z(" + za + ")}{F_Z(" + zb + ")}=\\dfrac{" + nf(Z[String(zb)] - Z[String(za)], 5) + "}{" + Z[String(zb)] + "}=" + nf(v, 4) + "$."] };
+    } },
+
+  /* ---------- Added after the past-paper analysis: one drill for every frequent pattern ---------- */
+  { id: "counting", w: 1, name: "Counting experiments", desc: "Joint PMF values from digits, cards, urns and coins",
+    gen(r) {
+      const type = ri(r, 0, 3);
+      if (type === 0) {
+        const m = ri(r, 3, 9), a = ri(r, 0, 9), b = ri(r, 0, m - 1), hits = [];
+        for (let n = 0; n < 100; n++) if (n % 10 === a && n % m === b) hits.push(n);
+        const pad = n => (n < 10 ? "0" : "") + n;
+        return { w: 1, q: "A number from 00 to 99 is chosen uniformly at random. $X$ is its units digit and $Y$ is the remainder when it is divided by $" + m + "$. Find $P(X=" + a + ",\\ Y=" + b + ")$. " + dpText(2), v: hits.length / 100, dp: 2,
+          steps: ["Numbers ending in " + a + ": " + pad(a) + ", " + pad(10 + a) + ", …, " + (90 + a) + ".", "Those leaving remainder " + b + " on division by " + m + ": " + (hits.map(pad).join(", ") || "none") + ".", "$P=" + hits.length + "/100=" + nf(hits.length / 100, 2) + "$."] };
+      }
+      if (type === 1) {
+        const n = pk(r, [3, 4]), a = ri(r, 0, 2), b = ri(r, 0, n - a > 2 ? 2 : n - a), rest = n - a - b;
+        const v = C(4, a) * C(4, b) * C(44, rest) / C(52, n);
+        return { w: 1, q: "$" + n + "$ cards are drawn from a well-shuffled deck of 52. $X$ = number of kings, $Y$ = number of queens. Find $f_{XY}(" + a + "," + b + ")$. " + dpText(4), v, dp: 4,
+          steps: ["Choose the kings, the queens, and the other cards from the 44 that are neither.", "$\\dfrac{\\binom4{" + a + "}\\binom4{" + b + "}\\binom{44}{" + rest + "}}{\\binom{52}{" + n + "}}=\\dfrac{" + C(4, a) * C(4, b) * C(44, rest) + "}{" + C(52, n) + "}=" + nf(v, 5) + "$."] };
+      }
+      if (type === 2) {
+        const R = ri(r, 3, 6), Wh = ri(r, 2, 5), G = ri(r, 2, 4), N = R + Wh + G, a = ri(r, 0, 2), b = ri(r, 0, 3 - a), c = 3 - a - b;
+        const v = C(R, a) * C(Wh, b) * C(G, c) / C(N, 3);
+        return { w: 1, q: "An urn has " + R + " red, " + Wh + " white and " + G + " green balls. Three are drawn without replacement. $X$ = red drawn, $Y$ = white drawn. Find $P(X=" + a + ",Y=" + b + ")$. " + dpText(3), v, dp: 3,
+          steps: ["The remaining " + c + " ball" + (c === 1 ? " is" : "s are") + " green.", "$\\dfrac{\\binom{" + R + "}{" + a + "}\\binom{" + Wh + "}{" + b + "}\\binom{" + G + "}{" + c + "}}{\\binom{" + N + "}{3}}=\\dfrac{" + C(R, a) * C(Wh, b) * C(G, c) + "}{" + C(N, 3) + "}=" + nf(v, 4) + "$."] };
+      }
+      const p = pk(r, [0.5, 0.4, 0.6, 0.3]), first = r() < 0.5 ? 1 : 2, a = ri(r, 0, first), y = ri(r, a, a + (3 - first));
+      const q = +(1 - p).toFixed(1), v = C(first, a) * Math.pow(p, a) * Math.pow(q, first - a) * C(3 - first, y - a) * Math.pow(p, y - a) * Math.pow(q, 3 - first - (y - a));
+      return { w: 1, q: "A coin with $P(\\text{head})=" + p + "$ is tossed three times. $X$ = heads in the first " + (first === 1 ? "toss" : "two tosses") + ", $Y$ = total heads. Find $f_{XY}(" + a + "," + y + ")$. " + dpText(3), v, dp: 3,
+        steps: ["$X=" + a + "$ heads in the first " + first + ", and $" + (y - a) + "$ head" + (y - a === 1 ? "" : "s") + " in the last " + (3 - first) + ".", "$\\binom{" + first + "}{" + a + "}" + p + "^{" + a + "}" + q + "^{" + (first - a) + "}\\cdot\\binom{" + (3 - first) + "}{" + (y - a) + "}" + p + "^{" + (y - a) + "}" + q + "^{" + (3 - first - y + a) + "}=" + nf(v, 4) + "$."] };
+    } },
+
+  { id: "indep", w: 2, name: "Independence check", desc: "Fill a joint table so that X and Y are independent",
+    gen(r) {
+      const s = pk(r, [0.2, 0.25, 0.4, 0.5, 0.6]), qu = parts(r, 3, 10, 1, 6), q = qu.map(x => x / 10);
+      const row0 = q.map(x => +(s * x).toFixed(4)), row1 = q.map(x => +((1 - s) * x).toFixed(4)), j = ri(r, 1, 2);
+      const tbl = jtable([0, 1], [0, 1, 2], (i, k) => i === 0 ? nf(row0[k], 4) : k === 0 ? nf(row1[0], 4) : k === j ? "?" : "·");
+      return { w: 2, q: "$X$ and $Y$ are independent. Part of their joint PMF is" + tbl + "Find the cell marked ?. " + dpText(3), v: row1[j], dp: 3,
+        steps: ["Independent ⇒ every row is proportional to the column totals, so row 1 = row 0 × (" + nf(row1[0], 4) + " / " + nf(row0[0], 4) + ").", "Ratio $=" + nf(row1[0] / row0[0], 4) + "$, so the cell is $" + nf(row0[j], 4) + "\\times" + nf(row1[0] / row0[0], 4) + "=" + nf(row1[j], 4) + "$.", "Check: $f_X(0)=" + nf(s, 2) + "$ and $f_X(1)=" + nf(1 - s, 2) + "$ add to 1."] };
+    } },
+
+  { id: "linearity", w: 3, name: "Linearity and indicators", desc: "Expected prizes, counts and sums without listing outcomes",
+    gen(r) {
+      const type = ri(r, 0, 3);
+      if (type === 0) {
+        const N = pk(r, [200, 250, 300, 400, 500]), pr = [pk(r, [1000, 1500, 2000]), pk(r, [500, 600, 1000])], k = ri(r, 2, 4), tot = pr[0] + pr[1];
+        return { w: 3, q: "A raffle has " + N + " tickets: one wins ₹" + pr[0] + ", one wins ₹" + pr[1] + ", the rest win nothing. You get " + k + " tickets at random. Find your expected winnings in ₹. " + dpText(2), v: k * tot / N, dp: 2,
+          steps: ["Each ticket you hold has mean prize $\\frac{" + tot + "}{" + N + "}=" + nf(tot / N, 4) + "$.", "Linearity (works without replacement): $" + k + "\\times" + nf(tot / N, 4) + "=" + nf(k * tot / N, 4) + "$."] };
+      }
+      if (type === 1) {
+        const m = pk(r, [4, 6, 8]), n = ri(r, 2, 4), v = m * (1 - Math.pow((m - 1) / m, n));
+        return { w: 3, q: "A fair " + m + "-sided die is rolled " + n + " times. Find the expected number of different faces that appear. " + dpText(2), v, dp: 2,
+          steps: ["Indicator for each face: it appears with probability $1-\\left(\\frac{" + (m - 1) + "}{" + m + "}\\right)^{" + n + "}$.", "Add over the " + m + " faces: $" + m + "\\left(1-\\left(\\frac{" + (m - 1) + "}{" + m + "}\\right)^{" + n + "}\\right)=" + nf(v, 4) + "$."] };
+      }
+      if (type === 2) {
+        const N = pk(r, [10, 12, 20, 30]), k = ri(r, 3, 6), v = k * (N + 1) / 2;
+        return { w: 3, q: "Balls numbered 1 to " + N + " are in a bag; " + k + " are drawn without replacement. Find the expected sum of the numbers drawn. " + dpText(1), v, dp: 1,
+          steps: ["Each drawn ball has mean $\\frac{" + N + "+1}{2}=" + nf((N + 1) / 2, 2) + "$.", "$" + k + "\\times" + nf((N + 1) / 2, 2) + "=" + nf(v, 2) + "$."] };
+      }
+      const l = pk(r, [20, 30, 40, 60]), prices = [pk(r, [20, 30]), pk(r, [40, 50]), pk(r, [80, 100])], u = parts(r, 3, 10, 1, 6), pr = u.map(x => x / 10);
+      const m = prices.reduce((a, x, i) => a + x * pr[i], 0);
+      return { w: 3, q: "Customers per day at a stall are Poisson($" + l + "$). Each spends ₹" + prices.join(", ₹") + " with probabilities " + pr.map(x => nf(x, 1)).join(", ") + ". Find the expected daily takings in ₹. " + dpText(1), v: l * m, dp: 1,
+        steps: ["Mean spend per customer: $" + prices.map((x, i) => x + "(" + nf(pr[i], 1) + ")").join("+") + "=" + nf(m, 2) + "$.", "Expected takings $=\\lambda\\times" + nf(m, 2) + "=" + nf(l * m, 2) + "$."] };
+    } },
+
+  { id: "varcomb", w: 3, name: "Variance combinations", desc: "Var(aX + bY), Var(XY), E[(X + Y)²], binomial from mean and variance",
+    gen(r) {
+      const type = ri(r, 0, 3), ex = ri(r, 1, 6), vx = ri(r, 1, 5), ey = ri(r, 1, 6), vy = ri(r, 1, 5);
+      const intro = "$X$ and $Y$ are independent with $E[X]=" + ex + "$, $\\mathrm{Var}(X)=" + vx + "$, $E[Y]=" + ey + "$, $\\mathrm{Var}(Y)=" + vy + "$. ";
+      if (type === 0) { const v = (vx + ex * ex) * (vy + ey * ey) - ex * ex * ey * ey;
+        return { w: 3, q: intro + "Find $\\mathrm{Var}(XY)$.", v, dp: 0, steps: ["$E[X^2]=" + vx + "+" + ex * ex + "=" + (vx + ex * ex) + "$, $E[Y^2]=" + (vy + ey * ey) + "$.", "$\\mathrm{Var}(XY)=E[X^2]E[Y^2]-(E[X]E[Y])^2=" + (vx + ex * ex) * (vy + ey * ey) + "-" + ex * ex * ey * ey + "=" + v + "$."] }; }
+      if (type === 1) { const v = vx + vy + (ex + ey) * (ex + ey);
+        return { w: 3, q: intro + "Find $E[(X+Y)^2]$.", v, dp: 0, steps: ["$E[(X+Y)^2]=\\mathrm{Var}(X+Y)+(E[X+Y])^2$.", "$=(" + vx + "+" + vy + ")+(" + ex + "+" + ey + ")^2=" + v + "$."] }; }
+      if (type === 2) { const a = pk(r, [2, 3, 4, -2]), b = pk(r, [2, 3, -1, -3]), c = ri(r, 1, 9), v = a * a * vx + b * b * vy;
+        return { w: 3, q: intro + "Find $\\mathrm{Var}(" + a + "X" + (b < 0 ? "" : "+") + b + "Y+" + c + ")$.", v, dp: 0, steps: ["Independent: $\\mathrm{Var}(aX+bY+c)=a^2\\mathrm{Var}X+b^2\\mathrm{Var}Y$.", "$" + a * a + "(" + vx + ")+" + b * b + "(" + vy + ")=" + v + "$."] }; }
+      const n = pk(r, [8, 10, 12, 16, 20]), p = pk(r, [0.25, 0.5, 0.75]), mu = n * p, s2 = n * p * (1 - p);
+      return { w: 3, q: "$X\\sim\\text{Binomial}(n,p)$ with $E[X]=" + nf(mu, 2) + "$ and $\\mathrm{Var}(X)=" + nf(s2, 3) + "$. Find $n$.", v: n, dp: 0, steps: ["$\\frac{\\mathrm{Var}}{E}=1-p=" + nf(s2 / mu, 3) + "$, so $p=" + nf(p, 2) + "$.", "$n=E[X]/p=" + nf(mu, 2) + "/" + nf(p, 2) + "=" + n + "$."] };
+    } },
+
+  { id: "discretecdf", w: 4, name: "Discrete CDF", desc: "Read PMF values and probabilities off a staircase CDF",
+    gen(r) {
+      const vals = [ri(r, -2, 0)]; while (vals.length < 4) vals.push(vals[vals.length - 1] + ri(r, 1, 3));
+      const u = parts(r, 4, 20, 1, 9), pr = u.map(x => x / 20), cum = []; pr.reduce((a, x, i) => (cum[i] = +(a + x).toFixed(2)), 0);
+      let cdf = "F(x)=\\begin{cases}0,&x\\lt" + vals[0];
+      for (let i = 0; i < 4; i++) cdf += "\\\\ " + nf(cum[i], 2) + ",&" + (i < 3 ? vals[i] + "\\le x\\lt" + vals[i + 1] : "x\\ge" + vals[i]);
+      cdf += "\\end{cases}";
+      const type = ri(r, 0, 2), i = ri(r, 1, 3);
+      if (type === 0) return { w: 4, q: "A discrete random variable has CDF $" + cdf + "$. Find $P(X=" + vals[i] + ")$. " + dpText(2), v: pr[i], dp: 2, steps: ["$P(X=" + vals[i] + ")$ is the jump at " + vals[i] + ": $" + nf(cum[i], 2) + "-" + nf(cum[i - 1], 2) + "=" + nf(pr[i], 2) + "$."] };
+      if (type === 1) { const j = ri(r, 0, i - 1), v = (1 - (i ? cum[i - 1] : 0)) / (1 - (j ? cum[j - 1] : 0));
+        return { w: 4, q: "A discrete random variable has CDF $" + cdf + "$. Find $P(X\\ge" + vals[i] + "\\mid X\\ge" + vals[j] + ")$. " + dpText(2), v, dp: 2, steps: ["$P(X\\ge" + vals[i] + ")=1-F(\\text{just below }" + vals[i] + ")=1-" + nf(cum[i - 1], 2) + "$.", "$P(X\\ge" + vals[j] + ")=1-" + nf(j ? cum[j - 1] : 0, 2) + "$.", "Ratio $=" + nf(v, 4) + "$."] }; }
+      const t = vals[i] + 0.5, s = vals[0] - 0.5 + ri(r, 0, 1), F = x => { let c = 0; vals.forEach((vv, k) => { if (x >= vv) c = cum[k]; }); return c; }, v = F(t) - F(s);
+      return { w: 4, q: "A discrete random variable has CDF $" + cdf + "$. Find $P(" + s + "\\lt X\\le" + t + ")$. " + dpText(2), v, dp: 2, steps: ["$P(a\\lt X\\le b)=F(b)-F(a)$.", "$F(" + t + ")-F(" + s + ")=" + nf(F(t), 2) + "-" + nf(F(s), 2) + "=" + nf(v, 2) + "$."] };
+    } },
+
+  { id: "pdfprob", w: 4, name: "Probability from a PDF", desc: "Interval and conditional probabilities from piecewise and polynomial PDFs",
+    gen(r) {
+      const type = ri(r, 0, 2);
+      if (type === 0) {
+        // f = c on [0,1), 2c on [1,3), 3c on [3,4] with c = 1/8
+        const t = pk(r, [0.5, 1.5, 2.5, 3.5]);
+        const cc = 1 / 8, F = x => x <= 1 ? cc * x : x <= 3 ? cc + 2 * cc * (x - 1) : 5 * cc + 3 * cc * (x - 3), sub = r() < 0.5;
+        if (sub) return { w: 4, q: "$f(x)=c$ on $[0,1)$, $2c$ on $[1,3)$, $3c$ on $[3,4]$, 0 otherwise. Find $P(X\\lt" + t + ")$. " + dpText(3), v: F(t), dp: 3, steps: ["Area: $c+4c+3c=8c=1$, so $c=\\tfrac18$.", "$P(X\\lt" + t + ")$ = area to the left of " + t + " $=" + nf(F(t), 4) + "$."] };
+        const s = pk(r, [0.5, 1]), u = pk(r, [2, 3.5]), v = (F(u) - F(s)) / (1 - F(s));
+        return { w: 4, q: "$f(x)=c$ on $[0,1)$, $2c$ on $[1,3)$, $3c$ on $[3,4]$, 0 otherwise. Find $P(X\\lt" + u + "\\mid X\\gt" + s + ")$. " + dpText(3), v, dp: 3, steps: ["$c=\\tfrac18$ from the total area.", "$P(" + s + "\\lt X\\lt" + u + ")=" + nf(F(u) - F(s), 4) + "$ and $P(X\\gt" + s + ")=" + nf(1 - F(s), 4) + "$.", "Ratio $=" + nf(v, 4) + "$."] };
+      }
+      if (type === 1) {
+        const s = pk(r, [0.25, 0.5, 0.75]), t = pk(r, [1.25, 1.5, 1.75]), F = x => x <= 1 ? x * x / 2 : 1 - (2 - x) * (2 - x) / 2, v = F(t) - F(s);
+        return { w: 4, q: "$X$ has the triangular PDF $f(x)=x$ on $[0,1]$, $2-x$ on $[1,2]$, 0 otherwise. Find $P(" + s + "\\lt X\\lt" + t + ")$. " + dpText(3), v, dp: 3, steps: ["Left of " + s + ": a triangle of area $\\tfrac12(" + s + ")^2=" + nf(F(s), 4) + "$.", "Right of " + t + ": a triangle of area $\\tfrac12(2-" + t + ")^2=" + nf(1 - F(t), 4) + "$.", "$P=1-" + nf(F(s), 4) + "-" + nf(1 - F(t), 4) + "=" + nf(v, 4) + "$."] };
+      }
+      const b = ri(r, 3, 8), s = ri(r, 1, b - 2), t = ri(r, s + 1, b - 1), F = x => 1 - (b - x) * (b - x) / (b * b), v = (F(t) - F(s)) / (1 - F(s));
+      return { w: 4, q: "$f(x)=\\dfrac{2(" + b + "-x)}{" + b * b + "}$ for $0\\lt x\\lt" + b + "$. Find $P(X\\lt" + t + "\\mid X\\gt" + s + ")$. " + dpText(3), v, dp: 3, steps: ["$P(X\\gt x)=\\left(\\frac{" + b + "-x}{" + b + "}\\right)^2$ (a smaller similar triangle).", "$P(" + s + "\\lt X\\lt" + t + ")=\\frac{" + ((b - s) * (b - s) - (b - t) * (b - t)) + "}{" + b * b + "}$, $P(X\\gt" + s + ")=\\frac{" + (b - s) * (b - s) + "}{" + b * b + "}$.", "Ratio $=\\frac{" + ((b - s) * (b - s) - (b - t) * (b - t)) + "}{" + (b - s) * (b - s) + "}=" + nf(v, 4) + "$."] };
     } }
 ];

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<link rel="stylesheet" href="assets/css/style.css?v=cdca7f4848">
+<link rel="stylesheet" href="assets/css/style.css?v=b478b2bb32">
 <script>try { var t0 = localStorage.getItem("s2prep-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); } catch (e) {}</script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="window.s2MathReady && window.s2MathReady()"></script>
@@ -60,7 +60,7 @@
     <span class="sheet-grip" aria-hidden="true"></span>
       <a href="#formulas" data-page="formulas"><i data-lucide="sigma"></i><span><b>Formula sheet</b><small>Every formula for Weeks 1–4, plus what the exam gives you</small></span></a>
       <a href="#worked" data-page="worked"><i data-lucide="calculator"></i><span><b>Worked examples</b><small>Step-by-step solutions in the quiz style</small></span></a>
-      <a href="#patterns" data-page="patterns"><i data-lucide="repeat"></i><span><b>Past quiz patterns</b><small>What the last Quiz 1 papers asked</small></span></a>
+      <a href="#patterns" data-page="patterns"><i data-lucide="repeat"></i><span><b>Past quiz patterns</b><small>13 past papers analysed, with a prediction</small></span></a>
       <a href="#traps" data-page="traps"><i data-lucide="triangle-alert"></i><span><b>Traps</b><small>Read on quiz morning</small></span></a>
       <a href="#resources" data-page="resources"><i data-lucide="library"></i><span><b>Resources</b><small>Lectures, slides, Seek links</small></span></a>
   </div>
@@ -97,7 +97,7 @@
     <div class="sec-head" id="plan">
       <p class="eyebrow">Start here</p>
       <h2>Four weeks to Quiz 1</h2>
-      <p>Quiz 1 tests the same skills as the weekly assignments, mostly as numbers you type in. The last two papers (Feb and Jun 2026) each had about 18 marked items (single questions plus parts of comprehension sets): joint PMF tables, conditional probability, Poisson splitting, max/min of i.i.d. variables, Chebyshev/Markov bounds, expectation, and one or two continuous-PDF questions from Week 4. The plan below follows the course calendar.</p>
+      <p>Quiz 1 tests the same skills as the weekly assignments, mostly as numbers you type in. I tagged every question from all 13 past Quiz 1 sittings (June 2022 to July 2026). Six patterns appear in 11 or 12 of the 13 papers: normalising a PDF, expectation from a PMF, max/min of i.i.d. variables, a probability from a PDF or CDF, variance, and Chebyshev. Week 3 is always worth 9–14 of the 40 marks. The plan below follows the course calendar and those patterns.</p>
     </div>
     <p class="callout"><b>Deadlines that matter before the quiz.</b> Week 2 graded assignment: Sun 18 Oct, 23:59. Week 3: Sun 25 Oct, 23:59. To sit the end term you need the average of your best 5 of the first 7 weekly graded assignments to be at least 40/100, and you must attend at least one of the two quizzes. Final score: T = max(0.6F + 0.3·max(Qz1, Qz2), 0.45F + 0.25Qz1 + 0.3Qz2).</p>
     <div class="days">
@@ -126,8 +126,8 @@
         <h3>Mixed practice</h3>
         <ul>
           <li>All worked examples, writing each step yourself</li>
-          <li>Past quiz patterns: answer every pattern question</li>
-          <li>Mock quiz A in exam mode, then review</li>
+          <li>Past quiz patterns: drill every pattern above 50% chance</li>
+          <li>The predicted paper in exam mode, then review</li>
           <li>Drills on your weakest topics (see the score on each)</li>
         </ul>
       </div>
@@ -135,7 +135,7 @@
         <p class="when">9–14 Nov · Phase 4</p>
         <h3>Mocks and revision</h3>
         <ul>
-          <li>Mock quizzes B and C, timed</li>
+          <li>Mock quizzes A, B and C, timed; a fresh predicted paper</li>
           <li>Seek's own "Mock for Quiz 1" from the Jun 2026 run</li>
           <li>Formula sheet from memory, then check</li>
           <li>Traps list the night before</li>
@@ -158,10 +158,10 @@
       <a class="kitcard" href="#notes"><span class="ic"><i data-lucide="book-open"></i></span><span class="k">Week 0 recap + Weeks 1–4</span><h3>Week notes</h3><p>One week at a time: definitions, short examples and the shortcuts the quiz rewards.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#formulas"><span class="ic"><i data-lucide="sigma"></i></span><span class="k">8 formula cards</span><h3>Formula sheet</h3><p>Everything to memorise, and the table the exam prints for you.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#worked"><span class="ic"><i data-lucide="calculator"></i></span><span class="k" id="kit-worked">Step by step</span><h3>Worked examples</h3><p>Quiz-style problems solved line by line, with the trap in each.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#patterns"><span class="ic"><i data-lucide="repeat"></i></span><span class="k">Feb 2026 + Jun 2026 papers</span><h3>Past quiz patterns</h3><p>Every kind of question the last two Quiz 1 papers asked, with one to try for each.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#patterns"><span class="ic"><i data-lucide="repeat"></i></span><span class="k">13 sittings · 233 questions tagged</span><h3>Past quiz patterns</h3><p>Heatmap of every pattern since 2022, the chance of each on 15 Nov, and a predicted paper.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#practice"><span class="ic"><i data-lucide="list-checks"></i></span><span class="k" id="kit-practice">Questions by week</span><h3>Practice</h3><p>MCQ, multi-select and numeric-entry questions with full explanations.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#drills"><span class="ic"><i data-lucide="dices"></i></span><span class="k" id="kit-drills">Fresh numbers every time</span><h3>Number drills</h3><p>Random joint tables, Poisson splits, bounds and PDFs, each with a worked solution.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#mock"><span class="ic"><i data-lucide="timer"></i></span><span class="k">3 papers + random papers</span><h3>Mock quizzes</h3><p>Quiz-length papers on a timer, scored the way the real quiz is.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#mock"><span class="ic"><i data-lucide="timer"></i></span><span class="k">Predicted paper + 3 fixed + random</span><h3>Mock quizzes</h3><p>Quiz-length papers on a timer, scored the way the real quiz is.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#traps"><span class="ic"><i data-lucide="triangle-alert"></i></span><span class="k">Read on quiz morning</span><h3>Traps</h3><p>The small slips that cost marks in this course.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#resources"><span class="ic"><i data-lucide="library"></i></span><span class="k">Lectures · slides · Seek</span><h3>Resources</h3><p>Every Week 1–4 lecture (English and Hindi), live sessions and course links.</p><span class="go">Open →</span></a>
     </div>
@@ -792,119 +792,39 @@ P(0,1) = 0.7·0.6 = 0.42</span></div></li>
 <section id="patterns" class="page" hidden>
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Feb 2026 paper · Jun 2026 paper · Jun 2026 Seek mock</p>
+      <p class="eyebrow">Every Stats 2 Quiz 1 since June 2022</p>
       <h2>Past quiz patterns</h2>
-      <p>The answer-keyed Quiz 1 papers from the last two terms are on Seek (your Jun 2026 and Feb 2026 course pages, "Answer Key for Exam"). This page lists every kind of question they asked, described in my own words, with marks. Each one links to a drill that generates fresh questions of the same shape.</p>
+      <p>I read and tagged every question from 13 Quiz 1 sittings (June 2022 to July 2026): 82 paper sets from <a href="https://quizpractice.space/" target="_blank" rel="noopener">quizpractice.space</a> plus the answer-keyed Feb and Jun 2026 papers on Seek. Duplicate sets were merged, leaving the distinct questions below. Each one was tagged with the pattern it tests. Nothing here copies a question; it counts them.</p>
     </div>
 
-    <div class="tiles">
-      <div class="tile"><span class="l">Marks per paper</span><span class="v">40</span><span class="s">18–19 marked items</span></div>
-      <div class="tile"><span class="l">Week 1 marks</span><span class="v">8–18</span><span class="s">Joint / conditional</span></div>
-      <div class="tile"><span class="l">Week 2 marks</span><span class="v">3–13</span><span class="s">Indep., max/min, sums</span></div>
-      <div class="tile"><span class="l">Week 3 marks</span><span class="v">11</span><span class="s">Both papers</span></div>
-      <div class="tile"><span class="l">Week 4 marks</span><span class="v">8</span><span class="s">Both papers</span></div>
+    <div class="tiles" id="patTiles"></div>
+
+    <h3>What the data says</h3>
+    <div class="insights">
+      <div class="insight"><b>Six patterns are in almost every paper</b><p>Normalising a PDF (12 of 13 sittings), expectation from a PMF (12), max/min of i.i.d. variables (11), a probability from a PDF or CDF (11), variance (11) and Chebyshev (11). Master these six and you have roughly half the paper.</p></div>
+      <div class="insight"><b>Seek's own mock is a real past paper</b><p>"Mock For Quiz 1" on the Jun 2026 Seek page is the Oct 2023 Quiz 1, question for question, and "Mock for Week 1 and 2" is mostly the Jun 2022 paper. Do both, but don't treat a good score there as a prediction.</p></div>
+      <div class="insight"><b>Setups come back with new numbers</b><p>Exact repeats across sittings: none. Same setup, new numbers: often. Formula joint PMFs like (2x + y)/27, the "book store" pair of Poissons, U = XY from three coin tosses, a PDF drawn as a graph with α and β, and "roll a die, then toss that many coins" each appeared in two or more sittings.</p></div>
+      <div class="insight"><b>The week split is steady</b><p>Week 3 is worth 9–14 marks in every paper. Week 4 is usually about 8 (range 5–14), and Weeks 1 and 2 share the rest. The chart below shows each sitting.</p></div>
+      <div class="insight"><b>A fill-in-the-blanks set every time since Oct 2025</b><p>A worked solution with blanks A–E (1 or 0.5 mark each, about 3 marks in all): type the option number, then the final value. The tested topics were a conditional from a table, the max of two variables and P(X &gt; a | X &gt; b) from a PDF.</p></div>
+      <div class="insight"><b>Traps the papers keep setting</b><p>Markov with a strict inequality on a count (P(X &gt; 74) means P(X ≥ 75)) came up three times, once in reverse (find μ from the bound). Chebyshev is almost always "between a and b" around the mean. "Find k" before every Week 4 probability.</p></div>
     </div>
-    <p class="callout"><b>How the paper is built.</b> Two zero-mark items first (confirm the subject; the formula file). Then single numeric questions worth 3 marks, and "comprehension" sets: one shared setup with 2–5 sub-questions worth 1–3 marks each. Most answers are typed numbers, often with a range accepted ("0.24 to 0.30"). There are a few MCQs and one or two multi-selects, and no negative marking. Each paper had one <b>fill-in-the-blanks solution</b>: a worked solution with blanks A–E and a numbered list of options; you type the option number for each blank, then the final value.</p>
 
-    <div class="pat">
-      <h3>Week 1</h3>
-      <div class="patrow"><div class="pw"><b>3–5</b>marks</div><div>
-        <h4>Probability of an event from a joint table</h4>
-        <p>A joint PMF table is given; find something like P(X + Y = 2), P(Y = 3), or a conditional probability. Sometimes the table must first be built from coin tosses (X = heads on the first toss, Y = total heads).</p>
-        <span class="seen"><span class="on">Feb 26</span><span>Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-jointcond">Drill: joint table questions →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>5</b>marks</div><div>
-        <h4>Joint PMF given by a formula: find k, then a probability</h4>
-        <p>\(P(X=i,Y=j)=\frac{ai+bj}{k}\) on a small grid, or a k(1 + x₁ + x₂ + x₃) form for three binary variables. Find k (3 marks), then a marginal or conditional (2 marks).</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-formulak">Drill: find k →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>3</b>marks</div><div>
-        <h4>Count outcomes of a simple experiment</h4>
-        <p>A uniformly random number from 00 to 99 with X = a digit and Y = a remainder; a loaded die; draws with replacement. Usually one value of the joint PMF.</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#practice">Practice: Week 1 set →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>2–3</b>marks</div><div>
-        <h4>Poisson splitting</h4>
-        <p>Vehicles or customers are Poisson(λ), each has a property with probability p. Multi-select: which of "(Y | X = n) ~ Binomial(n, p)", "Y ~ Poisson(λp)", "E[Y] = λp" are true; then a variance expression.</p>
-        <span class="seen"><span class="on">Feb 26</span><span>Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#d-poisson">Drill: Poisson splitting →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>1–2</b>marks</div><div>
-        <h4>Chain rule with three variables</h4>
-        <p>Given a joint value, one marginal and one conditional, find the missing conditional.</p>
-        <span class="seen"><span>Feb 26</span><span>Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-chain">Drill: chain rule →</a></p></div></div>
+    <h3>Marks by week in each paper</h3>
+    <p class="muted-p">Marks per week, scaled to a 40-mark paper (the Oct 2022 sitting had two different papers and is averaged). Hover a bar for exact values.</p>
+    <div class="weekchart" id="weekChart"></div>
 
-      <h3>Week 2</h3>
-      <div class="patrow"><div class="pw"><b>3</b>marks</div><div>
-        <h4>Condition on a sum of independent Bernoullis</h4>
-        <p>X ~ Bernoulli(p₁), Y ~ Bernoulli(p₂), Z = X + Y: find \(f_{X\mid Z=1}(1)\).</p>
-        <span class="seen"><span>Feb 26</span><span class="on">Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#d-bernsum">Drill: conditioning on a sum →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>3–5</b>marks</div><div>
-        <h4>Max or min of i.i.d. variables</h4>
-        <p>Min of two i.i.d. Uniform{1, …, m}: P(min = k) and P(min ≤ k). CDF of the max of two dice, then P(max = k). A fill-in-the-blanks solution for P(max(X, Y) = X) from a joint table.</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-maxmin">Drill: max and min →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>5</b>marks</div><div>
-        <h4>i.i.d. samples from a small PMF</h4>
-        <p>Four samples from a given PMF: probability that a value appears exactly once (3 marks), probability that a value never appears (2 marks).</p>
-        <span class="seen"><span>Feb 26</span><span class="on">Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#d-iid">Drill: i.i.d. samples →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>2–4</b>marks</div><div>
-        <h4>Function of two variables</h4>
-        <p>Range and PMF of X + Y for a die with repeated faces; PMF of U = XY from coin tosses; then a conditional on U.</p>
-        <span class="seen"><span>Feb 26</span><span>Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-funcsum">Drill: PMF of a sum →</a></p></div></div>
+    <h3>Pattern heatmap</h3>
+    <p class="muted-p">Rows are patterns, columns are sittings, and each cell shows the marks that pattern carried in that paper. "Chance" weights recent papers more (each older paper counts 15% less) and is a rough guide, not a promise. Tap a row's drill to practise it.</p>
+    <div class="chips" id="patFilter"></div>
+    <div class="heatwrap"><table class="heat" id="heat"></table></div>
 
-      <h3>Week 3</h3>
-      <div class="patrow"><div class="pw"><b>3</b>marks</div><div>
-        <h4>Chebyshev lower bound</h4>
-        <p>Mean and variance given; lower-bound the probability of an interval symmetric about the mean (or a 2σ band). Appeared in both papers and the mock.</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-bounds">Drill: Markov and Chebyshev →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>2</b>marks</div><div>
-        <h4>Markov upper bound</h4>
-        <p>From a small PMF (find the mean first), bound P(X ≥ c).</p>
-        <span class="seen"><span>Feb 26</span><span class="on">Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#d-bounds">Drill: Markov and Chebyshev →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>2–3</b>marks</div><div>
-        <h4>Expectation from a PMF</h4>
-        <p>\(E[(X-c)^2]\) as an MCQ; E[X] when one probability is an unknown α; an indicator Y = 1 if X ≥ 2 and a conditional on it.</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-expvar">Drill: mean and variance →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>3</b>marks</div><div>
-        <h4>Covariance algebra</h4>
-        <p>Given Cov(X, Y), Cov(X, Z), Cov(Y, Z), Var(Y): find Cov(aX + bY, Y − Z). Also Var(2X) − 3Var(Y) + 4 type expressions.</p>
-        <span class="seen"><span class="on">Feb 26</span><span>Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#d-covalg">Drill: covariance algebra →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>3</b>marks</div><div>
-        <h4>Linearity: expected prize</h4>
-        <p>Coupons or lottery tickets drawn without replacement; expected total prize = (number drawn) × (total prize ÷ number of tickets).</p>
-        <span class="seen"><span>Feb 26</span><span class="on">Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#practice">Practice: Week 3 set →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>1–3</b>marks</div><div>
-        <h4>Covariance from a joint table</h4>
-        <p>Compute E[X], E[Y], E[XY] from a table. Often the answer is 0.</p>
-        <span class="seen"><span>Feb 26</span><span>Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-jointcov">Drill: Cov and ρ from a table →</a></p></div></div>
+    <h3>The likely Quiz 1 on 15 Nov 2026</h3>
+    <p class="muted-p">A blueprint built from the chances above, with each week's marks matching the usual split. Take it as a timed paper from Mock quizzes ("Predicted paper"): every question is a fresh drill of that pattern.</p>
+    <div class="blueprint" id="blueprint"></div>
+    <p><a class="btn primary" href="#mock">Take the predicted paper →</a></p>
 
-      <h3>Week 4</h3>
-      <div class="patrow"><div class="pw"><b>3</b>marks</div><div>
-        <h4>Normalising a PDF</h4>
-        <p>Find the constant (k, c, or the end point a) that makes a PDF integrate to 1: k(b − x) on (0, b), 2(1 − x) on (0, a), cx² then cx on two pieces.</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-pdfk">Drill: normalising constants →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>5</b>marks</div><div>
-        <h4>CDF ↔ PDF and a conditional probability</h4>
-        <p>Pick the PDF that matches a CDF like x²/c (2 marks); find P(X &gt; a | X &lt; b) (3 marks). The Jun paper did the same as a 5-blank fill-in solution with a PDF x/c.</p>
-        <span class="seen"><span class="on">Feb 26</span><span class="on">Jun 26</span><span class="on">Mock</span></span>
-        <p><a class="btn" href="#d-cdfcond">Drill: CDF and conditional →</a></p></div></div>
-      <div class="patrow"><div class="pw"><b>?</b>marks</div><div>
-        <h4>Uniform, exponential, normal</h4>
-        <p>Not in the last two papers, but in every Week 4 assignment: exponential tails and memorylessness, uniform conditionals, standardising a normal with a few given \(F_Z\) values. Worth a few drills in case it comes up this term.</p>
-        <span class="seen"><span>Feb 26</span><span>Jun 26</span><span>Mock</span></span>
-        <p><a class="btn" href="#d-named">Drill: named distributions →</a></p></div></div>
-    </div>
+    <h3>Every pattern, explained</h3>
+    <div class="patlist" id="patList"></div>
   </div>
 </section>
 <section id="practice" class="page" hidden>
@@ -1103,7 +1023,8 @@ P(0,1) = 0.7·0.6 = 0.42</span></div></li>
 <script async src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script src="assets/js/questions.js?v=1f9b97b32a"></script>
 <script src="assets/js/mocks.js?v=c712170fc7"></script>
-<script src="assets/js/drills.js?v=f45d99f97b"></script>
-<script src="assets/js/app.js?v=003b2c5c11"></script>
+<script src="assets/js/drills.js?v=405f89b327"></script>
+<script src="assets/js/patterns-data.js?v=ed14c11ba8"></script>
+<script src="assets/js/app.js?v=9e257a934b"></script>
 </body>
 </html>
