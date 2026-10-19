@@ -8,7 +8,9 @@ the house website uses), it first remakes the logo files the site uses:
   src/assets/saranda-emblem.png   192x192 eagle only, on black (sidebar)
 Then it always writes:
   src/assets/og.png          1200x630 link-preview image (WhatsApp, LinkedIn, Telegram, X)
-  marketing/poster.png       1080x1350 poster with a QR code, for groups and stories
+  marketing/poster.png       1600x1600: the poster framed on a blurred square, for chats (WhatsApp crops tall
+                             images to about a square in the chat, which cut off the logo and the address)
+  marketing/poster-4x5.png   1080x1350 plain poster, for status and stories
   marketing/qr.png           the QR code on its own
 Fonts: Segoe UI and Consolas on Windows; falls back to Pillow's default font elsewhere."""
 import io
@@ -185,11 +187,40 @@ def poster():
     d.text((qx + qs / 2, qy + qs + 30), "Scan to open", font=font(SEMI, 24), fill=CREAM, anchor="ma")
     d.text((W / 2, 1176), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(SEMI, 32), fill=CREAM, anchor="ma")
     d.text((W / 2, 1224), "arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 24), fill=SAGE, anchor="ma")
+    card = im.convert("RGB")
+    os.makedirs(os.path.join(ROOT, "marketing"), exist_ok=True)
+    save(card, os.path.join(ROOT, "marketing", "poster-4x5.png"))
     out = os.path.join(ROOT, "marketing", "poster.png")
-    os.makedirs(os.path.dirname(out), exist_ok=True)
-    im.convert("RGB").save(out, optimize=True)
-    qr_image(900).save(os.path.join(ROOT, "marketing", "qr.png"))
+    save(framed(card), out)
+    save(qr_image(900), os.path.join(ROOT, "marketing", "qr.png"))
     return out
+
+
+def save(img, path):
+    """Write next to the target and swap it in: Windows refuses to reopen a PNG that a viewer still holds."""
+    tmp = path[:-4] + ".tmp.png"
+    img.save(tmp, optimize=True)
+    os.replace(tmp, path)
+
+
+def framed(card, side=1600, radius=34):
+    """The poster as a rounded card on a square of its own blurred, darkened image, with a thin border and a
+    shadow, so a chat's square crop only trims background."""
+    w, h = card.size
+    scale = side / min(w, h)
+    bg = card.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
+    left, top = (bg.width - side) // 2, (bg.height - side) // 2
+    bg = bg.crop((left, top, left + side, top + side)).filter(ImageFilter.GaussianBlur(90))
+    bg = Image.blend(bg, Image.new("RGB", bg.size, (4, 12, 7)), 0.5).convert("RGBA")
+    x, y = (side - w) // 2, (side - h) // 2
+    shadow = Image.new("RGBA", bg.size, (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rounded_rectangle([x, y + 18, x + w, y + h + 18], radius=radius, fill=(0, 0, 0, 170))
+    bg.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(28)))
+    mask = Image.new("L", card.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w - 1, h - 1], radius=radius, fill=255)
+    bg.paste(card, (x, y), mask)
+    ImageDraw.Draw(bg).rounded_rectangle([x - 1, y - 1, x + w, y + h], radius=radius + 1, outline=LEAF + (110,), width=3)
+    return bg.convert("RGB")
 
 
 if __name__ == "__main__":
