@@ -64,21 +64,30 @@ main,footer{margin-left:248px}
   .bottombar .on{color:var(--accent);background:var(--accent-soft)}
   body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
   .totop{bottom:calc(env(safe-area-inset-bottom,0px) + 86px)}
+  /* the More sheet opens above the tab bar, which stays tappable (More toggles it) */
+  .bottombar{z-index:45}
+  .bottombar button[aria-expanded="true"]{color:var(--accent);background:var(--accent-soft)}
   .exambar{top:calc(env(safe-area-inset-top,0px) + var(--navh,54px))}
 }
 /* frosted glass where supported */
 @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) and (background:color-mix(in srgb, red 50%, transparent)){
   .topbar,.bottombar{background:color-mix(in srgb, var(--surface) 80%, transparent);-webkit-backdrop-filter:saturate(1.5) blur(14px);backdrop-filter:saturate(1.5) blur(14px)}
 }
-.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;background:rgba(4,10,14,.45)}
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;background:rgba(4,10,14,.45);cursor:pointer;touch-action:none;overscroll-behavior:contain}
 .sheet[hidden]{display:none}
-.sheet-panel{width:100%;display:grid;gap:4px;padding:8px 14px calc(18px + env(safe-area-inset-bottom,0px));border-radius:20px 20px 0 0;background:var(--surface);box-shadow:0 -12px 32px rgba(0,0,0,.22);animation:sheetUp .24s cubic-bezier(.2,.7,.2,1) both}
-.sheet-grip{width:42px;height:4px;border-radius:999px;background:var(--line);justify-self:center;margin:6px 0 10px}
+.sheet-panel{width:100%;max-height:calc(100% - 56px);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;cursor:auto;display:grid;gap:4px;padding:8px 14px calc(18px + env(safe-area-inset-bottom,0px));border-radius:20px 20px 0 0;background:var(--surface);box-shadow:0 -12px 32px rgba(0,0,0,.22);transition:transform .2s ease;animation:sheetUp .24s cubic-bezier(.2,.7,.2,1) backwards}
+.sheet-grip{width:42px;height:4px;border-radius:999px;background:var(--line);justify-self:center;margin:6px 0 2px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:0 4px 4px 12px}
+.sheet-head b{font-family:var(--display);font-size:1.05rem}
+.sheet-close{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:var(--bg);color:var(--ink);cursor:pointer}
+.sheet-close svg{width:20px;height:20px}
+body.sheet-open{overflow:hidden}
 .sheet a{display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;text-decoration:none;color:var(--ink)}
 .sheet a svg{width:22px;height:22px;color:var(--accent);flex:none}
 .sheet a b{display:block;font-weight:600}
 .sheet a small{display:block;color:var(--muted);font-size:.82rem}
 .sheet a.on{background:var(--accent-soft)}
+@media (max-width:1023px){ .sheet{bottom:calc(67px + env(safe-area-inset-bottom,0px))} .sheet-panel{padding-bottom:12px} }
 @keyframes sheetUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 
 /* page transitions (View Transitions API where available) */

@@ -41,17 +41,59 @@ function renderPager(page) {
 }
 function hashNow() { try { return decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return ""; } }
 function isRoute(h) { return PAGE_ORDER.includes(h) || !!ALIAS[h] || /^w[0-4]$/.test(h) || /^d-[a-z]+$/.test(h) || /^ga[1-4]$/.test(h); }
-function go(h) { route(h); try { if (hashNow() !== h) history.pushState({ h }, "", "#" + h); } catch (e) {} }
+function go(h) {
+  const fromSheet = sheetEntry; sheetEntry = false;   // a page opened from the More sheet takes over the sheet's history entry
+  route(h);
+  try {
+    if (hashNow() !== h) history[fromSheet ? "replaceState" : "pushState"]({ h }, "", "#" + h);
+    else if (fromSheet) { skipPop = true; history.back(); }
+  } catch (e) {}
+}
 document.addEventListener("click", e => {
   const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
   const h = a.getAttribute("href").slice(1); if (!isRoute(h)) return;
   e.preventDefault(); go(h);
 });
-function openSheet() { const s = document.getElementById("moreSheet"); s.hidden = false; document.getElementById("moreBtn").setAttribute("aria-expanded", "true"); }
-function closeSheet() { const s = document.getElementById("moreSheet"); if (!s || s.hidden) return; s.hidden = true; document.getElementById("moreBtn").setAttribute("aria-expanded", "false"); }
-document.getElementById("moreBtn").addEventListener("click", () => { document.getElementById("moreSheet").hidden ? openSheet() : closeSheet(); });
-document.getElementById("moreSheet").addEventListener("click", e => { if (e.target.id === "moreSheet") closeSheet(); });
+
+/* ---------- More sheet (phones): opens above the tab bar; closes with More, ×, the backdrop, a swipe down, Esc or Back ---------- */
+const sheetEl = document.getElementById("moreSheet"), sheetPanel = sheetEl.querySelector(".sheet-panel"), moreBtn = document.getElementById("moreBtn");
+let sheetEntry = false, skipPop = false;   // sheetEntry: a history entry was pushed, so the phone's Back button closes the sheet
+function openSheet() {
+  sheetEl.hidden = false; moreBtn.setAttribute("aria-expanded", "true"); document.body.classList.add("sheet-open");
+  sheetPanel.scrollTop = 0;
+  try { history.pushState({ sheet: true }, ""); sheetEntry = true; } catch (e) {}
+}
+// how: "nav" (a page is opening and go() reuses the history entry), "pop" (Back already removed it), or nothing (dismissed: remove it)
+function closeSheet(how) {
+  if (sheetEl.hidden) return;
+  sheetEl.hidden = true; sheetPanel.style.transform = ""; sheetPanel.style.transition = "";
+  moreBtn.setAttribute("aria-expanded", "false"); document.body.classList.remove("sheet-open");
+  if (sheetEntry && !how) { skipPop = true; try { history.back(); } catch (e) { skipPop = false; } }
+  sheetEntry = false;
+}
+moreBtn.addEventListener("click", () => { sheetEl.hidden ? openSheet() : closeSheet(); });
+sheetEl.addEventListener("click", e => { if (e.target === sheetEl) closeSheet(); });
+document.getElementById("sheetClose").addEventListener("click", () => closeSheet());
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+(function sheetSwipe() {
+  let y0 = null, dy = 0;
+  sheetPanel.addEventListener("touchstart", e => {
+    if (sheetPanel.scrollTop > 0 || e.touches.length > 1) { y0 = null; return; }
+    y0 = e.touches[0].clientY; dy = 0; sheetPanel.style.transition = "none";
+  }, { passive: true });
+  sheetPanel.addEventListener("touchmove", e => {
+    if (y0 == null) return;
+    dy = e.touches[0].clientY - y0;
+    if (dy > 0) { sheetPanel.style.transform = "translateY(" + dy + "px)"; if (e.cancelable) e.preventDefault(); }
+  }, { passive: false });
+  const end = () => {
+    if (y0 == null) return;
+    y0 = null; sheetPanel.style.transition = "";
+    if (dy > 80) closeSheet(); else sheetPanel.style.transform = "";
+  };
+  sheetPanel.addEventListener("touchend", end);
+  sheetPanel.addEventListener("touchcancel", () => { dy = 0; end(); });
+})();
 
 
 function route(hIn) {
@@ -73,7 +115,7 @@ function route(hIn) {
     document.querySelectorAll("[data-page]").forEach(a => { const on = a.dataset.page === page; a.classList.toggle("on", on); if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
     const mb = document.getElementById("moreBtn"); if (mb) mb.classList.toggle("on", MORE_PAGES.includes(page));
     const tt = document.getElementById("topTitle"); if (tt) tt.textContent = PAGE_NAMES[page];
-    closeSheet(); renderPager(page);
+    closeSheet("nav"); renderPager(page);
     currentPage = page;
     typesetPage(page);
     if (page === "home") renderHome();
@@ -98,6 +140,10 @@ buildWeekFooters();
 buildChips();
 updateCountdowns();
 window.addEventListener("hashchange", () => route());
-window.addEventListener("popstate", () => route());
+window.addEventListener("popstate", () => {
+  if (skipPop) { skipPop = false; return; }       // our own history.back() after dismissing the sheet
+  if (!sheetEl.hidden) { closeSheet("pop"); return; }   // Back closes the sheet before leaving the page
+  route();
+});
 route();
 window.s2Icons && window.s2Icons();
