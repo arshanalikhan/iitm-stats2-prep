@@ -5,6 +5,9 @@
 .katex-display{margin:.4em 0;overflow-x:auto;overflow-y:hidden;padding:2px 0}
 .q-text .katex-display,.why .katex-display{margin:.3em 0}
 .mathblock{overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+/* KaTeX's hidden MathML copy is position:absolute; make every sideways scroller its containing block,
+   or that copy escapes the scroller and widens the whole page on small phones */
+.katex-display,.mathblock,.tbl,.ptwrap,.heatwrap,.wscroll,figure.diag .scroll,pre.f,.calc{position:relative}
 
 /* small PMF / CDF tables inside questions and notes */
 table.pt{width:auto;border-collapse:collapse;margin:6px 0;font-size:.92rem;background:var(--surface)}
@@ -27,6 +30,8 @@ table.pt td.m,table.pt th.m{background:var(--accent-soft);color:var(--accent)}
 
 /* notes */
 .defn,.ex,.warn{border-radius:10px;padding:12px 14px;max-width:84ch;display:grid;gap:6px}
+/* grid children may shrink, so wide maths scrolls inside its box instead of widening the page on phones */
+.defn > *,.ex > *,.warn > *,.fl li > *{min-width:0}
 .defn{background:var(--accent-soft);border-left:4px solid var(--accent)}
 .ex{background:var(--surface);border:1px solid var(--line)}
 .warn{background:var(--bad-soft);border-left:4px solid var(--bad)}

@@ -96,8 +96,10 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet()
 })();
 
 
+let routedHash = null;   // the hash last routed, so Back (popstate, then hashchange) renders the page once
 function route(hIn) {
   const h = hIn == null ? hashNow() : hIn;
+  routedHash = h;
   let page = h || "home", target = null, week = null, drill = null;
   if (/^w[0-4]$/.test(h)) { page = "notes"; week = h; }
   else if (/^d-[a-z]+$/.test(h)) { page = "drills"; drill = h.slice(2); }
@@ -139,11 +141,11 @@ function route(hIn) {
 buildWeekFooters();
 buildChips();
 updateCountdowns();
-window.addEventListener("hashchange", () => route());
+window.addEventListener("hashchange", () => { if (hashNow() !== routedHash) route(); });
 window.addEventListener("popstate", () => {
   if (skipPop) { skipPop = false; return; }       // our own history.back() after dismissing the sheet
   if (!sheetEl.hidden) { closeSheet("pop"); return; }   // Back closes the sheet before leaving the page
-  route();
+  if (hashNow() !== routedHash) route();
 });
 route();
 window.s2Icons && window.s2Icons();

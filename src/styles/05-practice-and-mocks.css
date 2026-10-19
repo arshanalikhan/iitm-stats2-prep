@@ -93,6 +93,11 @@
 .pill.ok{background:var(--ok-soft);color:var(--ok)}
 .pill.no{background:var(--bad-soft);color:var(--bad)}
 .result{display:grid;gap:18px}
+/* notice when a timed paper ends while the reader is on another page */
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);z-index:46;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100% - 32px);padding:10px 8px 10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:.9rem;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.toast a{color:inherit;font-weight:600;white-space:nowrap}
+.toast-x{flex:none;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:inherit;font-size:1.2rem;line-height:1;cursor:pointer}
+@media (max-width:1023px){ .toast{bottom:calc(env(safe-area-inset-bottom,0px) + 80px)} }
 
 /* traps */
 .traps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:0 28px;margin:0;padding:0;list-style:none}

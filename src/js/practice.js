@@ -36,10 +36,10 @@ function practiceCard(i, n) {
     onPick(k) {
       if (q.t === "mcq") { st.sel = [k]; st.done = true; st.ok = k === q.a[0]; }
       else st.sel = st.sel.includes(k) ? st.sel.filter(x => x !== k) : st.sel.concat(k);
-      store[id] = st; savePractice(); redrawPractice(i);
+      store[id] = st; savePractice(); redrawPractice(i); if (st.done) buildChips();   // "Not answered" / "Got wrong" counts
     },
     onVal(v) { st.val = v; store[id] = st; },
-    onCheck() { st.done = true; st.ok = isCorrect(q, st); store[id] = st; savePractice(); redrawPractice(i); if (q.t === "num") buildChips(); }
+    onCheck() { st.done = true; st.ok = isCorrect(q, st); store[id] = st; savePractice(); redrawPractice(i); buildChips(); }
   });
   card.id = "pq" + i; card.dataset.n = n;
   return card;

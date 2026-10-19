@@ -57,4 +57,4 @@ Because practice progress is keyed on question content, editing a question's tex
 
 ## Answers and tolerance
 
-Numeric questions store `n: [value, tolerance]`. Two-decimal answers use 0.006 and three-decimal answers 0.0006, so any correctly rounded entry is accepted. Drills declare the decimals they ask for (`dp`) and the tolerance follows from it (`dpTol` in `core.js`). Entries may be decimals or fractions such as `3/8`.
+Numeric questions store `n: [value, tolerance]`. Two-decimal answers use 0.006 and three-decimal answers 0.0006, so any correctly rounded entry is accepted. Drills declare the decimals they ask for (`dp`) and the tolerance follows from it (`dpTol` in `core.js`). Entries may be decimals or fractions such as `3/8`. `parseAns` also reads a decimal comma (`0,375` as 0.375), drops thousands separators (`1,000`) and allows a leading `+`.

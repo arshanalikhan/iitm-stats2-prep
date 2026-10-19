@@ -53,7 +53,9 @@ function renderPatterns() {
       col.addEventListener("mouseleave", () => { tip.hidden = true; }); col.addEventListener("blur", () => { tip.hidden = true; });
       bars.appendChild(col); xl.appendChild(el("span", null, SHORT(d)));
     });
-    wc.append(lg, bars, xl);
+    const plot = el("div", "wplot"), scroller = el("div", "wscroll");
+    plot.append(bars, xl); scroller.appendChild(plot);
+    wc.append(lg, scroller);
     // filter chips
     const fc = document.getElementById("patFilter");
     [["all", "All weeks"], ["1", "Week 1"], ["2", "Week 2"], ["3", "Week 3"], ["4", "Week 4"]].forEach(([id, l]) => {
@@ -79,16 +81,34 @@ function renderPatterns() {
   }
   drawHeat();
 }
+// Heatmap cells mix the accent into the background. Pick the text colour that reads better on each mix, and
+// where neither reaches 4.5:1 (the mid tones), deepen the cell until one does. Uses the current theme's tokens.
+function heatShade() {
+  const cs = getComputedStyle(document.documentElement);
+  const rgb = v => { const h = cs.getPropertyValue(v).trim().replace("#", ""); return h.length === 6 ? [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255) : null; };
+  const acc = rgb("--accent"), bg = rgb("--bg"), ink = rgb("--ink"), on = rgb("--on-accent");
+  if (!acc || !bg || !ink || !on) return pct => ({ pct, on: pct >= 55 });
+  const lum = c => c.map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((a, v, i) => a + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const cr = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  return pct => {
+    for (let p = pct; ; p++) {
+      const mix = acc.map((a, i) => a * p / 100 + bg[i] * (1 - p / 100)), ci = cr(mix, ink), co = cr(mix, on);
+      if (Math.max(ci, co) >= 4.5 || p >= 100) return { pct: p, on: co > ci };
+    }
+  };
+}
+document.addEventListener("themechange", () => { if (patRendered) drawHeat(); });
 function drawHeat() {
   document.querySelectorAll("#patFilter .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.w === patFilterW)));
   const tb = document.getElementById("heat"); if (!tb) return;
+  const shade = heatShade();
   let h = '<thead><tr><th class="pn">Pattern</th>' + PAT.sittings.map(d => "<th>" + SHORT(d).replace(" ", "<br>") + "</th>").join("") + "<th>Seen</th><th>Chance</th><th></th></tr></thead><tbody>";
   PAT.patterns.filter(p => patFilterW === "all" || String(p.w) === patFilterW).forEach(p => {
     h += '<tr><td class="pn">' + p.name + "<small>Week " + p.w + "</small></td>";
     PAT.sittings.forEach(d => {
       const v = p.m[d] ? scale40(d, p.m[d]) : 0;
-      const pct = Math.round(Math.min(1, v / 8) * 85 + (v ? 15 : 0));
-      h += v ? '<td class="c' + (pct >= 55 ? ' on' : '') + '" style="background:color-mix(in srgb, var(--accent) ' + pct + '%, var(--bg))" title="' + p.name + ", " + LONG(d) + ": " + v.toFixed(1) + ' marks">' + (Math.round(v * 2) / 2) + "</td>" : '<td class="c" title="' + p.name + ", " + LONG(d) + ': not asked"></td>';
+      const s = shade(Math.round(Math.min(1, v / 8) * 85 + (v ? 15 : 0)));
+      h += v ? '<td class="c' + (s.on ? ' on' : '') + '" style="background:color-mix(in srgb, var(--accent) ' + s.pct + '%, var(--bg))" title="' + p.name + ", " + LONG(d) + ": " + v.toFixed(1) + ' marks">' + (Math.round(v * 2) / 2) + "</td>" : '<td class="c" title="' + p.name + ", " + LONG(d) + ': not asked"></td>';
     });
     const c = Math.round(p.ch * 100);
     h += '<td class="seen">' + p.n + "/" + PAT.sittings.length + '</td><td class="ch ' + (c >= 70 ? "hi" : c >= 40 ? "md" : "lo") + '">' + c + '%</td><td class="dr"><a href="#d-' + p.drill + '">Drill →</a></td></tr>';

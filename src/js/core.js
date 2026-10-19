@@ -49,7 +49,13 @@ window.s2MathReady = function () {
 
 /* ---------- Numeric answers ---------- */
 function parseAns(s) {
-  s = String(s || "").trim().replace(/[−–]/g, "-").replace(/\s+/g, "").replace(/,/g, "");
+  s = String(s || "").trim().replace(/[−–]/g, "-").replace(/\s+/g, "").replace(/^\+/, "");
+  // commas: thousands separators (1,000 or 12,500.5) are dropped; a decimal comma (0,375 or 2,5) becomes a point
+  if (s.includes(",")) {
+    if (/^-?[1-9]\d{0,2}(,\d{3})+(\.\d+)?$/.test(s)) s = s.replace(/,/g, "");
+    else if (/^-?\d+,\d+$/.test(s)) s = s.replace(",", ".");
+    else return NaN;
+  }
   if (!s) return NaN;
   const m = s.match(/^(-?\d*\.?\d+)\/(-?\d*\.?\d+)$/);
   if (m) return Number(m[1]) / Number(m[2]);

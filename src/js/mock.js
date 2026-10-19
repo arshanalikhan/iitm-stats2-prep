@@ -29,13 +29,25 @@ function startExam(id, mode) {
   if (id === "P") exam.items = buildPredictedItems();
   saveJSON(EXAM_KEY, exam); renderMock(); focusQuestion();
 }
-function submitExam() {
+// timeUp: the timer ran out (the reader may be on another page, or come back to an expired paper)
+function submitExam(timeUp) {
   if (!exam || exam.done) return;
-  exam.done = true; exam.end = Date.now();
+  exam.done = true; exam.end = Date.now(); if (timeUp === true) exam.timeUp = true;
   const s = score(exam), k = exam.id + "|" + exam.mode;
   if (!best[k] || s.got > best[k].got) { best[k] = { got: s.got, total: s.total, at: exam.end }; saveJSON(BEST_KEY, best); }
-  saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock(); window.scrollTo({ top: 0, behavior: "instant" });
+  saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock();
+  if (currentPage !== "mock") { mockNotice(); return; }   // leave the page they are reading where it is
+  window.scrollTo({ top: 0, behavior: "instant" });
   if (s.pct >= 70 && window.confetti && !REDUCE) setTimeout(() => window.confetti({ particleCount: 140, spread: 80, startVelocity: 42, origin: { y: 0.3 } }), 250);
+}
+function mockNotice() {
+  let n = document.getElementById("mockNotice"); if (n) n.remove();
+  n = el("div", "toast"); n.id = "mockNotice"; n.setAttribute("role", "status");
+  const a = el("a", null, "See your score"); a.href = "#mock";
+  const x = el("button", "toast-x", "×"); x.type = "button"; x.setAttribute("aria-label", "Dismiss");
+  [a, x].forEach(b => b.addEventListener("click", () => n.remove()));
+  n.append(el("span", null, "Time is up on your mock paper, so it was submitted."), a, x);
+  document.body.appendChild(n);
 }
 function persist() { saveJSON(EXAM_KEY, exam); renderMock(); }
 function focusQuestion() {
@@ -50,6 +62,7 @@ function focusQuestion() {
 }
 function renderMock() {
   const root = document.getElementById("mockArea"); if (!root) return;
+  if (currentPage === "mock") { const n = document.getElementById("mockNotice"); if (n) n.remove(); }
   root.innerHTML = "";
   if (!exam) root.appendChild(renderPapers());
   else if (!exam.done) root.appendChild(renderExam());
@@ -148,7 +161,7 @@ function renderExam() {
 function renderResult() {
   const s = score(exam), items = examItems(exam);
   const box = el("div", "result");
-  box.appendChild(el("p", "eyebrow", paperName(exam.id) + " · " + MODES[exam.mode] + " · finished"));
+  box.appendChild(el("p", "eyebrow", paperName(exam.id) + " · " + MODES[exam.mode] + (exam.timeUp ? " · time ran out, submitted automatically" : " · finished")));
   const tiles = el("div", "tiles");
   const t = (v, l) => { const d = el("div", "tile"); d.append(el("span", "l", l), el("span", "v", v)); return d; };
   const used = ((exam.end || Date.now()) - exam.start) / 1000;
@@ -187,5 +200,5 @@ setInterval(() => {
   if (!exam || exam.done || !exam.dur) return;
   const r = remaining(), tEl = document.getElementById("timer");
   if (tEl) { tEl.textContent = fmt(r); tEl.classList.toggle("low", r < 300); }
-  if (r <= 0) submitExam();
+  if (r <= 0) submitExam(true);
 }, 1000);
