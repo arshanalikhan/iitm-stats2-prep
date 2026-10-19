@@ -21,7 +21,7 @@ All scripts are plain browser scripts that share globals, so order matters:
 1. **Data**: `data/questions/helpers.js` defines `R` (String.raw), `T()` / `L()` table helpers and the empty `QS` array; each `week*.js` pushes its questions; `mocks.js` defines `MOCKS`; `patterns-data.js` defines `PAT`.
 2. **`js/core.js`**: storage helpers (`loadJSON`, `saveJSON`), DOM helpers (`el`, `html`), seeded random numbers (`rng`), KaTeX typesetting with a queue (`typeset`, `typesetPage`), numeric answer parsing (`parseAns`, `numOk`), and `questionCard()`, which renders every question on the site.
 3. **`js/drills/`**: `helpers.js` has maths and table helpers and the empty `DRILLS` array; each week file pushes generators.
-4. **Page modules**: `practice.js`, `drills-ui.js`, `mock.js`, `patterns.js`, `notes.js`, `home.js`. They define render functions and wire their own buttons.
+4. **Page modules**: `practice.js`, `drills-ui.js`, `mock.js`, `patterns.js`, `notes.js`, `home.js`, `share.js`. They define render functions and wire their own buttons (`share.js` fills the share links and fetches the GitHub star count).
 5. **`js/shell.js`** (last): theme toggle, phone helpers, the router (`route`, `go`) and the boot sequence.
 
 KaTeX loads with `defer`, so it arrives after the app scripts; its `onload` calls `window.s2MathReady()`, which typesets anything that was queued.
@@ -35,6 +35,7 @@ Pages are `<section class="page">` elements; the router shows one and hides the 
 | `#home`, `#notes`, `#formulas`, `#worked`, `#patterns`, `#practice`, `#drills`, `#mock`, `#traps`, `#resources` | that page |
 | `#w0` … `#w4` | the notes page at that week |
 | `#d-<drillId>` | the drills page with that drill selected |
+| `#plan`, `#about` | the home page, scrolled to the study plan or the About section |
 
 Navigation never depends on the hash actually changing (some embedded viewers ignore it); `go()` routes first and then updates the URL when it can.
 

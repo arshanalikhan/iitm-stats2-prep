@@ -2,7 +2,7 @@
 let currentPage = null;
 const PAGE_ORDER = ["home", "notes", "formulas", "worked", "patterns", "practice", "drills", "mock", "traps", "resources"];
 const PAGE_NAMES = { home: "Home", notes: "Week notes", formulas: "Formula sheet", worked: "Worked examples", patterns: "Past quiz patterns", practice: "Practice", drills: "Number drills", mock: "Mock quizzes", traps: "Last-minute traps", resources: "Resources" };
-const ALIAS = { plan: ["home", "plan"] };
+const ALIAS = { plan: ["home", "plan"], about: ["home", "about"] };
 const MORE_PAGES = ["formulas", "worked", "patterns", "traps", "resources"];
 
 /* ---------- Light / dark toggle ---------- */
@@ -83,7 +83,8 @@ function route(hIn) {
     heroAnim(page === "home");
     document.title = (page === "home" ? "" : PAGE_NAMES[page] + " · ") + "Stats 2 Quiz 1 Prep";
     const t = target ? document.getElementById(target) : null;
-    if (t) t.scrollIntoView(); else window.scrollTo({ top: 0, behavior: "instant" });
+    // jump straight there when arriving from another page or a shared link; glide only within the same page
+    if (t) t.scrollIntoView({ behavior: pageChanged ? "instant" : "smooth" }); else window.scrollTo({ top: 0, behavior: "instant" });
   };
   if (useVT) { try { const vt = document.startViewTransition(apply); [vt.ready, vt.finished, vt.updateCallbackDone].forEach(pr => pr && pr.catch(() => {})); setTimeout(() => { if (!applied) { try { vt.skipTransition(); } catch (e) {} apply(); } }, 400); } catch (e) { apply(); } }
   else apply();

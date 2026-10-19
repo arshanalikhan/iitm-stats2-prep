@@ -80,7 +80,7 @@ function renderPapers() {
     row.append(l, x); c.appendChild(row); papers.appendChild(c);
   });
   wrap.append(dp, papers);
-  wrap.appendChild(html("p", "callout", "<b>Also do Seek's own mock.</b> The Jun 2026 course page on Seek has \"Mock For Quiz 1\" (graded instantly, with answers after you submit). Your Sep 2026 page will likely get one closer to the quiz."));
+  wrap.appendChild(html("p", "callout", "<b>Also do Seek's own mock.</b> If you took the course in the Jun 2026 term, its Seek page has \"Mock For Quiz 1\" (graded instantly, with answers after you submit). This term's page usually gets one closer to the quiz."));
   return wrap;
 }
 function renderExam() {

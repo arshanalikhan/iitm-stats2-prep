@@ -6,6 +6,7 @@ Output (site/ is generated; never edit it by hand):
   site/index.html              the page shell + every page from src/pages/, in filename order
   site/assets/css/style.css    src/styles/*.css concatenated in filename order
   site/assets/js/app.js        the data and script files below, concatenated in SCRIPTS order
+  site/assets/*                src/assets/* copied as they are (share image for link previews)
 
 All scripts are plain browser scripts that share globals, so order matters: helpers before the
 data that uses them, data before the UI, and src/js/shell.js last because it boots the app.
@@ -13,6 +14,7 @@ Asset URLs carry a content hash (?v=...) so a new deploy is never mixed with cac
 import glob
 import hashlib
 import os
+import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC, OUT = os.path.join(ROOT, "src"), os.path.join(ROOT, "site")
@@ -25,9 +27,13 @@ SCRIPTS = [
     # app
     "js/core.js",
     "js/drills/helpers.js", "js/drills/week1.js", "js/drills/week2.js", "js/drills/week3.js", "js/drills/week4.js",
-    "js/practice.js", "js/drills-ui.js", "js/mock.js", "js/patterns.js", "js/notes.js", "js/home.js",
+    "js/practice.js", "js/drills-ui.js", "js/mock.js", "js/patterns.js", "js/notes.js", "js/home.js", "js/share.js",
     "js/shell.js",
 ]
+SITE_URL = "https://arshanalikhan.github.io/iitm-stats2-prep/"
+SHARE_TITLE = "Stats 2 Quiz 1 Prep · IIT Madras BS"
+SHARE_DESC = ("Week notes, every past Quiz 1 since 2022 analysed by pattern, 117 practice questions, "
+              "number drills and timed mock quizzes for BSMA1004 Weeks 1-4. By Arshan Ali Khan, RC Lucknow, Saranda House.")
 KATEX = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist"
 BASE_CSS = ("[hidden]{display:none!important}img{max-width:100%}"
             ":root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);"
@@ -63,9 +69,17 @@ def main():
 
     pages = sorted(glob.glob(os.path.join(SRC, "pages", "*.html")))
     body = "\n".join(open(p, encoding="utf-8").read().strip() for p in pages)
-    body += ("\n</main>\n<footer><div class=\"wrap\">Unofficial study aid for IIT Madras BS BSMA1004 (Statistics for Data Science II), "
-             "Sep 2026 term. Questions are original, modelled on the course's assignments and past Quiz 1 papers. "
-             "Progress is saved only in this browser.</div></footer>")
+    body += ("\n</main>\n<footer><div class=\"wrap footrow\">"
+             "<span>Made by <a href=\"#about\">Arshan Ali Khan</a>, Regional Coordinator, Lucknow Region, Saranda House. "
+             "A personal, unofficial resource, not endorsed by IIT Madras or Saranda House. "
+             "Progress is saved only in this browser.</span>"
+             "<a class=\"btn footstar\" href=\"https://github.com/arshanalikhan/iitm-stats2-prep\" target=\"_blank\" rel=\"noopener\">"
+             "&#9733; Star on GitHub</a></div></footer>")
+
+    # static files (share image, etc.) are copied as they are
+    for p in glob.glob(os.path.join(SRC, "assets", "*")):
+        os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
+        shutil.copyfile(p, os.path.join(OUT, "assets", os.path.basename(p)))
     page = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -73,6 +87,21 @@ def main():
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stats 2 Quiz 1 Prep</title>
 <meta name="description" content="Quiz 1 prep for IIT Madras BS Statistics for Data Science II (BSMA1004): week notes, formula sheet, worked examples, past quiz pattern analysis, practice questions, number drills and timed mock quizzes for Weeks 1-4.">
+<meta name="author" content="Arshan Ali Khan">
+<link rel="canonical" href="{SITE_URL}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Stats 2 Quiz 1 Prep">
+<meta property="og:title" content="{SHARE_TITLE}">
+<meta property="og:description" content="{SHARE_DESC}">
+<meta property="og:url" content="{SITE_URL}">
+<meta property="og:image" content="{SITE_URL}assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Stats 2 Quiz 1 Prep: notes, past-paper patterns, practice, drills and mocks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{SHARE_TITLE}">
+<meta name="twitter:description" content="{SHARE_DESC}">
+<meta name="twitter:image" content="{SITE_URL}assets/og.png">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f4f3f8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#12101c" media="(prefers-color-scheme: dark)">
