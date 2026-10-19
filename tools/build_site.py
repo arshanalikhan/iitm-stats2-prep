@@ -103,9 +103,9 @@ def main():
 <meta name="twitter:description" content="{SHARE_DESC}">
 <meta name="twitter:image" content="{SITE_URL}assets/og.png">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#f4f3f8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#12101c" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%235a3fb0%27/%3E%3Cpath d=%27M6 24c3 0 4-12 10-12s7 12 10 12%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f1f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b140f" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%232a6440%27/%3E%3Cpath d=%27M6 24c3 0 4-12 10-12s7 12 10 12%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">

@@ -6,7 +6,7 @@ Study site for **IIT Madras BS · BSMA1004 Statistics for Data Science II**<br>
 Quiz 1 · Weeks 1–4 · Sep 2026 term · quiz on 15 Nov 2026
 
 [![Deploy](https://github.com/arshanalikhan/iitm-stats2-prep/actions/workflows/deploy.yml/badge.svg)](https://github.com/arshanalikhan/iitm-stats2-prep/actions/workflows/deploy.yml)
-[![Live site](https://img.shields.io/badge/live-site-5a3fb0)](https://arshanalikhan.github.io/iitm-stats2-prep/)
+[![Live site](https://img.shields.io/badge/live-site-2a6440)](https://arshanalikhan.github.io/iitm-stats2-prep/)
 ![No dependencies](https://img.shields.io/badge/dependencies-none-2ea44f)
 
 **[Open the site](https://arshanalikhan.github.io/iitm-stats2-prep/)** ·

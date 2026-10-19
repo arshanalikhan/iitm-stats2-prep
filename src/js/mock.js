@@ -138,7 +138,7 @@ function renderExam() {
     pal.appendChild(b);
   });
   const lg = el("p", "legend");
-  (learn ? ["Green = right", "Red = wrong", "Amber = revealed", "Purple = answered", "Outline = current"] : ["Purple = answered", "Amber underline = marked", "Outline = current"]).forEach(t => lg.appendChild(el("span", null, t)));
+  (learn ? ["Teal = right", "Red = wrong", "Gold = revealed", "Solid green = answered", "Outline = current"] : ["Solid green = answered", "Gold underline = marked", "Outline = current"]).forEach(t => lg.appendChild(el("span", null, t)));
   const quit = el("button", "btn", "Quit paper"); quit.type = "button";
   armButton(quit, "Quit paper", "Tap again to discard", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
   side.append(pal, lg, quit);

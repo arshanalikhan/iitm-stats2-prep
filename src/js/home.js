@@ -58,7 +58,7 @@ const heroAnim = (function () {
   const cv = document.querySelector(".hero-net");
   if (!cv || !cv.getContext) return () => {};
   const ctx = cv.getContext("2d");
-  let raf = 0, running = false, W = 0, H = 0, x0 = 0, x1 = 0, bins = [], dots = [], col = "#5a3fb0", muted = "#5c5873";
+  let raf = 0, running = false, W = 0, H = 0, x0 = 0, x1 = 0, bins = [], dots = [], col = "#2a6440", muted = "#4f6157";
   const NB = 13, ROWS = 12;
   const readColor = () => { const cs = getComputedStyle(document.documentElement); col = cs.getPropertyValue("--accent").trim() || col; muted = cs.getPropertyValue("--muted").trim() || muted; };
   function layout() {

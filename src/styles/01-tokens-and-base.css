@@ -1,27 +1,29 @@
 /* Tokens (light and dark), base typography */
+/* Saranda House palette: forest-tinted neutrals, house green accent, logo gold highlight.
+   "Correct" is teal so it never reads as the green accent (a selected option vs the right one). */
 :root{
-  --bg:#f4f3f8; --surface:#ffffff; --ink:#1b1830; --muted:#5c5873; --line:#dcd9e8;
-  --accent:#5a3fb0; --accent-soft:#ece8fb; --on-accent:#ffffff;
-  --hi:#8f5400; --hi-soft:#fbefd9;
-  --ok:#17703f; --ok-soft:#e1f2e8; --bad:#b3261e; --bad-soft:#fbe6e4;
+  --bg:#f1f4ef; --surface:#ffffff; --ink:#14201a; --muted:#4f6157; --line:#d3ded5;
+  --accent:#2a6440; --accent-soft:#e1eee3; --on-accent:#ffffff;
+  --hi:#87620a; --hi-soft:#f7eed2;
+  --ok:#0b7266; --ok-soft:#dbf0ec; --bad:#b3261e; --bad-soft:#fbe6e4;
   --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
   --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#12101c; --surface:#1b1829; --ink:#e8e6f2; --muted:#a29dba; --line:#2e2a44;
-    --accent:#b4a2ff; --accent-soft:#2a2247; --on-accent:#150f2e;
-    --hi:#e6ad4d; --hi-soft:#30250f;
-    --ok:#52c98f; --ok-soft:#0f2b1f; --bad:#f27a6f; --bad-soft:#371917;
+    --bg:#0b140f; --surface:#121e17; --ink:#e3ede5; --muted:#9bb1a2; --line:#233a2c;
+    --accent:#8fd3a1; --accent-soft:#1a3424; --on-accent:#0a1a0f;
+    --hi:#e2b93b; --hi-soft:#2d2610;
+    --ok:#4fd0b8; --ok-soft:#0d2c27; --bad:#f27a6f; --bad-soft:#371917;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#12101c; --surface:#1b1829; --ink:#e8e6f2; --muted:#a29dba; --line:#2e2a44;
-  --accent:#b4a2ff; --accent-soft:#2a2247; --on-accent:#150f2e;
-  --hi:#e6ad4d; --hi-soft:#30250f;
-  --ok:#52c98f; --ok-soft:#0f2b1f; --bad:#f27a6f; --bad-soft:#371917;
+  --bg:#0b140f; --surface:#121e17; --ink:#e3ede5; --muted:#9bb1a2; --line:#233a2c;
+  --accent:#8fd3a1; --accent-soft:#1a3424; --on-accent:#0a1a0f;
+  --hi:#e2b93b; --hi-soft:#2d2610;
+  --ok:#4fd0b8; --ok-soft:#0d2c27; --bad:#f27a6f; --bad-soft:#371917;
   color-scheme:dark;
 }
 *{box-sizing:border-box}

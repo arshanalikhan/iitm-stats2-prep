@@ -72,7 +72,7 @@
 .side{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
 .palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:5px}
 .pal{font:inherit;font-family:var(--mono);font-size:.78rem;height:34px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer;font-variant-numeric:tabular-nums}
-.pal.ans{background:var(--accent-soft);border-color:var(--accent)}
+.pal.ans{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .pal.flag{box-shadow:inset 0 -3px 0 var(--hi)}
 .pal.cur{outline:2px solid var(--ink);outline-offset:1px}
 .pal.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
