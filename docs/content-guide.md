@@ -54,6 +54,14 @@ To link a past-paper pattern to a drill, set its `drill` id in `CAT` in `tools/a
 
 Each paper has `id`, `name`, `note` and `items`. Items are question objects plus `m` (marks). Items sharing the same `c` form a comprehension set. A paper must total 40 marks (the data check enforces it).
 
+## Graded assignments (`src/data/ga.js`)
+
+One entry per week: `w`, `title`, `due` (ISO in IST, e.g. `2026-10-25T23:59:00+05:30`), `tentative` while the date is not on Seek yet, `topics`, and `items`.
+
+- **Add a week's items only after its deadline has passed.** The repository is public, so answers in it are published. `tests/check_data.js` fails if a week has items before its `due` time, which blocks the deploy.
+- Never copy the question text. Each item gives `q` (question number(s) on Seek), `mk` (marks), `p` (past-quiz pattern code, optional), `topic`, `idea`, `work` and `ans`. Quote the accepted range for numeric answers.
+- `twin` is an optional original practice question in the practice-bank format (new numbers and settings), with a verified answer.
+
 ## Notes, formulas, worked examples
 
 Edit the HTML in `src/pages/`. Each week of notes is an `<article class="week" id="wN">`; boxes use `defn`, `ex` and `warn` classes. Worked examples are `<article class="wx">` cards with a `<details class="wsol">` working.

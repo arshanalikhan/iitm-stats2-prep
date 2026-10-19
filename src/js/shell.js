@@ -1,9 +1,9 @@
 /* ---------- Shell: theme, phone helpers, page routing and boot. Loaded last. ---------- */
 let currentPage = null;
-const PAGE_ORDER = ["home", "notes", "formulas", "worked", "patterns", "practice", "drills", "mock", "traps", "resources"];
-const PAGE_NAMES = { home: "Home", notes: "Week notes", formulas: "Formula sheet", worked: "Worked examples", patterns: "Past quiz patterns", practice: "Practice", drills: "Number drills", mock: "Mock quizzes", traps: "Last-minute traps", resources: "Resources" };
+const PAGE_ORDER = ["home", "notes", "ga", "formulas", "worked", "patterns", "practice", "drills", "mock", "traps", "resources"];
+const PAGE_NAMES = { home: "Home", notes: "Week notes", ga: "Graded assignments", formulas: "Formula sheet", worked: "Worked examples", patterns: "Past quiz patterns", practice: "Practice", drills: "Number drills", mock: "Mock quizzes", traps: "Last-minute traps", resources: "Resources" };
 const ALIAS = { plan: ["home", "plan"], about: ["home", "about"] };
-const MORE_PAGES = ["formulas", "worked", "patterns", "traps", "resources"];
+const MORE_PAGES = ["ga", "formulas", "worked", "patterns", "traps", "resources"];
 
 /* ---------- Light / dark toggle ---------- */
 (function themeToggle() {
@@ -40,7 +40,7 @@ function renderPager(page) {
   if (i < PAGE_ORDER.length - 1) { const n = el("a", "pg next"); n.href = "#" + PAGE_ORDER[i + 1]; n.append(el("span", "l", "Next"), el("span", "n", PAGE_NAMES[PAGE_ORDER[i + 1]] + " →")); nav.appendChild(n); }
 }
 function hashNow() { try { return decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return ""; } }
-function isRoute(h) { return PAGE_ORDER.includes(h) || !!ALIAS[h] || /^w[0-4]$/.test(h) || /^d-[a-z]+$/.test(h); }
+function isRoute(h) { return PAGE_ORDER.includes(h) || !!ALIAS[h] || /^w[0-4]$/.test(h) || /^d-[a-z]+$/.test(h) || /^ga[1-4]$/.test(h); }
 function go(h) { route(h); try { if (hashNow() !== h) history.pushState({ h }, "", "#" + h); } catch (e) {} }
 document.addEventListener("click", e => {
   const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
@@ -59,6 +59,7 @@ function route(hIn) {
   let page = h || "home", target = null, week = null, drill = null;
   if (/^w[0-4]$/.test(h)) { page = "notes"; week = h; }
   else if (/^d-[a-z]+$/.test(h)) { page = "drills"; drill = h.slice(2); }
+  else if (/^ga[1-4]$/.test(h)) { page = "ga"; target = h; }
   else if (ALIAS[h]) [page, target] = ALIAS[h];
   if (!PAGE_ORDER.includes(page)) page = "home";
   const pageChanged = currentPage !== page;
@@ -80,6 +81,7 @@ function route(hIn) {
     if (page === "drills") { renderDrillGrid(); renderDrill(false); }
     if (page === "mock") renderMock();
     if (page === "patterns") renderPatterns();
+    if (page === "ga") renderGA();
     heroAnim(page === "home");
     document.title = (page === "home" ? "" : PAGE_NAMES[page] + " · ") + "Stats 2 Quiz 1 Prep";
     const t = target ? document.getElementById(target) : null;

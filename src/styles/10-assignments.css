@@ -1,0 +1,35 @@
+/* Graded assignments page */
+.ga-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.ga-tile{display:grid;gap:2px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-decoration:none}
+.ga-tile .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ga-tile b{font-size:1rem;font-weight:600}
+.ga-tile .st{font-size:.82rem;color:var(--muted)}
+.ga-tile.open{border-color:var(--accent);background:radial-gradient(400px 120px at 100% 0%, var(--accent-soft), transparent 70%), var(--surface)}
+.ga-tile.open .st{color:var(--accent);font-weight:600}
+.ga-tile.solved b::before{content:"✓ ";color:var(--accent)}
+@media (hover:hover){ .ga-tile:hover{border-color:var(--accent)} }
+
+.ga-week{display:grid;gap:12px;padding-top:8px;scroll-margin-top:72px}
+.ga-head{display:grid;gap:4px}
+.ga-head h3{font-size:1.35rem}
+.ga-topics{color:var(--muted)}
+.ga-meta{font-family:var(--mono);font-size:.78rem;color:var(--accent)}
+.ga-list{display:grid;gap:8px}
+.ga-item{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.ga-item summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:12px 14px;cursor:pointer;list-style:none}
+.ga-item summary::-webkit-details-marker{display:none}
+.ga-item summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--muted)}
+.ga-item[open] summary::after{content:"−"}
+.ga-item .qn{font-family:var(--mono);font-weight:600;color:var(--accent);min-width:3.6em}
+.ga-item .tp{font-weight:500;flex:1 1 16em;min-width:0}
+.ga-item .mk,.ga-item .pat{font-family:var(--mono);font-size:.72rem;color:var(--muted);white-space:nowrap}
+.ga-item .pat{padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.ga-body{display:grid;gap:10px;padding:0 14px 14px;min-width:0}
+.ga-body p{color:var(--ink);line-height:1.6}
+.ga-body .ga-ans{padding:8px 12px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0}
+.ga-body > .btn{justify-self:start}
+.ga-twin:empty{display:none}
+.ga-wait{display:grid;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
+.ga-links{display:flex;flex-wrap:wrap;gap:8px}
+.ga-links .btn{text-decoration:none}
+@media (max-width:640px){ .ga-item summary{padding:10px 12px} .ga-body{padding:0 12px 12px} .ga-item .qn{min-width:auto} }

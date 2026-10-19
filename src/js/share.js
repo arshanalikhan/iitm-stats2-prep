@@ -1,7 +1,7 @@
 /* ---------- Share and star: WhatsApp / copy / native share buttons, live GitHub star count ---------- */
 const SITE_URL = "https://arshanalikhan.github.io/iitm-stats2-prep/";
 const REPO_API = "https://api.github.com/repos/arshanalikhan/iitm-stats2-prep";
-const SHARE_TEXT = "Stats 2 Quiz 1 (15 Nov) prep site: week notes, every past Quiz 1 since 2022 analysed by pattern, 117 practice questions, number drills and timed mocks. Free:";
+const SHARE_TEXT = "Stats 2 Quiz 1 (15 Nov) prep site, a Saranda House initiative: week notes, every past Quiz 1 since 2022 analysed by pattern, 117 practice questions, number drills, timed mocks, and graded-assignment answers after each deadline. Free:";
 
 (function shareButtons() {
   const wa = document.getElementById("shareWa");
