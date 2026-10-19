@@ -140,7 +140,7 @@ def og():
         x = chip(d, x, 348, t, f) + 12
     check("og chips", x, 830)
     d.text((72, 560), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(SEMI, 24), fill=CREAM, anchor="lm")
-    d.text((W - 72, 560), "Free · arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 20), fill=SAGE, anchor="rm")
+    d.text((W - 72, 560), "arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 20), fill=SAGE, anchor="rm")
     out = os.path.join(ROOT, "src", "assets", "og.png")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     im.convert("RGB").save(out, optimize=True)
@@ -184,7 +184,7 @@ def poster():
     im.paste(qr_image(qs), (qx, qy))
     d.text((qx + qs / 2, qy + qs + 30), "Scan to open", font=font(SEMI, 24), fill=CREAM, anchor="ma")
     d.text((W / 2, 1176), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(SEMI, 32), fill=CREAM, anchor="ma")
-    d.text((W / 2, 1224), "Free  ·  arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 24), fill=SAGE, anchor="ma")
+    d.text((W / 2, 1224), "arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 24), fill=SAGE, anchor="ma")
     out = os.path.join(ROOT, "marketing", "poster.png")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     im.convert("RGB").save(out, optimize=True)
