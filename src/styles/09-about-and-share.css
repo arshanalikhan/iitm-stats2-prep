@@ -1,7 +1,7 @@
 /* House credit, About section, star and share buttons, footer */
 /* the Saranda House emblem is gold on black, so it always sits on a black disc (both themes) */
 .house-av{flex:none;width:28px;height:28px;border-radius:50%;background:#000;box-shadow:0 0 0 1px var(--line)}
-.house-logo{flex:none;width:96px;height:96px;border-radius:16px;background:#000}
+.house-logo{flex:none;width:96px;height:96px;border-radius:50%}
 .mono-av{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.02em}
 .mono-av.big{width:64px;height:64px;font-size:1.4rem}
 
@@ -39,4 +39,32 @@
 .footrow{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
 .footrow span{max-width:80ch}
 .footstar{text-decoration:none;white-space:nowrap}
-@media (max-width:640px){ .aboutcard{padding:16px;gap:12px} .mono-av.big{width:52px;height:52px;font-size:1.15rem} .house-logo{width:72px;height:72px;border-radius:12px} }
+@media (max-width:640px){ .aboutcard{padding:16px;gap:12px} .mono-av.big{width:52px;height:52px;font-size:1.15rem} .house-logo{width:72px;height:72px} }
+
+/* Saranda House banner at the top of Home, in the house website's forest colours (house green #2e5137) */
+:root{--hb-bg1:#f3f1e2;--hb-bg2:#dce8d5;--hb-ink:#2e5137;--hb-soft:#4a6a52;--hb-pine:#2e5137;--hb-kick:#7d5f0c;--hb-line:#c5d6bf}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--hb-bg1:#0d1f12;--hb-bg2:#17331f;--hb-ink:#c0e1c7;--hb-soft:#9dbca5;--hb-pine:#98cda4;--hb-kick:#e2b93b;--hb-line:#27432f}
+}
+:root[data-theme="dark"]{--hb-bg1:#0d1f12;--hb-bg2:#17331f;--hb-ink:#c0e1c7;--hb-soft:#9dbca5;--hb-pine:#98cda4;--hb-kick:#e2b93b;--hb-line:#27432f}
+.house-banner{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:24px;padding:22px 28px 34px;border:1px solid var(--hb-line);border-radius:18px;background:linear-gradient(180deg,var(--hb-bg1) 0%,var(--hb-bg2) 100%);color:var(--hb-ink)}
+.hb-pines{position:absolute;left:0;bottom:0;width:100%;height:62%;z-index:-1;pointer-events:none}
+.hb-pines .back{fill:var(--hb-pine);opacity:.10}
+.hb-pines .front{fill:var(--hb-pine);opacity:.2}
+.hb-logo{width:132px;height:132px;border-radius:50%;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+.hb-text{display:grid;gap:2px;min-width:0;container-type:inline-size}
+.hb-kicker{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--hb-kick)}
+/* the word is about 5.4 em wide, so 18cqi always fits its column */
+.hb-name{font-family:"Rubik Distressed",var(--display);font-size:clamp(2.2rem,6.4vw,4.6rem);font-size:clamp(2rem,18cqi,4.6rem);line-height:1;letter-spacing:.03em;text-transform:uppercase;color:var(--hb-ink)}
+.hb-tag{font-family:var(--display);font-weight:700;font-size:clamp(.82rem,1.7vw,1.02rem);letter-spacing:.07em;text-transform:uppercase;color:var(--hb-ink)}
+.hb-by{margin-top:8px;font-size:.88rem;color:var(--hb-soft)}
+.hb-by a{color:var(--hb-ink);font-weight:600}
+.hb-visit{align-self:start;padding:6px 12px;border:1px solid var(--hb-line);border-radius:999px;background:color-mix(in srgb,var(--hb-bg1) 75%,transparent);color:var(--hb-ink);font-size:.82rem;font-weight:500;text-decoration:none;white-space:nowrap}
+@media (hover:hover){ .hb-visit:hover{border-color:var(--hb-ink)} }
+@media (max-width:760px){
+  .house-banner{grid-template-columns:auto minmax(0,1fr);gap:14px 16px;padding:16px 16px 24px}
+  .hb-logo{width:86px;height:86px}
+  .hb-kicker{font-size:.66rem;letter-spacing:.06em}
+  .hb-visit{grid-column:1/-1;justify-self:start}
+}
+@media (max-width:400px){ .hb-logo{width:70px;height:70px} .hb-by{font-size:.82rem} }

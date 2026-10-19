@@ -2,9 +2,10 @@
 
 Usage:  python tools/make_share_images.py [ORIGINAL_LOGO.png]      (needs Pillow and segno: pip install pillow segno)
 
-Given the original Saranda House logo (square, gold on black), it first remakes the logo files the site uses:
-  src/assets/saranda-logo.png     480x480 full logo (About card, share images)
-  src/assets/saranda-emblem.png   192x192 eagle only (sidebar, Home byline)
+Given the original Saranda House logo (1689x1689, a gold-on-black disc with transparent corners; the same file
+the house website uses), it first remakes the logo files the site uses:
+  src/assets/saranda-logo.png     360x360 round logo, transparent corners (Home banner, About card, share images)
+  src/assets/saranda-emblem.png   192x192 eagle only, on black (sidebar)
 Then it always writes:
   src/assets/og.png          1200x630 link-preview image (WhatsApp, LinkedIn, Telegram, X)
   marketing/poster.png       1080x1350 poster with a QR code, for groups and stories
@@ -33,26 +34,35 @@ def font(name, size):
 
 BOLD, SEMI, REG, MONO = "segoeuib.ttf", "seguisb.ttf", "segoeui.ttf", "consola.ttf"
 ASSETS = os.path.join(ROOT, "src", "assets")
-# regions of the 1689x1689 original: the whole mark (eagle + wordmark) and the eagle alone
-LOGO_BOX, EMBLEM_BOX = (114, 118, 1582, 1586), (290, 112, 1407, 1229)
+# regions of the logo as fractions of its side: the whole mark (eagle + wordmark) and the eagle alone
+LOGO_BOX, EMBLEM_BOX = (0.0675, 0.07, 0.9366, 0.939), (0.1717, 0.0663, 0.8330, 0.7277)
+
+
+def frac_crop(im, box):
+    return im.crop(tuple(round(v * (im.width if i % 2 == 0 else im.height)) for i, v in enumerate(box)))
 
 
 def make_logo_assets(src):
     im = Image.open(src).convert("RGBA")
+    im.resize((360, 360), Image.LANCZOS).quantize(256, method=Image.FASTOCTREE).save(os.path.join(ASSETS, "saranda-logo.png"), optimize=True)
     black = Image.new("RGBA", im.size, (0, 0, 0, 255))
     black.alpha_composite(im)
-    im = black.convert("RGB")
-    dim = im.convert("L").point(lambda v: 255 if v < 45 else 0)   # drop the faint smoke in the background
-    im = Image.composite(Image.new("RGB", im.size, (0, 0, 0)), im, dim)
-    sx, sy = im.width / 1689, im.height / 1689
-    for name, box, size in (("saranda-logo.png", LOGO_BOX, 480), ("saranda-emblem.png", EMBLEM_BOX, 192)):
-        crop = im.crop(tuple(round(v * (sx if i % 2 == 0 else sy)) for i, v in enumerate(box)))
-        crop.resize((size, size), Image.LANCZOS).quantize(256, method=Image.MEDIANCUT).save(os.path.join(ASSETS, name), optimize=True)
+    flat = black.convert("RGB")
+    dim = flat.convert("L").point(lambda v: 255 if v < 45 else 0)   # drop the faint smoke in the background
+    flat = Image.composite(Image.new("RGB", flat.size, (0, 0, 0)), flat, dim)
+    frac_crop(flat, EMBLEM_BOX).resize((192, 192), Image.LANCZOS).quantize(256, method=Image.MEDIANCUT).save(os.path.join(ASSETS, "saranda-emblem.png"), optimize=True)
 
 
-def paste_logo(im, name, x, y, size):
+def paste_logo(im, name, x, y, size, box=None):
     """Screen-blend the gold-on-black logo onto the dark background, so its black disappears."""
-    logo = Image.open(os.path.join(ASSETS, name)).convert("RGB").resize((size, size), Image.LANCZOS)
+    logo = Image.open(os.path.join(ASSETS, name)).convert("RGBA")
+    black = Image.new("RGBA", logo.size, (0, 0, 0, 255))
+    black.alpha_composite(logo)
+    logo = black.convert("RGB")
+    logo = Image.composite(Image.new("RGB", logo.size, (0, 0, 0)), logo, logo.convert("L").point(lambda v: 255 if v < 45 else 0))
+    if box:
+        logo = frac_crop(logo, box)
+    logo = logo.resize((size, size), Image.LANCZOS)
     region = im.crop((x, y, x + size, y + size))
     im.paste(ImageChops.screen(region, logo), (x, y))
 
@@ -98,7 +108,7 @@ def og():
     x = 72
     for t in ("21 number drills", "Timed mocks", "GA answers"):
         x = chip(d, x, 336, t, f) + 12
-    paste_logo(im, "saranda-logo.png", 846, 96, 290)
+    paste_logo(im, "saranda-logo.png", 846, 96, 290, LOGO_BOX)
     d.line([(72, 500), (W - 72, 500)], fill=LINE, width=2)
     paste_logo(im, "saranda-emblem.png", 68, 522, 76)
     d.text((156, 545), "A Saranda House initiative", font=font(SEMI, 28), fill=INK, anchor="lm")
@@ -125,7 +135,7 @@ def poster():
     d.text((76, 128), "Stats 2", font=font(BOLD, 120), fill=INK)
     d.text((76, 258), "Quiz 1 Prep", font=font(BOLD, 120), fill=INK)
     d.text((80, 410), "Weeks 1–4  ·  Quiz on Sun 15 Nov 2026", font=font(REG, 36), fill=MUTED)
-    paste_logo(im, "saranda-logo.png", 800, 40, 230)
+    paste_logo(im, "saranda-logo.png", 800, 40, 230, LOGO_BOX)
     items = [("Every past Quiz 1 since 2022", "analysed by pattern, with a predicted paper"),
              ("117 practice questions", "with full explanations"),
              ("21 number drills", "fresh numbers every time, worked solutions"),

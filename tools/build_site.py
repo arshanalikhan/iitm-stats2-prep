@@ -109,6 +109,7 @@ def main():
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Distressed&text=SARANDA&display=swap">
 <link rel="stylesheet" href="{KATEX}/katex.min.css">
 <link rel="stylesheet" href="{css_url}">
 <script>try {{ var t0 = localStorage.getItem("s2prep-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); }} catch (e) {{}}</script>
