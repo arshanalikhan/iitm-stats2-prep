@@ -12,16 +12,15 @@ Then it always writes:
   marketing/qr.png           the QR code on its own
 Fonts: Segoe UI and Consolas on Windows; falls back to Pillow's default font elsewhere."""
 import io
-import math
 import os
+import random
 import sys
 
 import segno
-from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 URL = "https://arshanalikhan.github.io/iitm-stats2-prep/"
-BG, INK, MUTED, ACCENT, SOFT, LINE = (18, 16, 28), (240, 238, 248), (170, 164, 192), (180, 162, 255), (56, 46, 98), (52, 46, 76)
 FONTS = "C:/Windows/Fonts/"
 
 
@@ -34,8 +33,8 @@ def font(name, size):
 
 BOLD, SEMI, REG, MONO = "segoeuib.ttf", "seguisb.ttf", "segoeui.ttf", "consola.ttf"
 ASSETS = os.path.join(ROOT, "src", "assets")
-# regions of the logo as fractions of its side: the whole mark (eagle + wordmark) and the eagle alone
-LOGO_BOX, EMBLEM_BOX = (0.0675, 0.07, 0.9366, 0.939), (0.1717, 0.0663, 0.8330, 0.7277)
+# the eagle alone, as fractions of the logo's side
+EMBLEM_BOX = (0.1717, 0.0663, 0.8330, 0.7277)
 
 
 def frac_crop(im, box):
@@ -53,112 +52,142 @@ def make_logo_assets(src):
     frac_crop(flat, EMBLEM_BOX).resize((192, 192), Image.LANCZOS).quantize(256, method=Image.MEDIANCUT).save(os.path.join(ASSETS, "saranda-emblem.png"), optimize=True)
 
 
-def paste_logo(im, name, x, y, size, box=None):
-    """Screen-blend the gold-on-black logo onto the dark background, so its black disappears."""
-    logo = Image.open(os.path.join(ASSETS, name)).convert("RGBA")
-    black = Image.new("RGBA", logo.size, (0, 0, 0, 255))
-    black.alpha_composite(logo)
-    logo = black.convert("RGB")
-    logo = Image.composite(Image.new("RGB", logo.size, (0, 0, 0)), logo, logo.convert("L").point(lambda v: 255 if v < 45 else 0))
-    if box:
-        logo = frac_crop(logo, box)
-    logo = logo.resize((size, size), Image.LANCZOS)
-    region = im.crop((x, y, x + size, y + size))
-    im.paste(ImageChops.screen(region, logo), (x, y))
+# House colours, after saranda.iitmbs.org: forest greens, cream text, a gold kicker
+F_TOP, F_BOT = (13, 31, 18), (24, 52, 32)
+CREAM, SAGE, GOLD, LEAF = (243, 241, 226), (163, 194, 170), (226, 185, 59), (152, 205, 164)
+CHIP_BG, CHIP_LINE = (25, 52, 33), (56, 92, 64)
+KICKER, TAGLINE = "A SARANDA HOUSE INITIATIVE", "THE HOUSE OF EXCELLENCE AND INNOVATION"
 
 
-def glow(w, h, cx, cy, r, colour, strength=110):
-    g = Image.new("RGB", (w, h), BG)
-    d = ImageDraw.Draw(g)
-    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=tuple(int(BG[i] + (colour[i] - BG[i]) * strength / 255) for i in range(3)))
-    return g.filter(ImageFilter.GaussianBlur(r // 2))
+def pines(layer, w, base, hmin, hmax, wscale, gap, fill, seed):
+    """A row of three-tier pine silhouettes standing on y = base."""
+    rnd, d, x = random.Random(seed), ImageDraw.Draw(layer), -20
+    while x < w + 20:
+        h = rnd.uniform(hmin, hmax)
+        tw = h * wscale
+        for top, bottom, width in ((0.0, 0.42, 0.38), (0.25, 0.70, 0.62), (0.52, 1.0, 1.0)):
+            yt, yb, hw = base - h + top * h, base - h + bottom * h * 0.9, tw * width / 2
+            d.polygon([(x, yt), (x + hw, yb), (x - hw, yb)], fill=fill)
+        d.rectangle([x - tw * 0.06, base - h * 0.12, x + tw * 0.06, base], fill=fill)
+        x += tw * rnd.uniform(0.55, 0.9) + gap
 
 
-def bell(d, x0, y0, w, h, bins=13):
-    """Histogram bars with a bell curve over them (the site's hero motif)."""
-    mu, sd = bins / 2, bins / 6.2
-    bw = w / bins
-    for i in range(bins):
-        v = math.exp(-((i + 0.5 - mu) ** 2) / (2 * sd * sd))
-        bh = v * h * 0.86
-        d.rounded_rectangle([x0 + i * bw + 3, y0 + h - bh, x0 + (i + 1) * bw - 3, y0 + h], radius=5, fill=SOFT)
-    pts = [(x0 + t / 200 * w, y0 + h - math.exp(-((t / 200 * bins - mu) ** 2) / (2 * sd * sd)) * h * 0.86) for t in range(201)]
-    d.line(pts, fill=ACCENT, width=5, joint="curve")
-    d.line([(x0, y0 + h + 2), (x0 + w, y0 + h + 2)], fill=LINE, width=2)
+def forest(w, h, tree_h):
+    """Deep-green gradient with a soft fog glow at the top and two layers of pines along the bottom."""
+    im = Image.composite(Image.new("RGB", (w, h), F_BOT), Image.new("RGB", (w, h), F_TOP), Image.linear_gradient("L").resize((w, h))).convert("RGBA")
+    fog = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(fog).ellipse([w * 0.15, -h * 0.35, w * 0.85, h * 0.35], fill=LEAF + (34,))
+    im.alpha_composite(fog.filter(ImageFilter.GaussianBlur(w // 8)))
+    trees = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    pines(trees, w, h, tree_h * 0.55, tree_h, 0.42, 6, LEAF + (22,), 7)
+    pines(trees, w, h, tree_h * 0.3, tree_h * 0.65, 0.45, 18, LEAF + (40,), 11)
+    im.alpha_composite(trees)
+    return im
+
+
+def disc(im, x, y, size):
+    """The round house logo with a soft shadow, as the house website shows it."""
+    shadow = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).ellipse([x + 4, y + 12, x + size + 4, y + size + 12], fill=(0, 0, 0, 150))
+    im.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(14)))
+    logo = Image.open(os.path.join(ASSETS, "saranda-logo.png")).convert("RGBA").resize((size, size), Image.LANCZOS)
+    im.alpha_composite(logo, (x, y))
 
 
 def chip(d, x, y, text, f, pad=16, h=46):
     w = d.textlength(text, font=f) + 2 * pad
-    d.rounded_rectangle([x, y, x + w, y + h], radius=h // 2, fill=(30, 27, 46), outline=LINE, width=2)
-    d.text((x + pad, y + h / 2), text, font=f, fill=INK, anchor="lm")
+    d.rounded_rectangle([x, y, x + w, y + h], radius=h // 2, fill=CHIP_BG, outline=CHIP_LINE, width=2)
+    d.text((x + pad, y + h / 2), text, font=f, fill=CREAM, anchor="lm")
     return x + w
+
+
+def spaced(d, xy, text, f, fill, spacing, centre=False):
+    """Letter-spaced caps (Pillow has no tracking option). Returns the line width."""
+    widths = [d.textlength(c, font=f) for c in text]
+    total = sum(widths) + spacing * (len(text) - 1)
+    x, y = xy
+    if centre:
+        x -= total / 2
+    for c, cw in zip(text, widths):
+        d.text((x, y), c, font=f, fill=fill)
+        x += cw + spacing
+    return total
+
+
+def check(name, right, limit):
+    if right > limit:
+        raise SystemExit(f"{name} overlaps: ends at x={right:.0f}, limit {limit}")
 
 
 def og():
     W, H = 1200, 630
-    im = glow(W, H, 1050, 60, 320, ACCENT, 70)
+    im = forest(W, H, 150)
+    disc(im, 862, 70, 290)
     d = ImageDraw.Draw(im)
-    d.text((72, 70), "IIT MADRAS BS  ·  BSMA1004", font=font(MONO, 24), fill=ACCENT)
-    d.text((70, 104), "Stats 2 Quiz 1 Prep", font=font(BOLD, 76), fill=INK)
-    d.text((72, 200), "Weeks 1–4  ·  Quiz on Sun 15 Nov 2026", font=font(REG, 32), fill=MUTED)
+    spaced(d, (72, 62), KICKER, font(MONO, 22), GOLD, 3)
+    check("og tagline", 72 + spaced(d, (72, 96), TAGLINE, font(BOLD, 18), SAGE, 2), 830)
+    d.text((70, 128), "Stats 2 Quiz 1 Prep", font=font(BOLD, 76), fill=CREAM)
+    check("og title", 70 + d.textlength("Stats 2 Quiz 1 Prep", font=font(BOLD, 76)), 830)
+    sub = "BSMA1004  ·  Weeks 1–4  ·  Quiz on Sun 15 Nov 2026"
+    d.text((72, 226), sub, font=font(REG, 28), fill=SAGE)
+    check("og subtitle", 72 + d.textlength(sub, font=font(REG, 28)), 830)
     f = font(SEMI, 24)
     x = 72
     for t in ("13 past papers analysed", "117 practice questions"):
-        x = chip(d, x, 276, t, f) + 12
+        x = chip(d, x, 290, t, f) + 12
     x = 72
     for t in ("21 number drills", "Timed mocks", "GA answers"):
-        x = chip(d, x, 336, t, f) + 12
-    paste_logo(im, "saranda-logo.png", 846, 96, 290, LOGO_BOX)
-    d.line([(72, 500), (W - 72, 500)], fill=LINE, width=2)
-    paste_logo(im, "saranda-emblem.png", 68, 522, 76)
-    d.text((156, 545), "A Saranda House initiative", font=font(SEMI, 28), fill=INK, anchor="lm")
-    d.text((156, 580), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(REG, 22), fill=MUTED, anchor="lm")
-    d.text((W - 72, 562), "Free · arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 20), fill=MUTED, anchor="rm")
+        x = chip(d, x, 348, t, f) + 12
+    check("og chips", x, 830)
+    d.text((72, 560), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(SEMI, 24), fill=CREAM, anchor="lm")
+    d.text((W - 72, 560), "Free · arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 20), fill=SAGE, anchor="rm")
     out = os.path.join(ROOT, "src", "assets", "og.png")
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    im.save(out, optimize=True)
+    im.convert("RGB").save(out, optimize=True)
     return out
 
 
 def qr_image(size):
     buf = io.BytesIO()
-    segno.make(URL, error="m").save(buf, kind="png", scale=12, border=2, dark="#120f1c", light="#ffffff")
+    segno.make(URL, error="m").save(buf, kind="png", scale=12, border=2, dark="#0d1f12", light="#ffffff")
     buf.seek(0)
     return Image.open(buf).convert("RGB").resize((size, size), Image.NEAREST)
 
 
 def poster():
     W, H = 1080, 1350
-    im = glow(W, H, 900, 120, 420, ACCENT, 70)
+    im = forest(W, H, 260)
+    disc(im, (W - 280) // 2, 52, 280)
     d = ImageDraw.Draw(im)
-    d.text((80, 90), "IIT MADRAS BS  ·  BSMA1004", font=font(MONO, 28), fill=ACCENT)
-    d.text((76, 128), "Stats 2", font=font(BOLD, 120), fill=INK)
-    d.text((76, 258), "Quiz 1 Prep", font=font(BOLD, 120), fill=INK)
-    d.text((80, 410), "Weeks 1–4  ·  Quiz on Sun 15 Nov 2026", font=font(REG, 36), fill=MUTED)
-    paste_logo(im, "saranda-logo.png", 800, 40, 230, LOGO_BOX)
+    spaced(d, (W / 2, 362), KICKER, font(MONO, 28), GOLD, 4, centre=True)
+    check("poster tagline", W / 2 + spaced(d, (W / 2, 404), TAGLINE, font(BOLD, 24), SAGE, 3, centre=True) / 2, W - 60)
+    d.text((W / 2, 452), "Stats 2 Quiz 1 Prep", font=font(BOLD, 92), fill=CREAM, anchor="ma")
+    sub = "IIT Madras BS  ·  BSMA1004  ·  Weeks 1–4  ·  Quiz Sun 15 Nov"
+    d.text((W / 2, 572), sub, font=font(REG, 30), fill=SAGE, anchor="ma")
+    check("poster subtitle", W / 2 + d.textlength(sub, font=font(REG, 30)) / 2, W - 50)
     items = [("Every past Quiz 1 since 2022", "analysed by pattern, with a predicted paper"),
              ("117 practice questions", "with full explanations"),
              ("21 number drills", "fresh numbers every time, worked solutions"),
              ("Timed 40-mark mocks", "scored like the real quiz"),
              ("Weekly graded assignments", "answers and working after each deadline")]
-    y = 496
+    y, right = 660, 0
     for head, sub in items:
-        d.ellipse([84, y + 12, 104, y + 32], fill=ACCENT)
-        d.text((126, y), head, font=font(SEMI, 36), fill=INK)
-        d.text((126, y + 46), sub, font=font(REG, 26), fill=MUTED)
-        y += 94
-    qr = qr_image(300)
-    qx, qy = W - 80 - 300, H - 80 - 300
-    d.rounded_rectangle([qx - 16, qy - 16, qx + 316, qy + 316], radius=22, fill=(255, 255, 255))
-    im.paste(qr, (qx, qy))
-    bell(d, 80, 980, 520, 120, bins=11)
-    paste_logo(im, "saranda-emblem.png", 74, 1156, 88)
-    d.text((176, 1182), "A Saranda House initiative", font=font(SEMI, 34), fill=INK, anchor="lm")
-    d.text((176, 1222), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(REG, 23), fill=MUTED, anchor="lm")
-    d.text((80, 1292), "Free  ·  scan or open arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 22), fill=MUTED)
+        d.ellipse([82, y + 11, 100, y + 29], fill=GOLD)
+        d.text((122, y), head, font=font(SEMI, 32), fill=CREAM)
+        d.text((122, y + 42), sub, font=font(REG, 23), fill=SAGE)
+        right = max(right, 122 + d.textlength(head, font=font(SEMI, 32)), 122 + d.textlength(sub, font=font(REG, 23)))
+        y += 86
+    qs = 250
+    qx, qy = W - 76 - qs, 690
+    check("poster list", right, qx - 30)
+    d.rounded_rectangle([qx - 14, qy - 14, qx + qs + 14, qy + qs + 14], radius=20, fill=(255, 255, 255))
+    im.paste(qr_image(qs), (qx, qy))
+    d.text((qx + qs / 2, qy + qs + 30), "Scan to open", font=font(SEMI, 24), fill=CREAM, anchor="ma")
+    d.text((W / 2, 1176), "Built by Arshan Ali Khan, RC Lucknow Region", font=font(SEMI, 32), fill=CREAM, anchor="ma")
+    d.text((W / 2, 1224), "Free  ·  arshanalikhan.github.io/iitm-stats2-prep", font=font(MONO, 24), fill=SAGE, anchor="ma")
     out = os.path.join(ROOT, "marketing", "poster.png")
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    im.save(out, optimize=True)
+    im.convert("RGB").save(out, optimize=True)
     qr_image(900).save(os.path.join(ROOT, "marketing", "qr.png"))
     return out
 
